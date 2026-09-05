@@ -80,9 +80,18 @@
     {
       "id": "S1",
       "name": "deterministic_control",
-      "status": "pending",
+      "status": "phase_b_pending",
       "parent_policy": "current_champion",
-      "single_change": "stable per-game seed plus read-only telemetry"
+      "single_change": "stable per-game seed plus read-only telemetry",
+      "kernel_version": 4,
+      "phase_a_status": "COMPLETE",
+      "phase_a_runtime_s": 8497,
+      "phase_a_public25_mean": 7.19,
+      "phase_a_public25_actions": 3522,
+      "submission_ref": 56034166,
+      "public_score": null,
+      "delta_vs_parent": null,
+      "decision": "pending_score"
     },
     {
       "id": "S2",
@@ -128,9 +137,12 @@
     }
   ],
   "last_submission": {
-    "date": "2026-09-04",
-    "submission_ref": 56011722,
-    "status": "COMPLETE",
-    "public_score": 2.95
+    "date": "2026-09-05",
+    "submission_ref": 56034166,
+    "status": "PENDING",
+    "public_score": null,
+    "message": "S1 deterministic control: per-game vLLM seed + read-only telemetry on Flash v3 parent (kernel v4)",
+    "kernel_slug": "dmitriigluzdov/duck-qwen3-8-flash-next-nvfp4-mtp",
+    "kernel_version": 4
   }
 }
