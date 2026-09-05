@@ -1,0 +1,27 @@
+# =============================================================================
+# CELL 1: OFFLINE COMPETITION RUNTIME INSTALLATION
+# =============================================================================
+import subprocess, sys, os, pathlib
+
+print('=== Installing ARC-AGI competition wheels ===', flush=True)
+# Install competition runtime wheels (arc-agi, arcengine)
+# Must be installed strictly from the competition directory with --no-deps
+# to prevent overriding pre-installed Kaggle packages (such as Pillow).
+candidate_comp_dirs = [
+    '/kaggle/input/competitions/arc-prize-2026-arc-agi-3/arc_agi_3_wheels',
+    '/kaggle/input/arc-prize-2026-arc-agi-3/arc_agi_3_wheels',
+]
+comp_dir = next((p for p in candidate_comp_dirs if os.path.isdir(p)), None)
+if comp_dir:
+    print(f'Found competition wheels directory: {comp_dir}', flush=True)
+    for pkg in ['arcengine', 'arc-agi']:
+        cmd = [sys.executable, '-m', 'pip', 'install', '--no-index', '--no-deps', f'--find-links={comp_dir}', pkg]
+        res = subprocess.run(cmd, capture_output=True, text=True)
+        if res.returncode == 0:
+            print(f'[OK] Installed {pkg}', flush=True)
+        else:
+            print(f'Notice during {pkg} install: {res.stderr[-500:] if res.stderr else res.stdout[-500:]}', flush=True)
+else:
+    print('Notice: Competition wheels directory not found, assuming pre-installed.', flush=True)
+
+print('Environment initialization complete.', flush=True)

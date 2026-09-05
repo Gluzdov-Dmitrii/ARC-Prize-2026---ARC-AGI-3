@@ -1,0 +1,24 @@
+# =============================================================================
+# CELL 3: PHASE-A STRUCTURAL PREFLIGHT & SUBMISSION ARTIFACT ASSURANCE
+# =============================================================================
+import os, pathlib, json
+import pandas as pd
+import lcld_preflight
+
+# Run structural preflight test (deterministic offline verification)
+lcld_preflight.run_preflight()
+
+# Ensure /kaggle/working/submission.parquet exists for Kaggle evaluator
+working_root = pathlib.Path('/kaggle/working')
+working_root.mkdir(parents=True, exist_ok=True)
+submission_path = working_root / 'submission.parquet'
+if not submission_path.exists():
+    dummy_submission = pd.DataFrame(
+        data=[['1_0', '1', True, 1]],
+        columns=['row_id', 'game_id', 'end_of_game', 'score'],
+    )
+    dummy_submission.to_parquet(submission_path, index=False)
+    print(f'Created required competition submission artifact at {submission_path}', flush=True)
+
+is_rerun = os.getenv('KAGGLE_IS_COMPETITION_RERUN', '').strip().lower() in ('1', 'true')
+print(f'KAGGLE_IS_COMPETITION_RERUN = {is_rerun}', flush=True)

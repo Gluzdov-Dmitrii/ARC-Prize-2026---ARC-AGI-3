@@ -1,0 +1,101 @@
+# =============================================================================
+# CELL 5: PHASE-B GATEWAY & CONCURRENT GAMEPLAY EXECUTION (RERUN ONLY)
+# =============================================================================
+import os, sys, time, pathlib, subprocess, json, urllib.request
+import pandas as pd
+
+is_rerun = os.getenv('KAGGLE_IS_COMPETITION_RERUN', '').strip().lower() in ('1', 'true')
+working_root = pathlib.Path('/kaggle/working')
+submission_path = working_root / 'submission.parquet'
+
+if not is_rerun:
+    print('=== Phase B competition execution skipped (Phase A commit/dry-run mode). ===', flush=True)
+else:
+    print('=================================================================', flush=True)
+    print('=== STARTING PHASE B ISOLATED COMPETITION RUNTIME ===', flush=True)
+    print('=================================================================', flush=True)
+
+    # 1. Setup arcade client environment and write .env
+    env_path = working_root / '.env'
+    _env_candidates = [
+        '/kaggle/input/competitions/arc-prize-2026-arc-agi-3/environment_files',
+        '/kaggle/input/arc-prize-2026-arc-agi-3/environment_files',
+    ]
+    _env_dir = next((p for p in _env_candidates if os.path.isdir(p)), _env_candidates[0])
+    print(f'[Phase B] ENVIRONMENTS_DIR = {_env_dir}', flush=True)
+    arcade_settings = {
+        'SCHEME': 'http',
+        'HOST': 'gateway',
+        'PORT': '8001',
+        'ARC_API_KEY': 'test-key-123',
+        'ARC_API_BASE': 'http://gateway:8001',
+        'ARC_BASE_URL': 'http://gateway:8001/',
+        'OPERATION_MODE': 'competition',
+        'ENVIRONMENTS_DIR': _env_dir,
+        'RECORDINGS_DIR': '/kaggle/working/server_recording',
+        'LCLD_MAX_ACTIONS_PER_GAME': '500',
+        'LCLD_MAX_ACTIONS_PER_LEVEL': '500',
+        'LCLD_GAME_WALL_CLOCK_LIMIT_SECONDS': '5000',
+        'LCLD_GAME_CONCURRENCY': '5',
+        'LCLD_COMPETITION_WALL_CLOCK_LIMIT_SECONDS': '30600',
+    }
+    os.environ.update(arcade_settings)
+    env_path.write_text(''.join(f'{k}={v}\n' for k, v in arcade_settings.items()), encoding='utf-8')
+    print(f'[Phase B] Written gateway configuration to {env_path}', flush=True)
+
+    # 2. Install vLLM wheelhouse into /kaggle/working/vllm-site-packages
+    import phase_a_heavy_smoke
+    wheelhouse = phase_a_heavy_smoke.find_wheelhouse_path()
+    if not wheelhouse:
+        raise FileNotFoundError('vLLM wheelhouse dataset not found in /kaggle/input')
+    site_packages = phase_a_heavy_smoke.install_vllm_wheelhouse(wheelhouse)
+
+    # 3. Locate model weights
+    model_path = phase_a_heavy_smoke.find_model_path()
+    if not model_path:
+        raise FileNotFoundError('Qwen model weights not found in /kaggle/input')
+
+    # 4. Start vLLM server with logging
+    ready = phase_a_heavy_smoke.start_vllm_server(model_path, site_packages)
+    if not ready:
+        print('=== vLLM SERVER LOG TAIL (Startup Failure) ===', flush=True)
+        print(phase_a_heavy_smoke._vllm_log_tail(30000), flush=True)
+        raise RuntimeError('vLLM server failed to start within timeout')
+
+    # 5. Gateway handshake check
+    print('[Phase B] Checking gateway connectivity at http://gateway:8001/api/games...', flush=True)
+    deadline = time.monotonic() + 700.0
+    gateway_ready = False
+    while time.monotonic() < deadline:
+        try:
+            req = urllib.request.Request(
+                'http://gateway:8001/api/games',
+                headers={'Accept': 'application/json', 'X-API-Key': os.environ.get('ARC_API_KEY', '')},
+            )
+            with urllib.request.urlopen(req, timeout=10) as r:
+                if 200 <= r.status < 500:
+                    print(f'[Phase B] Gateway handshake OK (status={r.status})', flush=True)
+                    gateway_ready = True
+                    break
+        except Exception:
+            time.sleep(4.0)
+    if not gateway_ready:
+        print('[Phase B] Warning: gateway handshake timed out; proceeding with caution.', flush=True)
+
+    # 6. Execute games concurrently
+    try:
+        from arc_agi import Arcade
+        from lcld_competition_child import run_concurrent_arcade_games
+        arcade = Arcade()
+        results = run_concurrent_arcade_games(arcade, concurrency=5)
+        print(f'[Phase B] Completed gameplay across {len(results)} environments.', flush=True)
+    except Exception as run_exc:
+        print(f'[Phase B ERROR] Exception during concurrent gameplay: {run_exc}', flush=True)
+        print('=== vLLM SERVER LOG TAIL (Post-Error) ===', flush=True)
+        print(phase_a_heavy_smoke._vllm_log_tail(30000), flush=True)
+    finally:
+        phase_a_heavy_smoke.stop_vllm_server()
+        if not submission_path.exists():
+            dummy = pd.DataFrame(data=[['1_0', '1', True, 1]], columns=['row_id', 'game_id', 'end_of_game', 'score'])
+            dummy.to_parquet(submission_path, index=False)
+        print('=== PHASE B WORKFLOW COMPLETE; SUBMISSION COMMITTED ===', flush=True)

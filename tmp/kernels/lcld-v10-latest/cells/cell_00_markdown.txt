@@ -1,0 +1,6 @@
+# ARC Prize 2026: ARC-AGI-3 LCLD Agent Version 10.0
+
+**Architecture**: Neuro-Symbolic Tri-Agent (Explorer, DSL Coder, Solver) with Brusentsov Ternary Logic,
+Isolated Memory Contours (ISO-1..ISO-5), Deterministic ARGALite Perception, and Tufa Single-RESET Protection.
+**Model**: Qwen3.8 27B FP8 (`foysalemonshanto/qwen3-8-27b-fp8-repacked-v1`) via vLLM with FlashAttention.
+**Configuration**: Concurrency=5, Thinking=32K tokens, Context=64K..128K, HeavySmoke=True.

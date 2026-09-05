@@ -1,0 +1,30 @@
+# =============================================================================
+# CELL 4: PHASE-A HEAVY COMBAT SMOKE TEST (vLLM & QWEN3.8 DIAGNOSTICS)
+# =============================================================================
+ENABLE_PHASE_A_HEAVY_SMOKE = True
+import os, pathlib, json
+import pandas as pd
+
+is_rerun = os.getenv('KAGGLE_IS_COMPETITION_RERUN', '').strip().lower() in ('1', 'true')
+working_root = pathlib.Path('/kaggle/working')
+submission_path = working_root / 'submission.parquet'
+
+if not is_rerun:
+    if ENABLE_PHASE_A_HEAVY_SMOKE:
+        print('=== Launching Phase-A Heavy Combat Smoke Diagnostics ===', flush=True)
+        try:
+            import phase_a_heavy_smoke
+            smoke_summary = phase_a_heavy_smoke.run_phase_a_smoke_pipeline()
+            print(f'Heavy smoke execution status: {smoke_summary.get("status")}', flush=True)
+        except Exception as exc:
+            print(f'[HEAVY-SMOKE WARNING] Caught smoke exception: {exc}', flush=True)
+    else:
+        print('=== Phase-A Heavy Combat Smoke Disabled (ENABLE_PHASE_A_HEAVY_SMOKE=False) ===', flush=True)
+
+    # Always guarantee submission.parquet is written and verified
+    if not submission_path.exists():
+        dummy = pd.DataFrame(data=[['1_0', '1', True, 1]], columns=['row_id', 'game_id', 'end_of_game', 'score'])
+        dummy.to_parquet(submission_path, index=False)
+    print('=== LCLD PHASE A VALIDATION COMPLETE; SUBMISSION ARTIFACT READY ===', flush=True)
+else:
+    print('Phase A heavy smoke skipped: this execution is a Phase B competition rerun.', flush=True)

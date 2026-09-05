@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.env
+kaggle.json
+*.log
+.ipynb_checkpoints/
+tmp/*.txt
+tmp/diag_extract/
+tmp/gptoss-v16-cells/
+tmp/kernels/*-output/
