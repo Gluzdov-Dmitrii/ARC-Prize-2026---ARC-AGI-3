@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-09-05",
+  "competition": {
+    "slug": "arc-prize-2026-arc-agi-3",
+    "submission_limit_per_day": 1,
+    "runtime_limit_hours": 9,
+    "public_games": 25,
+    "hidden_public_lb_games": 55,
+    "hidden_private_lb_games": 55,
+    "leaderboard_snapshot": {
+      "date": "2026-09-05",
+      "team_rank": 92,
+      "team_count": 2803,
+      "leader_score": 7.51,
+      "third_place_score": 6.43,
+      "approx_gold_cutoff_rank": "15-16",
+      "approx_gold_cutoff_score": 4.29
+    }
+  },
+  "execution_policy": {
+    "submission_trigger": "засабмить следующее решение",
+    "max_phase_b_submissions_per_trigger": 1,
+    "advance_after_infrastructure_failure": false,
+    "experiment_order": [
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S5",
+      "S6",
+      "S7"
+    ],
+    "promotion_threshold_public_delta": 0.5,
+    "rejection_threshold_public_delta": -0.5
+  },
+  "current_champion": {
+    "label": "Flash v3",
+    "kernel_slug": "dmitriigluzdov/duck-qwen3-8-flash-next-nvfp4-mtp",
+    "kernel_version": 3,
+    "submission_ref": 55959595,
+    "best_public_score": 3.39,
+    "model_source": "keithtyser/qwen3-8-flash-next-nvfp4/PyTorch/radixark-modelopt-fp4/1",
+    "model_family": "Qwen3.8-Flash-Next NVFP4 MTP3",
+    "seed_mode": "stochastic (-1)",
+    "status": "champion"
+  },
+  "repeat_observations": [
+    {
+      "date": "2026-09-02",
+      "label": "Flash v3",
+      "submission_ref": 55959595,
+      "public_score": 3.39,
+      "status": "COMPLETE"
+    },
+    {
+      "date": "2026-09-04",
+      "label": "Flash v3",
+      "submission_ref": 56011722,
+      "public_score": 2.95,
+      "status": "COMPLETE"
+    }
+  ],
+  "excluded_for_current_sprint": [
+    {
+      "label": "LCLD",
+      "reason": "0.00 followed by Phase B ERROR runs; reproduce and fix gateway failure before any new submission"
+    },
+    {
+      "label": "GPT-OSS-120B",
+      "reason": "approximately eight-hour public run with low coverage/mean result"
+    },
+    {
+      "label": "generic state graph",
+      "reason": "available public ablation regressed; not a priority for this seven-submit sprint"
+    }
+  ],
+  "next_experiment_id": "S1",
+  "experiments": [
+    {
+      "id": "S1",
+      "name": "deterministic_control",
+      "status": "pending",
+      "parent_policy": "current_champion",
+      "single_change": "stable per-game seed plus read-only telemetry"
+    },
+    {
+      "id": "S2",
+      "name": "memory_capture_fix",
+      "status": "pending",
+      "parent_policy": "current_champion",
+      "single_change": "extract structured memory from reasoning and content"
+    },
+    {
+      "id": "S3",
+      "name": "cross_level_transfer",
+      "status": "pending",
+      "parent_policy": "current_champion",
+      "single_change": "retain confirmed mechanics but clear layout-specific state at level transition"
+    },
+    {
+      "id": "S4",
+      "name": "semantic_no_impact_guard",
+      "status": "pending",
+      "parent_policy": "current_champion",
+      "single_change": "HUD-insensitive semantic diff and confirmed state-action no-impact memory"
+    },
+    {
+      "id": "S5",
+      "name": "animation_aware_observation",
+      "status": "pending",
+      "parent_policy": "current_champion",
+      "single_change": "bounded full-frame animation context with actionable-frame labeling"
+    },
+    {
+      "id": "S6",
+      "name": "scheduled_simplification",
+      "status": "pending",
+      "parent_policy": "current_champion",
+      "single_change": "periodic structured transcript compaction and shorter recent history"
+    },
+    {
+      "id": "S7",
+      "name": "adaptive_compute_scheduler",
+      "status": "pending",
+      "parent_policy": "current_champion",
+      "single_change": "progress-aware game budget allocation with full hidden-set coverage first"
+    }
+  ],
+  "last_submission": {
+    "date": "2026-09-04",
+    "submission_ref": 56011722,
+    "status": "COMPLETE",
+    "public_score": 2.95
+  }
+}
