@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-09-05",
+  "updated_at": "2026-09-06",
   "competition": {
     "slug": "arc-prize-2026-arc-agi-3",
     "submission_limit_per_day": 1,
@@ -9,13 +9,14 @@
     "hidden_public_lb_games": 55,
     "hidden_private_lb_games": 55,
     "leaderboard_snapshot": {
-      "date": "2026-09-05",
-      "team_rank": 92,
-      "team_count": 2803,
+      "date": "2026-09-06",
+      "team_rank": null,
+      "team_count": null,
       "leader_score": 7.51,
       "third_place_score": 6.43,
       "approx_gold_cutoff_rank": "15-16",
-      "approx_gold_cutoff_score": 4.29
+      "approx_gold_cutoff_score": 4.29,
+      "note": "top-15 is 4.33, 16th is 4.29 on 2026-09-06 public board; our best Public remains 3.39"
     }
   },
   "execution_policy": {
@@ -75,12 +76,12 @@
       "reason": "available public ablation regressed; not a priority for this seven-submit sprint"
     }
   ],
-  "next_experiment_id": "S1",
+  "next_experiment_id": "S2",
   "experiments": [
     {
       "id": "S1",
       "name": "deterministic_control",
-      "status": "phase_b_pending",
+      "status": "rejected",
       "parent_policy": "current_champion",
       "single_change": "stable per-game seed plus read-only telemetry",
       "kernel_version": 4,
@@ -89,16 +90,32 @@
       "phase_a_public25_mean": 7.19,
       "phase_a_public25_actions": 3522,
       "submission_ref": 56034166,
-      "public_score": null,
-      "delta_vs_parent": null,
-      "decision": "pending_score"
+      "public_score": 2.71,
+      "delta_vs_parent": -0.68,
+      "delta_vs_best": -0.68,
+      "decision": "reject",
+      "classification": "algorithmic",
+      "notes": "COMPLETE 2.71 vs parent/best 3.39; below -0.50 threshold. Not stacked into S2. Champion remains Flash v3."
     },
     {
       "id": "S2",
       "name": "memory_capture_fix",
-      "status": "pending",
+      "status": "phase_b_pending",
       "parent_policy": "current_champion",
-      "single_change": "extract structured memory from reasoning and content"
+      "parent_kernel_version": 3,
+      "parent_submission_ref": 55959595,
+      "parent_public_score": 3.39,
+      "single_change": "extract structured memory from reasoning and content",
+      "kernel_version": 5,
+      "phase_a_status": "COMPLETE",
+      "phase_a_runtime_s": 8476,
+      "phase_a_public25_mean": 6.32,
+      "phase_a_public25_actions": 4120,
+      "submission_ref": 56051525,
+      "public_score": null,
+      "delta_vs_parent": null,
+      "decision": "pending_score",
+      "notes": "Phase A COMPLETE kernel v5; Phase B ref 56051525 PENDING. Champion remains Flash v3 until score."
     },
     {
       "id": "S3",
@@ -137,12 +154,12 @@
     }
   ],
   "last_submission": {
-    "date": "2026-09-05",
-    "submission_ref": 56034166,
+    "date": "2026-09-06",
+    "submission_ref": 56051525,
     "status": "PENDING",
     "public_score": null,
-    "message": "S1 deterministic control: per-game vLLM seed + read-only telemetry on Flash v3 parent (kernel v4)",
+    "message": "S2 memory capture: labeled facts from reasoning and content on Flash v3 parent (kernel v5)",
     "kernel_slug": "dmitriigluzdov/duck-qwen3-8-flash-next-nvfp4-mtp",
-    "kernel_version": 4
+    "kernel_version": 5
   }
 }

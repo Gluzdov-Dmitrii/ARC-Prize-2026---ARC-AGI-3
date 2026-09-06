@@ -34,6 +34,34 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - Artifact/report links: `tmp/kernels/s1-deterministic/`, `src/s1_deterministic_control.py`, `reports/SUBMIT_2026-09-05_S1.md`
 - Notes and anomalies: late-run vLLM read timeouts on several in-flight games; all 25 runs still finalized for the Phase A audit. Offline public mean 7.19 is not a leaderboard score.
 
+### 2026-09-06 — S1 score closeout
+
+- Phase B terminal: submission ref **56034166** COMPLETE, Public **2.71**
+- Delta: vs parent 3.39 = **-0.68**; vs historical best 3.39 = **-0.68**; vs Flash v3 unlucky repeat 2.95 = **-0.24**
+- LB snapshot 2026-09-06: leader 7.51, third 6.43, 15th 4.33, 16th 4.29. Our best Public remains 3.39 (Flash v3). Team rank not re-fetched as a precise row.
+- Classification: algorithmic (Phase A COMPLETE, no proven infra failure on Phase B)
+- Decision: **reject**. Do not adopt. Do not stack S1 seed into S2.
+- Champion after decision: Flash v3 (kernel v3, ref 55959595, 3.39)
+- Next experiment ID: **S2** (memory capture on champion v3, not on rejected v4)
+
+### 2026-09-06 — S2 — memory_capture_fix
+
+- Parent: `dmitriigluzdov/duck-qwen3-8-flash-next-nvfp4-mtp` v3, submission ref 55959595, Public 3.39, git parent `51856a8`. Not stacked on rejected S1 (kernel v4 / ref 56034166 / 2.71).
+- Single causal change: extract Duck labeled knowledge blocks from assistant reasoning and content; content wins on conflict; identical normalized text kept once; labeled-block length policy remains `max_chars=None`. Prompts, seed, scheduler, temperature, concurrency unchanged.
+- Model/checkpoint/license: `keithtyser/qwen3-8-flash-next-nvfp4/PyTorch/radixark-modelopt-fp4/1` (Qwen3.8-Flash-Next NVFP4 MTP3)
+- Inference config: seed=stochastic (`LOCAL_ANALYZER_SEED=-1`); temperature/top_p/top_k unchanged from Duck defaults (0.6 / 0.95 / 20 unless env overrides); context 32768; concurrency 28; analyzer_timeout 900; max_runtime_s_per_game 7920; notebook budget 32400
+- Local tests: `python -m unittest tests.test_s2_memory_capture tests.test_s1_deterministic_control -v` — 17/17 OK
+- Phase A: kernel v5 COMPLETE; setup+run ~8476 s (~2h 21m) including 2h 12m 2s benchmark; 25/25 public games, 4120 actions, 1,910,303 tokens; offline mean 6.32 / median 2.90; 0 won / all `gave_up` (expected); `PUBLIC25_AUDIT` passed; `S2_MEMORY_CAPTURE reasoning+content`; telemetry written (install + after `bm.run`); no OOM / no Traceback. Analyzer HTTP read timeouts clustered at ~8468 s during wind-down, not a notebook crash.
+- Phase B: submission ref **56051525**, message as in `reports/SUBMIT_2026-09-06_S2.md`, status **PENDING**, Public score **не измерено**
+- LB snapshot: not re-fetched after send; pre-submit snapshot remains 2026-09-06 leader 7.51, third 6.43, 15th 4.33, 16th 4.29
+- Delta: vs parent 3.39 = null; vs historical best 3.39 = null
+- Classification: pending (Phase B not terminal)
+- Decision: pending_score; do not adopt/reject; do not advance queue
+- Champion after decision: Flash v3 (3.39) unchanged
+- Next experiment ID: **S2** until 56051525 is COMPLETE or ERROR
+- Artifact/report links: `tmp/kernels/s2-memory-capture/`, `src/s2_memory_capture.py`, `reports/SUBMIT_2026-09-06_S2.md`
+- Notes and anomalies: late-run vLLM read timeouts on several in-flight games; all 25 runs still finalized for the Phase A audit. Offline public mean 6.32 is not a leaderboard score.
+
 ## Шаблон записи Sx
 
 Скопировать секцию и заполнить после каждого подготовленного/отправленного варианта.
