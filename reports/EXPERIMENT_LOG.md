@@ -62,6 +62,16 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - Artifact/report links: `tmp/kernels/s2-memory-capture/`, `src/s2_memory_capture.py`, `reports/SUBMIT_2026-09-06_S2.md`
 - Notes and anomalies: late-run vLLM read timeouts on several in-flight games; all 25 runs still finalized for the Phase A audit. Offline public mean 6.32 is not a leaderboard score.
 
+### 2026-09-07 — S2 score closeout
+
+- Phase B terminal: submission ref **56051525** COMPLETE, Public **2.72**
+- Delta: vs parent 3.39 = **-0.67**; vs historical best 3.39 = **-0.67**; vs Flash v3 unlucky repeat 2.95 = **-0.23**; vs rejected S1 2.71 = **+0.01**
+- LB snapshot 2026-09-07: team rank 138/2847, leader 7.91, third 7.51, 15th 4.34, 16th 4.33. Our best Public remains 3.39 (Flash v3).
+- Classification: algorithmic (Phase A COMPLETE, no proven infra failure on Phase B)
+- Decision: **reject**. Do not adopt. Do not stack S2 memory capture into S3.
+- Champion after decision: Flash v3 (kernel v3, ref 55959595, 3.39)
+- Next experiment ID: **S3** (cross-level transfer on champion v3, not on rejected v5)
+
 ## Шаблон записи Sx
 
 Скопировать секцию и заполнить после каждого подготовленного/отправленного варианта.

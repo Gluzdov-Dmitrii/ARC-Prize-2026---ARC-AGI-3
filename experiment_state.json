@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-09-06",
+  "updated_at": "2026-09-07",
   "competition": {
     "slug": "arc-prize-2026-arc-agi-3",
     "submission_limit_per_day": 1,
@@ -9,14 +9,14 @@
     "hidden_public_lb_games": 55,
     "hidden_private_lb_games": 55,
     "leaderboard_snapshot": {
-      "date": "2026-09-06",
-      "team_rank": null,
-      "team_count": null,
-      "leader_score": 7.51,
-      "third_place_score": 6.43,
+      "date": "2026-09-07",
+      "team_rank": 138,
+      "team_count": 2847,
+      "leader_score": 7.91,
+      "third_place_score": 7.51,
       "approx_gold_cutoff_rank": "15-16",
-      "approx_gold_cutoff_score": 4.29,
-      "note": "top-15 is 4.33, 16th is 4.29 on 2026-09-06 public board; our best Public remains 3.39"
+      "approx_gold_cutoff_score": 4.33,
+      "note": "top-15 is 4.34, 16th is 4.33 on 2026-09-07 public board; our best Public remains 3.39"
     }
   },
   "execution_policy": {
@@ -76,7 +76,7 @@
       "reason": "available public ablation regressed; not a priority for this seven-submit sprint"
     }
   ],
-  "next_experiment_id": "S2",
+  "next_experiment_id": "S3",
   "experiments": [
     {
       "id": "S1",
@@ -100,7 +100,7 @@
     {
       "id": "S2",
       "name": "memory_capture_fix",
-      "status": "phase_b_pending",
+      "status": "rejected",
       "parent_policy": "current_champion",
       "parent_kernel_version": 3,
       "parent_submission_ref": 55959595,
@@ -112,17 +112,23 @@
       "phase_a_public25_mean": 6.32,
       "phase_a_public25_actions": 4120,
       "submission_ref": 56051525,
-      "public_score": null,
-      "delta_vs_parent": null,
-      "decision": "pending_score",
-      "notes": "Phase A COMPLETE kernel v5; Phase B ref 56051525 PENDING. Champion remains Flash v3 until score."
+      "public_score": 2.72,
+      "delta_vs_parent": -0.67,
+      "delta_vs_best": -0.67,
+      "decision": "reject",
+      "classification": "algorithmic",
+      "notes": "COMPLETE 2.72 vs parent/best 3.39; below -0.50 threshold. Not stacked into S3. Champion remains Flash v3."
     },
     {
       "id": "S3",
       "name": "cross_level_transfer",
-      "status": "pending",
+      "status": "phase_a_running",
       "parent_policy": "current_champion",
-      "single_change": "retain confirmed mechanics but clear layout-specific state at level transition"
+      "parent_kernel_version": 3,
+      "parent_submission_ref": 55959595,
+      "parent_public_score": 3.39,
+      "single_change": "retain confirmed mechanics but clear layout-specific state at level transition",
+      "kernel_version": 6
     },
     {
       "id": "S4",
@@ -156,8 +162,8 @@
   "last_submission": {
     "date": "2026-09-06",
     "submission_ref": 56051525,
-    "status": "PENDING",
-    "public_score": null,
+    "status": "COMPLETE",
+    "public_score": 2.72,
     "message": "S2 memory capture: labeled facts from reasoning and content on Flash v3 parent (kernel v5)",
     "kernel_slug": "dmitriigluzdov/duck-qwen3-8-flash-next-nvfp4-mtp",
     "kernel_version": 5
