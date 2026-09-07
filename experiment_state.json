@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "updated_at": "2026-09-07",
+  "updated_at": "2026-09-08",
   "competition": {
     "slug": "arc-prize-2026-arc-agi-3",
     "submission_limit_per_day": 1,
@@ -43,9 +43,9 @@
     "validation_protocol": "EXTERNAL_COMPUTE_PLAN.md"
   },
   "compute_migration": {
-    "revision_date": "2026-09-07",
-    "status": "p0a_complete_p0c_installing",
-    "next_task": "P0c_ml_env_and_27b_download",
+    "revision_date": "2026-09-08",
+    "status": "p0c_27b_loaded_on_a100",
+    "next_task": "P0d_paired_external_baseline",
     "required_before_next_new_submission": true,
     "resources_source": "C:/Users/Dmitry/Desktop/Kaggle/Kaggle Agents/external-resources/SETUP_STATUS.md",
     "linux_project_root": "/home/scientists/gluz_d_s/kaggle/projects/arc-prize-2026-arc-agi-3",
@@ -55,26 +55,33 @@
     "proxy_model_role": "A100 screening only; not a Kaggle champion replacement",
     "full_flash_external_compatibility": "unverified",
     "proxy_model_policy": "Official Qwen3.8-27B-FP8 on one A100 for paired screening; proxy results do not establish Flash improvement",
-    "live_nsu_check_utc": "2026-09-07T12:48:00Z",
+    "live_nsu_check_utc": "2026-09-07T17:16:00Z",
     "remote_readiness_from_documents": {
       "project_directories": "provisioned",
       "baseline_venvs": "stdlib_only_preserved",
-      "ml_environment": "installing_py3.11-cu124-vllm-v1",
-      "ssh_after_bootstrap_start": "timeout_to_10.1.0.7_and_10.1.0.8_while_NSU-SSTP_connected",
+      "ml_environment": "py3.11-cu124-vllm-v1 torch-2.6.0+cu124 transformers-5.16.1; vllm-0.28 needs CUDA 13 and does not run on driver 550.54.15",
+      "proxy_checkpoint": "models/Qwen3.8-27B-FP8 246 files 30890081594 bytes",
       "coordination": "DIRECT_USER_AUTHORIZED",
-      "queue": "empty",
+      "queue": "released_after_smoke",
       "slurm": "not_required_in_direct_mode",
       "a100_driver": "550.54.15",
       "a100_idle_at_check": true,
-      "personal_storage_quota": "quota_tool_missing; NFS home 7.0T free / 62G used",
-      "live_checked_this_revision": true
+      "personal_storage_quota": "quota_tool_missing; NFS home 7.0T free",
+      "live_checked_this_revision": true,
+      "smoke": {
+        "backend": "transformers_qwen3_5",
+        "elapsed_s": 74.2,
+        "ok": true,
+        "fp8_native": false,
+        "note": "Finegrained FP8 quantizer crashes on tp_plan None; loaded with quantization_config stripped so FP8 scale_inv tensors were UNEXPECTED. Infrastructure smoke only, not a quality baseline."
+      }
     },
     "measured_phase_a_seconds_s1_s2_s3": [8497, 8476, 8559],
     "kaggle_quota_debit_measured": null,
     "tasks": [
       {"id": "P0a", "name": "short_phase_a_packaging", "status": "complete"},
       {"id": "P0b", "name": "portable_offline_harness", "status": "pending"},
-      {"id": "P0c", "name": "external_runtime_and_allocation", "status": "in_progress"},
+      {"id": "P0c", "name": "external_runtime_and_allocation", "status": "complete_with_fp8_workaround"},
       {"id": "P0d", "name": "paired_external_baseline", "status": "pending"}
     ]
   },

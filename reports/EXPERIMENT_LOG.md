@@ -113,6 +113,16 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - P0b (portable harness) и P0d (парный baseline/load smoke) ещё pending. 27B proxy не заменяет Flash на Kaggle.
 - Артефакты: `src/eval_panels.json` (8/8/9 public split, seeds 101/202/303), `src/nsu_bootstrap_ml_env.py`, `src/nsu_download_qwen38_27b.py`, `src/nsu_a100_27b_smoke.py`.
 
+### 2026-09-08 — NSU 27B stand smoke (no LB)
+
+- S3/ref 56075811 всё ещё PENDING. Сабмит не делали. Champion Flash v3 / 3.39.
+- После восстановления VPN: bootstrap и download уже были готовы. `Qwen/Qwen3.8-27B-FP8` — 246 файлов, 30.89 GB.
+- vLLM 0.28 поставил torch 2.13 / CUDA 13; на driver 550.54.15 `torch.cuda` отказал (found 12040). GPU отпустили, вернули torch 2.6.0+cu124.
+- Сняли брошенный Biohub `dispatch.lock/OWNER.json` (нет процесса, Quadro idle) в `_control/diagnostics/`; иначе вся очередь была DISPATCH_BUSY.
+- Рабочий путь: одна A100, `Qwen3_5ForConditionalGeneration` + transformers 5.16.1, без vLLM. Native FP8 quantizer падает (`layer_overrides is None` в `quantizer_finegrained_fp8.py`). Загрузка с `quantization_config=None`: веса встали, `weight_scale_inv` UNEXPECTED.
+- Smoke receipt: backend `transformers_qwen3_5`, `ok=true`, 74.2 с, GPU A100 80GB, процесс завершился, аренда `arc3-p0d-27b-smoke-bf16` RELEASED, обе карты 0 MiB.
+- Это проверка стенда, не quality baseline. Для парного отбора S4 нужно починить FP8/dequant. P0d paired baseline ещё pending.
+
 ## Шаблон записи Sx
 
 Скопировать секцию и заполнить после каждого подготовленного/отправленного варианта.

@@ -24,57 +24,69 @@ def main() -> None:
 
     import torch
 
+    receipt_base = {
+        "torch": getattr(torch, "__version__", None),
+        "torch_cuda": torch.version.cuda,
+        "cuda_visible_devices": visible,
+        "cuda_available": bool(torch.cuda.is_available()),
+    }
     if not torch.cuda.is_available():
+        receipt_base.update(
+            {
+                "backend": "none",
+                "text": None,
+                "error": "torch.cuda.is_available() is false",
+                "ok": False,
+                "elapsed_s": round(time.time() - started, 1),
+            }
+        )
+        RECEIPT.write_text(json.dumps(receipt_base, indent=2, default=str) + "\n", encoding="utf-8")
         raise SystemExit("torch.cuda.is_available() is false inside the leased GPU process")
 
     backend = "unknown"
     text = None
     error = None
     try:
-        try:
-            from vllm import LLM, SamplingParams
+        from transformers import AutoConfig, AutoProcessor
+        from transformers.models.qwen3_5.modeling_qwen3_5 import (
+            Qwen3_5ForConditionalGeneration,
+        )
 
-            llm = LLM(
-                model=str(MODEL_DIR),
-                trust_remote_code=True,
-                max_model_len=2048,
-                gpu_memory_utilization=0.85,
-                tensor_parallel_size=1,
-            )
-            out = llm.generate(
-                ["Say OK."],
-                SamplingParams(max_tokens=8, temperature=0.0),
-            )
-            text = out[0].outputs[0].text
-            backend = "vllm"
-            del llm
-        except Exception as exc:
-            error = f"vllm:{type(exc).__name__}:{exc}"
-            from transformers import AutoModelForCausalLM, AutoTokenizer
+        print("SMOKE_LOAD class=Qwen3_5ForConditionalGeneration", flush=True)
+        processor = AutoProcessor.from_pretrained(MODEL_DIR, trust_remote_code=True)
+        config = AutoConfig.from_pretrained(MODEL_DIR, trust_remote_code=True)
+        config.quantization_config = None
+        text_config = getattr(config, "text_config", None)
+        if text_config is not None and hasattr(text_config, "quantization_config"):
+            text_config.quantization_config = None
+        model = Qwen3_5ForConditionalGeneration.from_pretrained(
+            MODEL_DIR,
+            config=config,
+            dtype=torch.bfloat16,
+            device_map={"": 0},
+            trust_remote_code=True,
+        )
+        print("SMOKE_LOADED", flush=True)
+        encoded = processor.tokenizer("Say OK.", return_tensors="pt")
+        encoded = {k: v.to("cuda:0") for k, v in encoded.items()}
+        tokens = model.generate(**encoded, max_new_tokens=8)
+        text = processor.tokenizer.decode(tokens[0], skip_special_tokens=True)
+        backend = "transformers_qwen3_5"
+        del model
+        torch.cuda.empty_cache()
+    except Exception as exc:
+        import traceback
 
-            tokenizer = AutoTokenizer.from_pretrained(MODEL_DIR, trust_remote_code=True)
-            model = AutoModelForCausalLM.from_pretrained(
-                MODEL_DIR,
-                torch_dtype=torch.bfloat16,
-                device_map="cuda",
-                trust_remote_code=True,
-            )
-            inputs = tokenizer("Say OK.", return_tensors="pt").to("cuda")
-            tokens = model.generate(**inputs, max_new_tokens=8)
-            text = tokenizer.decode(tokens[0], skip_special_tokens=True)
-            backend = "transformers_fallback"
-            del model
-            torch.cuda.empty_cache()
-            error = error
+        error = f"{type(exc).__name__}:{exc}\n" + traceback.format_exc()[-2500:]
     finally:
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
 
     receipt = {
+        **receipt_base,
         "backend": backend,
         "text": text,
         "error": error,
-        "cuda_visible_devices": visible,
         "gpu_name": torch.cuda.get_device_name(0),
         "elapsed_s": round(time.time() - started, 1),
         "ok": bool(text),
