@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "updated_at": "2026-09-07",
   "competition": {
     "slug": "arc-prize-2026-arc-agi-3",
@@ -28,12 +28,48 @@
       "S2",
       "S3",
       "S4",
-      "S5",
       "S6",
-      "S7"
+      "S7",
+      "S5"
     ],
     "promotion_threshold_public_delta": 0.5,
-    "rejection_threshold_public_delta": -0.5
+    "rejection_threshold_public_delta": -0.5,
+    "threshold_interpretation": "historical heuristic and review signal, not statistical significance; future adoption requires external paired evidence plus LB and runtime checks",
+    "selection_rule": "close phase_b_pending first; then first eligible experiment in experiment_order, not numerical ID",
+    "allow_defer_after_failed_local_validation": true,
+    "allow_cpu_preparation_while_phase_b_pending": true,
+    "full_public25_on_kaggle_default": false,
+    "kaggle_phase_a_target_minutes": [20, 30],
+    "validation_protocol": "EXTERNAL_COMPUTE_PLAN.md"
+  },
+  "compute_migration": {
+    "revision_date": "2026-09-07",
+    "status": "planned_not_implemented",
+    "next_task": "P0a_short_phase_a_packaging",
+    "required_before_next_new_submission": true,
+    "resources_source": "C:/Users/Dmitry/Desktop/Kaggle/Kaggle Agents/external-resources/SETUP_STATUS.md",
+    "linux_project_root": "/home/scientists/gluz_d_s/kaggle/projects/arc-prize-2026-arc-agi-3",
+    "windows_remote_project_root": "C:/Users/User/kaggle/projects/arc-prize-2026-arc-agi-3",
+    "preferred_gpu": "one A100 80 GB on nsu-a100",
+    "full_flash_external_compatibility": "unverified",
+    "proxy_model_policy": "27B on one A100 if exact Flash backend unsupported; proxy results do not establish Flash improvement",
+    "remote_readiness_from_documents": {
+      "project_directories": "provisioned",
+      "baseline_venvs": "stdlib_only",
+      "ml_environment": "not_installed",
+      "coordination": "BLOCKED_COORDINATION",
+      "slurm": "last_checks_timed_out",
+      "personal_storage_quota": "unconfirmed",
+      "live_checked_this_revision": false
+    },
+    "measured_phase_a_seconds_s1_s2_s3": [8497, 8476, 8559],
+    "kaggle_quota_debit_measured": null,
+    "tasks": [
+      {"id": "P0a", "name": "short_phase_a_packaging", "status": "pending"},
+      {"id": "P0b", "name": "portable_offline_harness", "status": "pending"},
+      {"id": "P0c", "name": "external_runtime_and_allocation", "status": "pending"},
+      {"id": "P0d", "name": "paired_external_baseline", "status": "pending"}
+    ]
   },
   "current_champion": {
     "label": "Flash v3",

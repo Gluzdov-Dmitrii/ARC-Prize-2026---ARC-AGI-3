@@ -90,6 +90,18 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - Artifact/report links: `tmp/kernels/s3-cross-level/`, `src/s3_cross_level_transfer.py`, `reports/SUBMIT_2026-09-07_S3.md`
 - Notes and anomalies: late-run vLLM read timeouts on several in-flight games; all 25 runs still finalized for the Phase A audit. Offline public mean 8.46 is not a leaderboard score. Teardown GPU survivor is post-audit and did not prevent COMPLETE.
 
+### 2026-09-07 — досрочная корректировка вычислительного плана
+
+- Причина: общая Kaggle GPU-квота быстро расходуется, проекты конкурируют за слоты.
+- Измеренный расход Phase A S1–S3: 8497 + 8476 + 8559 = 25532 с, 7.09 часа времени GPU-инстанса. Списанные quota-hours отдельно не измерены.
+- Источник ресурсов: external-resources/SETUP_STATUS.md от 2026-09-07; Quadro RTX 6000 24 GB, RTX 3080 10 GB, 2×A100 80 GB. Более поздний setup создал каталоги/stdlib envs; старое сообщение об отсутствующих roots из NSU_STATUS больше не актуально. ML environment, scheduler/coordination и личная bulk-storage квота ещё не подтверждены как готовые.
+- Решение: P0a короткая Kaggle Phase A, P0b переносимый harness, P0c внешний runtime/allocation, P0d paired baseline. Цель Phase A 20–30 мин с cold start, это прогноз, не результат запуска.
+- Оставшийся порядок: S4 → S6 → S7 → S5 после terminal S3 и P0. IDs и исходные гипотезы сохраняются.
+- Protocol change: внешний paired screening вместо обязательного полного Kaggle public25; CPU/proxy/production evidence разделять; ±0.50 LB считать эвристикой, не значимостью. Исторические rejects S1/S2 сохранены.
+- Фактически выполнено: анализ кода notebook и документов; обновление плана/инструкций/state. Код миграции, NSU installs/transfers/GPU jobs и Kaggle launches/submissions в этой задаче не выполнялись.
+- S3/ref 56075811 остаётся PENDING по сохранённому state, новый terminal API результат в этой ревизии не запрашивался. Champion остаётся Flash v3.
+- Документ: EXTERNAL_COMPUTE_PLAN.md. Следующая подготовительная задача: P0a; следующий closeout: S3.
+
 ## Шаблон записи Sx
 
 Скопировать секцию и заполнить после каждого подготовленного/отправленного варианта.
@@ -101,6 +113,8 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - Model/checkpoint/license:
 - Inference config: seed, temperature, top_p, context, concurrency, action/time budgets
 - Local tests:
+- External validation: host/lease, proxy/approximate_flash/production, model/env hashes, panels/seeds, paired deltas, gpu_device_hours
+- Kaggle quota: observed debit if available (else null); Phase A and Phase B runtimes separately
 - Phase A: kernel/version, status, runtime, games/levels/actions, failures, memory/OOM margin
 - Phase B: submission ref, message, terminal status, Public score
 - LB snapshot: rank/teams, leader, gold/top-15 cutoff
