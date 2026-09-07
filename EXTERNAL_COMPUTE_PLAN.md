@@ -2,9 +2,9 @@
 
 ## Решение и факты
 
-Переносим CPU-тесты, анализ трасс и публичные модельные эксперименты на собственные/NSU ресурсы. Kaggle оставляем для короткой проверки финального окружения и скрытого rerun. Это план миграции: удалённый inference ещё не развёрнут, notebook ещё не переведён на короткую Phase A.
+Переносим CPU-тесты, анализ трасс и публичные модельные эксперименты на собственные/NSU ресурсы. Kaggle оставляем для короткой проверки финального окружения и скрытого rerun. P0a packaging уже в репозитории (`src/p0_phase_a_modes.py`, notebook `tmp/kernels/s4-no-impact`): Save & Run — короткий smoke, скрытый rerun сохраняет production budgets. P0c: на `nsu-a100` ставится отдельный `py3.11-cu124-vllm-v1`, затем официальный `Qwen/Qwen3.8-27B-FP8` как proxy на одной A100. P0b harness и P0d paired baseline ещё не закрыты. Flash NVFP4 на A100 по-прежнему не подтверждён.
 
-Источник ресурсов: `C:\Users\Dmitry\Desktop\Kaggle\Kaggle Agents\external-resources\AGENT_PROMPT.md` и связанные README, ACCESS, SETUP_STATUS, WORKFLOW, RESOURCE_POLICY. SETUP_STATUS от 2026-09-07 новее раннего `reports/NSU_STATUS_2026-09-07.md`: каталоги и stdlib-venv уже созданы, CUDA-пробы прошли. PyTorch/vLLM не установлены, dispatcher не активирован, Slurm отвечал timeout, личная дисковая квота не подтверждена. Это документальные снимки, не текущая аренда GPU.
+Источник ресурсов: `C:\Users\Dmitry\Desktop\Kaggle\Kaggle Agents\external-resources\AGENT_PROMPT.md` и связанные README, ACCESS, SETUP_STATUS, WORKFLOW, RESOURCE_POLICY. Live check 2026-09-07: `mode=DIRECT_USER_AUTHORIZED`, очередь пуста, обе A100 idle, driver 550.54.15, NFS home ~7.0T свободно, команда `quota` отсутствует. Stdlib-venv сохранены; отдельный ML env `py3.11-cu124-vllm-v1` устанавливается на `ngpu01`. Это не аренда GPU.
 
 S1 и S2 завершились 2.71/2.72, оба исторически отклонены. S3 v6/ref 56075811 в сохранённом state ещё PENDING: сначала закрыть именно этот результат. Историю не переписывать. Лучший сохранённый вариант — Flash v3, 3.39.
 

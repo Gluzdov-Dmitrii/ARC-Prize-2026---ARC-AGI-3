@@ -102,6 +102,17 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - S3/ref 56075811 остаётся PENDING по сохранённому state, новый terminal API результат в этой ревизии не запрашивался. Champion остаётся Flash v3.
 - Документ: EXTERNAL_COMPUTE_PLAN.md. Следующая подготовительная задача: P0a; следующий closeout: S3.
 
+### 2026-09-07 — P0a packaging + старт A100/27B стенда
+
+- S3/ref 56075811 всё ещё PENDING в live CLI; Phase B сегодня не повторяли и S4 не отправляли. Champion остаётся Flash v3 / 3.39.
+- P0a: `src/p0_phase_a_modes.py` разделяет `competition` / `kaggle_smoke` / `offline_eval`. Smoke: 2 игры, 4 действия, 180 с/игру, без PUBLIC25_AUDIT. Скрытый rerun по `KAGGLE_IS_COMPETITION_RERUN` сохраняет 7920/900/28/32400.
+- S4 notebook собран из champion packaging без S1/S2/S3: `tmp/kernels/s4-no-impact/`. Единственное policy-изменение — HUD-insensitive no-impact memory (`src/s4_semantic_no_impact.py`). Глобального ban нет.
+- Локальные тесты: `python -m unittest tests.test_p0_s4 tests.test_s3_cross_level_transfer tests.test_s2_memory_capture tests.test_s1_deterministic_control -v`.
+- NSU live check: `resource_queue.py status` → `DIRECT_USER_AUTHORIZED`, очередь пуста; обе A100 0 MiB, driver 550.54.15; NFS home ~7.0T свободно, `quota` отсутствует. Stdlib venv не трогали.
+- P0c: на `ngpu01` создаётся `envs/ngpu01/py3.11-cu124-vllm-v1` (torch 2.6.0+cu124). После receipt автоматически качается `Qwen/Qwen3.8-27B-FP8` (~30.9 GB) в `models/Qwen3.8-27B-FP8`. GPU lease на время pip/download не берём. После старта bootstrap SSH к `10.1.0.7`/`10.1.0.8` кратковременно timeout при подключённом NSU-SSTP, затем доступ восстановился. Живой лог: `pip install vllm` тянет CUDA 13 wheels (`humming-kernels[cu13]`, `nvidia-cuda-runtime` 13.3); на driver 550.54.15 это может не завестись. Если так — оставляем transformers fallback на A100. Load-smoke ещё не запускали.
+- P0b (portable harness) и P0d (парный baseline/load smoke) ещё pending. 27B proxy не заменяет Flash на Kaggle.
+- Артефакты: `src/eval_panels.json` (8/8/9 public split, seeds 101/202/303), `src/nsu_bootstrap_ml_env.py`, `src/nsu_download_qwen38_27b.py`, `src/nsu_a100_27b_smoke.py`.
+
 ## Шаблон записи Sx
 
 Скопировать секцию и заполнить после каждого подготовленного/отправленного варианта.

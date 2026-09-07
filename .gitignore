@@ -11,3 +11,4 @@ tmp/diag_extract/
 tmp/gptoss-v16-cells/
 tmp/kernels/*-output/
 tmp/src/
+tmp/nsu/
