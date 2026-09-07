@@ -122,13 +122,22 @@
     {
       "id": "S3",
       "name": "cross_level_transfer",
-      "status": "phase_a_running",
+      "status": "phase_b_pending",
       "parent_policy": "current_champion",
       "parent_kernel_version": 3,
       "parent_submission_ref": 55959595,
       "parent_public_score": 3.39,
       "single_change": "retain confirmed mechanics but clear layout-specific state at level transition",
-      "kernel_version": 6
+      "kernel_version": 6,
+      "phase_a_status": "COMPLETE",
+      "phase_a_runtime_s": 8559,
+      "phase_a_public25_mean": 8.46,
+      "phase_a_public25_actions": 3848,
+      "submission_ref": 56075811,
+      "public_score": null,
+      "delta_vs_parent": null,
+      "decision": "pending_score",
+      "notes": "Phase A COMPLETE kernel v6; Phase B ref 56075811 PENDING. Champion remains Flash v3 until score."
     },
     {
       "id": "S4",
@@ -160,12 +169,12 @@
     }
   ],
   "last_submission": {
-    "date": "2026-09-06",
-    "submission_ref": 56051525,
-    "status": "COMPLETE",
-    "public_score": 2.72,
-    "message": "S2 memory capture: labeled facts from reasoning and content on Flash v3 parent (kernel v5)",
+    "date": "2026-09-07",
+    "submission_ref": 56075811,
+    "status": "PENDING",
+    "public_score": null,
+    "message": "S3 cross-level transfer: keep confirmed mechanics, drop layout/plan on Flash v3 parent (kernel v6)",
     "kernel_slug": "dmitriigluzdov/duck-qwen3-8-flash-next-nvfp4-mtp",
-    "kernel_version": 5
+    "kernel_version": 6
   }
 }

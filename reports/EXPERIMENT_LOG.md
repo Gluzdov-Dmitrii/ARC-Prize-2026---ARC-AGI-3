@@ -72,6 +72,24 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - Champion after decision: Flash v3 (kernel v3, ref 55959595, 3.39)
 - Next experiment ID: **S3** (cross-level transfer on champion v3, not on rejected v5)
 
+### 2026-09-07 — S3 — cross_level_transfer
+
+- Parent: `dmitriigluzdov/duck-qwen3-8-flash-next-nvfp4-mtp` v3, submission ref 55959595, Public 3.39, git parent `34e2caf`. Not stacked on rejected S1 (v4 / 56034166 / 2.71) or S2 (v5 / 56051525 / 2.72).
+- Single causal change: at Duck `level_completed`, keep confirmed controls/action effects/goal invariants; drop coordinates, layout, and current plan; preserve `cross_level_notes`; keep full wipe on `run_complete`/`game_over`. Prompts, seed, scheduler, temperature, concurrency unchanged.
+- Model/checkpoint/license: `keithtyser/qwen3-8-flash-next-nvfp4/PyTorch/radixark-modelopt-fp4/1` (Qwen3.8-Flash-Next NVFP4 MTP3)
+- Inference config: seed=stochastic (`LOCAL_ANALYZER_SEED=-1`); temperature/top_p/top_k unchanged from Duck defaults (0.6 / 0.95 / 20 unless env overrides); context 32768; concurrency 28; analyzer_timeout 900; max_runtime_s_per_game 7920; notebook budget 32400
+- Local tests: `python -m unittest tests.test_s3_cross_level_transfer tests.test_s2_memory_capture tests.test_s1_deterministic_control -v` — 26/26 OK
+- Phase A: kernel v6 COMPLETE; setup+run ~8559 s (~2h 23m) including 2h 12m 2s benchmark; 25/25 public games, 3848 actions, 1,919,190 tokens; offline mean 8.46 / median 4.76; 0 won / all `gave_up` (expected); `PUBLIC25_AUDIT` passed; 42 `S3_LEVEL_TRANSFER` events; telemetry written (install + after `bm.run`); no CUDA OOM. Analyzer HTTP read timeouts clustered at ~8549 s during wind-down; teardown `shutdown_ok=false` after audit, notebook still COMPLETE.
+- Phase B: submission ref **56075811**, message as in `reports/SUBMIT_2026-09-07_S3.md`, status **PENDING**, Public score **не измерено**
+- LB snapshot: not re-fetched after send; pre-submit snapshot remains 2026-09-07 rank 138/2847, leader 7.91, third 7.51, 15th 4.34, 16th 4.33
+- Delta: vs parent 3.39 = null; vs historical best 3.39 = null
+- Classification: pending (Phase B not terminal)
+- Decision: pending_score; do not adopt/reject; do not advance queue
+- Champion after decision: Flash v3 (3.39) unchanged
+- Next experiment ID: **S3** until 56075811 is COMPLETE or ERROR
+- Artifact/report links: `tmp/kernels/s3-cross-level/`, `src/s3_cross_level_transfer.py`, `reports/SUBMIT_2026-09-07_S3.md`
+- Notes and anomalies: late-run vLLM read timeouts on several in-flight games; all 25 runs still finalized for the Phase A audit. Offline public mean 8.46 is not a leaderboard score. Teardown GPU survivor is post-audit and did not prevent COMPLETE.
+
 ## Шаблон записи Sx
 
 Скопировать секцию и заполнить после каждого подготовленного/отправленного варианта.
