@@ -123,6 +123,16 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - Smoke receipt: backend `transformers_qwen3_5`, `ok=true`, 74.2 с, GPU A100 80GB, процесс завершился, аренда `arc3-p0d-27b-smoke-bf16` RELEASED, обе карты 0 MiB.
 - Это проверка стенда, не quality baseline. Для парного отбора S4 нужно починить FP8/dequant. P0d paired baseline ещё pending.
 
+### 2026-09-08 — смена критерия: residual value, не погоня за золотом
+
+- Пользователь явно сменил цель: не клонировать чужие открытые notebooks и не жечь сабмиты ради Public gold. Вопрос перед работой: «что проверенное останется, даже если score не вырастет?»
+- Протокол: `COMMUNITY_TRACK.md`. Очередь по умолчанию **C1 датасет → C2 writeup → C3 LoRA на Qwen3.8-27B-FP8 → C4 optional LB**. S4–S7 остаются harness backlog.
+- S3/ref 56075811 не закрывали и не повторяли. Champion Flash v3 / 3.39. Phase B не делали.
+- C1: схема `src/community_dataset_schema.json`, builder `src/build_community_dataset.py`, тесты `tests/test_community_dataset.py`. Источник — S2 `tmp/kernels/s2-output/artifacts/*_events.jsonl`. Без transcripts и hidden games.
+- HUD finding: 5599 кадров / 5574 пары, identical **1808**. Классификатор S4 (только верхние 2 строки): hud_only **226**, interior **3540**. Исторический scan «outer 2 rows» — это верх **и** низ: hud_only **487**, interior **3279**. Датасет пишет оба поля (`label`, `label_outer2`). S4 harness в этом шаге не меняли.
+- C3 заблокирован сломанным Finegrained FP8 load (`weight_scale_inv` UNEXPECTED). Не начинать LoRA на обрезанном bf16 как «наш 27B».
+- Следующая задача: прогнать C1 builder (`--expect-s2-counts`) и при желании опубликовать dataset. Дневной слот по умолчанию пропускаем.
+
 ## Шаблон записи Sx
 
 Скопировать секцию и заполнить после каждого подготовленного/отправленного варианта.

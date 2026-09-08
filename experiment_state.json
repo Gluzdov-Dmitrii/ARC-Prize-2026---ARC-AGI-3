@@ -35,7 +35,10 @@
     "promotion_threshold_public_delta": 0.5,
     "rejection_threshold_public_delta": -0.5,
     "threshold_interpretation": "historical heuristic and review signal, not statistical significance; future adoption requires external paired evidence plus LB and runtime checks",
-    "selection_rule": "close phase_b_pending first; then first eligible experiment in experiment_order, not numerical ID",
+    "selection_rule": "close phase_b_pending first; default work is community_track (C1-C3), not the next S-ID; Phase B only if residual artifact plus local gate plus trigger phrase",
+    "daily_submit_default": "skip_unless_remainder_and_local_gate",
+    "forbid_clone_only_submits": true,
+    "value_criterion": "verified_remainder_if_score_unchanged",
     "allow_defer_after_failed_local_validation": true,
     "allow_cpu_preparation_while_phase_b_pending": true,
     "full_public25_on_kaggle_default": false,
@@ -45,7 +48,7 @@
   "compute_migration": {
     "revision_date": "2026-09-08",
     "status": "p0c_27b_loaded_on_a100",
-    "next_task": "P0d_paired_external_baseline",
+    "next_task": "C1_trajectory_dataset",
     "required_before_next_new_submission": true,
     "resources_source": "C:/Users/Dmitry/Desktop/Kaggle/Kaggle Agents/external-resources/SETUP_STATUS.md",
     "linux_project_root": "/home/scientists/gluz_d_s/kaggle/projects/arc-prize-2026-arc-agi-3",
@@ -123,9 +126,48 @@
     },
     {
       "label": "generic state graph",
-      "reason": "available public ablation regressed; not a priority for this seven-submit sprint"
+      "reason": "available public ablation regressed; not a priority on the community track"
     }
   ],
+  "value_policy": {
+    "criterion": "verified_remainder_if_score_unchanged",
+    "forbid_clone_only_submits": true,
+    "daily_submit_default": "skip_unless_remainder_and_local_gate",
+    "protocol": "COMMUNITY_TRACK.md"
+  },
+  "community_track": {
+    "revision_date": "2026-09-08",
+    "next_task": "C1_trajectory_dataset",
+    "tasks": [
+      {
+        "id": "C1",
+        "name": "public_trace_label_dataset",
+        "status": "locally_verified",
+        "remainder": "schema, builder, tests; S2 pairs verified: identical 1808, S4 top-2 hud 226, outer2 hud 487",
+        "schema": "src/community_dataset_schema.json",
+        "builder": "src/build_community_dataset.py"
+      },
+      {
+        "id": "C2",
+        "name": "public_writeup_notebook",
+        "status": "pending",
+        "remainder": "honest S1-S3 / HUD / 27B notes, not a Duck clone"
+      },
+      {
+        "id": "C3",
+        "name": "lora_qwen38_27b",
+        "status": "blocked_fp8_load",
+        "remainder": "adapter + recipe + paired eval vs base 27B",
+        "blocker": "Finegrained FP8 quantizer crashes; current load strips scales"
+      },
+      {
+        "id": "C4",
+        "name": "optional_leaderboard",
+        "status": "not_eligible",
+        "remainder": "only if C3 or harness S4 has local gain and residual artifact"
+      }
+    ]
+  },
   "next_experiment_id": "S3",
   "experiments": [
     {
@@ -199,7 +241,7 @@
       "parent_public_score": 3.39,
       "single_change": "HUD-insensitive semantic diff and confirmed state-action no-impact memory",
       "kernel_dir": "tmp/kernels/s4-no-impact",
-      "notes": "CPU packaging and unit tests ready on Flash v3 parent. Not stacked on S1/S2/S3. Do not Phase B until S3 is terminal and P0 smoke/validation gates pass. Do not submit today: quota used by S3/ref 56075811 still PENDING."
+      "notes": "CPU packaging and unit tests are the residual even if never submitted. Not stacked on S1/S2/S3. Do not Phase B until S3 is terminal, residual-value gate passes, and the user says the submit phrase. Daily slot is skip-by-default."
     },
     {
       "id": "S5",

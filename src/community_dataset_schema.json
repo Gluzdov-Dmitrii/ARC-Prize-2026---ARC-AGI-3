@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "name": "arc-agi-3-public-trace-labels-v1",
+  "description": "Labeled consecutive frame pairs and actions from our public-25 Duck/Flash rollouts. Not hidden games.",
+  "license_note": "Derived from ARC-AGI-3 public environments plus our agent traces. Do not include hidden environment files or gateway payloads.",
+  "split_source": "src/eval_panels.json",
+  "labels": {
+    "identical": "before grid equals after grid",
+    "hud_only": "grids differ only in the top HUD_TOP_ROWS rows (S4 classifier)",
+    "interior_change": "semantic interior after stripping the top HUD differs"
+  },
+  "label_outer2": {
+    "identical": "same as label.identical",
+    "hud_only": "grids differ only in the top and bottom two rows (historical S2 scan: 487 pairs)",
+    "interior_change": "change below the outer two-row strips"
+  },
+  "hud_top_rows": 2,
+  "hud_bottom_rows_outer2": 2,
+  "record": {
+    "game_id": "string",
+    "split": "development|validation|held_public",
+    "step": "int",
+    "action": "string",
+    "label": "identical|hud_only|interior_change",
+    "before_sha256": "hex of S4 interior (top HUD stripped)",
+    "after_sha256": "hex of S4 interior",
+    "label_outer2": "identical|hud_only|interior_change",
+    "level_id": "string|null",
+    "source_run": "s2|s1|s3",
+    "source_kernel_version": "int"
+  },
+  "exclude": [
+    "raw proprietary wheelhouse",
+    "hidden game ids",
+    "Kaggle credentials",
+    "full reasoning dumps if they contain non-public prompts we do not intend to release"
+  ]
+}

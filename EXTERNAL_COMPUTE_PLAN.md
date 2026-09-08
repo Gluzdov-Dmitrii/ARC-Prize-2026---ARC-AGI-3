@@ -1,8 +1,10 @@
-# ARC-AGI-3: перенос подготовки на NSU, редакция 2026-09-07
+# ARC-AGI-3: перенос подготовки на NSU, редакция 2026-09-08
 
 ## Решение и факты
 
-Переносим CPU-тесты, анализ трасс и публичные модельные эксперименты на собственные/NSU ресурсы. Kaggle оставляем для короткой проверки финального окружения и скрытого rerun. P0a packaging уже в репозитории (`src/p0_phase_a_modes.py`, notebook `tmp/kernels/s4-no-impact`): Save & Run — короткий smoke, скрытый rerun сохраняет production budgets. P0c: на `nsu-a100` ставится отдельный `py3.11-cu124-vllm-v1`, затем официальный `Qwen/Qwen3.8-27B-FP8` как proxy на одной A100. P0b harness и P0d paired baseline ещё не закрыты. Flash NVFP4 на A100 по-прежнему не подтверждён.
+Переносим CPU-тесты, анализ трасс, датасет C1 и публичные модельные эксперименты на собственные/NSU ресурсы. Kaggle оставляем для короткой проверки финального окружения, скрытого rerun и (отдельно) публичного writeup. Критерий отбора работы — residual value, см. [COMMUNITY_TRACK.md](COMMUNITY_TRACK.md): не клонировать чужие notebooks и не жечь дневной слот «за золотом».
+
+P0a packaging уже в репозитории (`src/p0_phase_a_modes.py`, notebook `tmp/kernels/s4-no-impact`). P0c: на `nsu-a100` стоит `py3.11-cu124-vllm-v1` и официальный `Qwen/Qwen3.8-27B-FP8`; native FP8 quantizer ещё падает — это блокер честного C3 LoRA. P0b harness и P0d paired baseline не закрыты. Flash NVFP4 на A100 не подтверждён.
 
 Источник ресурсов: `C:\Users\Dmitry\Desktop\Kaggle\Kaggle Agents\external-resources\AGENT_PROMPT.md` и связанные README, ACCESS, SETUP_STATUS, WORKFLOW, RESOURCE_POLICY. Live check 2026-09-07: `mode=DIRECT_USER_AUTHORIZED`, очередь пуста, обе A100 idle, driver 550.54.15, NFS home ~7.0T свободно, команда `quota` отсутствует. Stdlib-venv сохранены; отдельный ML env `py3.11-cu124-vllm-v1` устанавливается на `ngpu01`. Это не аренда GPU.
 
@@ -62,7 +64,7 @@ P0 — служебная работа, не новый номер сабмит�
 
 Сохранять три уровня доказательств: CPU replay проверяет обработку уже наблюдавшихся событий; proxy rollout проверяет замкнутый агент с другой моделью; production-profile rollout проверяет целевую модель. Replay после изменения действия не предсказывает новую траекторию и не даёт counterfactual score.
 
-- Сначала тесты на существующих S2-трассах. В отчёте найдено 1808 одинаковых пар кадров и 487 пар с изменениями только в двух внешних строках. Это кандидаты для S4 fixtures; не считать все такие изменения бессмысленным HUD без проверки.
+- Сначала тесты на существующих S2-трассах. 5599 кадров, 1808 identical. S4 (верхние 2 строки): 226 hud-only. Исторический scan 487 — это верх **и** низ по 2 строки; builder пишет оба поля. Не считать все такие изменения бессмысленным HUD без проверки.
 - Один раз разбить 25 игр на фиксированные 8 development, 8 validation и 9 отложенных; сохранять game IDs и мотив выбора до нового подбора. Это уже известные публичные игры, не честно невидимый holdout. Все уровни игры принадлежат одной группе.
 - На development-панели сравнить parent/candidate с seed-набором [101, 202, 303], одинаковыми action/token limits и serving profile. Seeds служат измерению и не переносят отвергнутый S1 в production. Повтор baseline хранится и переиспользуется только для того же model/code/runtime/protocol hash.
 - Заранее предложенный фильтр: нет новых crashes/illegal actions; положительная средняя paired delta и положительный результат в минимум 2 из 3 seed-проходов; общий token budget не вырос >10%, либо выросло число пройденных уровней. Пороги — операционная эвристика, не статистическая значимость. После отбора один validation-прогон и один заключительный проход оставшихся игр без подбора параметров.
@@ -72,16 +74,19 @@ P0 — служебная работа, не новый номер сабмит�
 
 Старое правило ±0.50 Public LB было страховкой на основе всего двух повторов, не оценкой дисперсии. Для будущих решений оно остаётся сигналом повторной проверки, но не заменяет внешние paired results. Исторические S1/S2 не переоценивать без повторов.
 
-## Очередь оставшихся сабмитов
+## Очередь: сначала C-track, harness — backlog
 
-После закрытия S3 и P0: **S4 → S6 → S7 → S5**. IDs сохраняются; день зависит от готовности внешнего стенда и квоты, а не даты в календаре.
+По умолчанию: **C1 датасет → C2 writeup → C3 LoRA 27B (после рабочего FP8) → C4 optional LB**. S3/ref 56075811 закрываем когда появится terminal score; champion до этого Flash v3. S4–S7 не календарь сабмитов. Отправка только если есть residual artifact, локальный gate и фраза `засабмить следующее решение`.
 
-| ID | Где готовим | Что должно быть измерено перед отправкой |
-|---|---|---|
-| S4: no-impact | CPU replay + A100 rollout | Не потеряны реальные движения/анимации; снижаются бесполезные повторы, legal actions сохранены |
-| S6: memory compaction | A100 paired rollout; при proxy — ограниченная Flash проверка | Tokens и стоимость context снизились, levels/score не ухудшились; compaction overhead включён |
-| S7: scheduler | CPU simulation/recorded latencies + A100 load test | Fair servicing динамического числа игр, корректная остановка, нет starvation; Kaggle throughput калибруется отдельно |
-| S5: animation | CPU frame fixtures + A100 multimodal rollout; при proxy — Flash проверка | Сохранены финальные и значимые промежуточные кадры; выигрыш покрывает дополнительные image tokens |
+| ID | Где готовим | Residual, даже если score плоский | Что измерить перед optional LB |
+|---|---|---|---|
+| C1 dataset | CPU, `tmp/kernels/s2-output/artifacts` | `pairs.jsonl` + схема + builder | counts vs HUD scan; нет hidden/transcripts |
+| C2 writeup | локальный public notebook | честный отчёт S1–S3 / HUD / 27B | не competition submit |
+| C3 LoRA 27B | одна A100 ≤2 ч | адаптер + рецепт + paired vs база | FP8 load честный; split `eval_panels.json` |
+| S4 no-impact | CPU replay; A100 если нужен proxy | unit tests + HUD labels | не потеряны реальные движения; legal actions |
+| S6 compaction | A100 paired; proxy ≠ Flash | тесты compaction | tokens↓, levels не хуже |
+| S7 scheduler | CPU + A100 load | симуляция coverage | нет starvation |
+| S5 animation | CPU fixtures | frame fixtures | image tokens оправданы |
 
 Провал локального фильтра: `deferred_local`, сохранить причину и перейти к следующей готовой гипотезе; не тратить LB только ради расписания. Нет готового кандидата — `WAITING_VALIDATION`, дневной слот не обязательно использовать. Во время `phase_b_pending` можно делать CPU/внешнюю подготовку следующих вариантов на явно зафиксированном parent, но submit следующего ждёт закрытия предыдущего и повторной сверки parent.
 
@@ -93,4 +98,4 @@ Linux project root: `/home/scientists/gluz_d_s/kaggle/projects/arc-prize-2026-ar
 
 Каждый run: code/model/env hashes, dataset version, seed list, profile (`proxy`/`approximate_flash`/`production`), resource request/lease, GPU UUID/count, durations и gpu_device_hours=count×hours. Для Kaggle дополнительно фактически наблюдённое списание квоты, если доступно; иначе null. Очередь общая для всех соревнований, неизвестный lease не присваивать. После работы забрать проверенные logs/metrics и закрыть свой server; очистить только свои неиспользуемые воспроизводимые файлы согласно RESOURCE_POLICY.
 
-Следующая реализация начинается с P0a на CPU; перенос NSU может готовиться без расхода Kaggle. Для запуска длительных NSU задач ещё требуется рабочий разрешённый scheduler/координатор и подтверждённый storage budget. Это конкретные условия среды из предоставленных пользователем документов, а не недостаток VRAM.
+Следующая реализация — C1 builder по уже скачанным S2-трассам (CPU, без LB). LoRA/C3 не стартовать, пока FP8/dequant не честный. Длительные NSU GPU-задачи по-прежнему через очередь, блоки ≤2 ч.

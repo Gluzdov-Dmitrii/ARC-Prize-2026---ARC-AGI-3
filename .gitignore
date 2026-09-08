@@ -12,3 +12,4 @@ tmp/gptoss-v16-cells/
 tmp/kernels/*-output/
 tmp/src/
 tmp/nsu/
+tmp/community-dataset-v1/
