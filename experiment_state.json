@@ -35,10 +35,12 @@
     "promotion_threshold_public_delta": 0.5,
     "rejection_threshold_public_delta": -0.5,
     "threshold_interpretation": "historical heuristic and review signal, not statistical significance; future adoption requires external paired evidence plus LB and runtime checks",
-    "selection_rule": "close phase_b_pending first; default work is community_track (C1-C3), not the next S-ID; Phase B only if residual artifact plus local gate plus trigger phrase",
+    "selection_rule": "close phase_b_pending first; default work is local C-drafts; Phase B only if residual plus gate plus submit phrase; Kaggle public release only after COMPLETE score > 0.03 on that method plus publish phrase",
     "daily_submit_default": "skip_unless_remainder_and_local_gate",
     "forbid_clone_only_submits": true,
     "value_criterion": "verified_remainder_if_score_unchanged",
+    "kaggle_public_release_default": false,
+    "kaggle_public_release_trigger": "опубликовать для сообщества",
     "allow_defer_after_failed_local_validation": true,
     "allow_cpu_preparation_while_phase_b_pending": true,
     "full_public25_on_kaggle_default": false,
@@ -48,7 +50,7 @@
   "compute_migration": {
     "revision_date": "2026-09-08",
     "status": "p0c_27b_loaded_on_a100",
-    "next_task": "C1_trajectory_dataset",
+    "next_task": "C2_local_writeup_draft",
     "required_before_next_new_submission": true,
     "resources_source": "C:/Users/Dmitry/Desktop/Kaggle/Kaggle Agents/external-resources/SETUP_STATUS.md",
     "linux_project_root": "/home/scientists/gluz_d_s/kaggle/projects/arc-prize-2026-arc-agi-3",
@@ -133,38 +135,58 @@
     "criterion": "verified_remainder_if_score_unchanged",
     "forbid_clone_only_submits": true,
     "daily_submit_default": "skip_unless_remainder_and_local_gate",
-    "protocol": "COMMUNITY_TRACK.md"
+    "protocol": "COMMUNITY_TRACK.md",
+    "kaggle_public_release": {
+      "default": false,
+      "trigger": "опубликовать для сообщества",
+      "requires_phase_b_complete": true,
+      "requires_score_above_baseline": true,
+      "baseline_submission_ref": 52980802,
+      "baseline_public_score": 0.03,
+      "baseline_date": "2026-09-01",
+      "method_must_match_submitted_kernel": true,
+      "flash_v3_does_not_unlock_c1_c2": true,
+      "rejected_s1_s2_do_not_unlock_publication": true,
+      "eligible": false,
+      "published": false
+    }
   },
   "community_track": {
     "revision_date": "2026-09-08",
-    "next_task": "C1_trajectory_dataset",
+    "next_task": "C2_local_writeup_draft",
     "tasks": [
       {
         "id": "C1",
         "name": "public_trace_label_dataset",
-        "status": "locally_verified",
-        "remainder": "schema, builder, tests; S2 pairs verified: identical 1808, S4 top-2 hud 226, outer2 hud 487",
+        "status": "local_draft_verified",
+        "publication": "private",
+        "remainder": "schema, builder, tests; S2 pairs verified locally: identical 1808, S4 top-2 hud 226, outer2 hud 487",
         "schema": "src/community_dataset_schema.json",
-        "builder": "src/build_community_dataset.py"
+        "builder": "src/build_community_dataset.py",
+        "note": "Not a Kaggle Dataset until LB gate plus publish phrase"
       },
       {
         "id": "C2",
-        "name": "public_writeup_notebook",
-        "status": "pending",
-        "remainder": "honest S1-S3 / HUD / 27B notes, not a Duck clone"
+        "name": "writeup_notebook",
+        "status": "local_draft",
+        "publication": "private",
+        "remainder": "tmp/writeup-draft outline; not a public kernel",
+        "path": "tmp/writeup-draft/README.md"
       },
       {
         "id": "C3",
         "name": "lora_qwen38_27b",
         "status": "blocked_fp8_load",
+        "publication": "private",
         "remainder": "adapter + recipe + paired eval vs base 27B",
         "blocker": "Finegrained FP8 quantizer crashes; current load strips scales"
       },
       {
         "id": "C4",
-        "name": "optional_leaderboard",
-        "status": "not_eligible",
-        "remainder": "only if C3 or harness S4 has local gain and residual artifact"
+        "name": "lb_verify_method",
+        "status": "waiting_s3_terminal",
+        "publication": "not_applicable",
+        "remainder": "COMPLETE Phase B of the drafted method (likely S4) with Public > 0.03; then publication_eligible, still not auto-public"
       }
     ]
   },
@@ -241,7 +263,7 @@
       "parent_public_score": 3.39,
       "single_change": "HUD-insensitive semantic diff and confirmed state-action no-impact memory",
       "kernel_dir": "tmp/kernels/s4-no-impact",
-      "notes": "CPU packaging and unit tests are the residual even if never submitted. Not stacked on S1/S2/S3. Do not Phase B until S3 is terminal, residual-value gate passes, and the user says the submit phrase. Daily slot is skip-by-default."
+      "notes": "CPU packaging and unit tests are the local residual. Not stacked on S1/S2/S3. C4 LB verify of this method waits for terminal S3 plus submit phrase. Do not publish C1/C2 from this packaging until COMPLETE Public > 0.03 on this method plus publish phrase."
     },
     {
       "id": "S5",

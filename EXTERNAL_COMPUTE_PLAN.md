@@ -2,7 +2,7 @@
 
 ## Решение и факты
 
-Переносим CPU-тесты, анализ трасс, датасет C1 и публичные модельные эксперименты на собственные/NSU ресурсы. Kaggle оставляем для короткой проверки финального окружения, скрытого rerun и (отдельно) публичного writeup. Критерий отбора работы — residual value, см. [COMMUNITY_TRACK.md](COMMUNITY_TRACK.md): не клонировать чужие notebooks и не жечь дневной слот «за золотом».
+Переносим CPU-тесты, анализ трасс, локальный датасет C1 и модельные эксперименты на собственные/NSU ресурсы. Kaggle — короткий smoke, скрытый rerun и (только после LB-гейта) опциональный public writeup. Не создавать public Dataset/Notebook до COMPLETE score > 0.03 у описываемого метода. Критерий: [COMMUNITY_TRACK.md](COMMUNITY_TRACK.md).
 
 P0a packaging уже в репозитории (`src/p0_phase_a_modes.py`, notebook `tmp/kernels/s4-no-impact`). P0c: на `nsu-a100` стоит `py3.11-cu124-vllm-v1` и официальный `Qwen/Qwen3.8-27B-FP8`; native FP8 quantizer ещё падает — это блокер честного C3 LoRA. P0b harness и P0d paired baseline не закрыты. Flash NVFP4 на A100 не подтверждён.
 
@@ -76,14 +76,15 @@ P0 — служебная работа, не новый номер сабмит�
 
 ## Очередь: сначала C-track, harness — backlog
 
-По умолчанию: **C1 датасет → C2 writeup → C3 LoRA 27B (после рабочего FP8) → C4 optional LB**. S3/ref 56075811 закрываем когда появится terminal score; champion до этого Flash v3. S4–S7 не календарь сабмитов. Отправка только если есть residual artifact, локальный gate и фраза `засабмить следующее решение`.
+По умолчанию: **C1 локальный датасет → C2 локальный черновик → C4 LB-проверка метода (обычно S4) → решение о публикации**. C3 LoRA после рабочего FP8. S3/ref 56075811 закрываем когда появится terminal score; champion до этого Flash v3. Отправка только по фразе `засабмить следующее решение`. Публичный Kaggle Dataset/writeup — только после COMPLETE > 0.03 и фразы `опубликовать для сообщества`.
 
 | ID | Где готовим | Residual, даже если score плоский | Что измерить перед optional LB |
 |---|---|---|---|
-| C1 dataset | CPU, `tmp/kernels/s2-output/artifacts` | `pairs.jsonl` + схема + builder | counts vs HUD scan; нет hidden/transcripts |
-| C2 writeup | локальный public notebook | честный отчёт S1–S3 / HUD / 27B | не competition submit |
-| C3 LoRA 27B | одна A100 ≤2 ч | адаптер + рецепт + paired vs база | FP8 load честный; split `eval_panels.json` |
-| S4 no-impact | CPU replay; A100 если нужен proxy | unit tests + HUD labels | не потеряны реальные движения; legal actions |
+| C1 dataset | CPU, `tmp/kernels/s2-output/artifacts` | локальный `pairs.jsonl` + схема + builder | counts vs HUD scan; **не** Kaggle Dataset |
+| C2 writeup | `tmp/writeup-draft/` | локальный черновик | не public kernel |
+| C4 LB verify | короткий smoke + Phase B | COMPLETE score > 0.03 у этого метода | не публикация |
+| C3 LoRA 27B | одна A100 ≤2 ч | адаптер + рецепт | FP8 load честный; public weights только после LB-гейта |
+| S4 no-impact | CPU replay; затем C4 | unit tests + HUD labels | не потеряны реальные движения; legal actions |
 | S6 compaction | A100 paired; proxy ≠ Flash | тесты compaction | tokens↓, levels не хуже |
 | S7 scheduler | CPU + A100 load | симуляция coverage | нет starvation |
 | S5 animation | CPU fixtures | frame fixtures | image tokens оправданы |
@@ -98,4 +99,4 @@ Linux project root: `/home/scientists/gluz_d_s/kaggle/projects/arc-prize-2026-ar
 
 Каждый run: code/model/env hashes, dataset version, seed list, profile (`proxy`/`approximate_flash`/`production`), resource request/lease, GPU UUID/count, durations и gpu_device_hours=count×hours. Для Kaggle дополнительно фактически наблюдённое списание квоты, если доступно; иначе null. Очередь общая для всех соревнований, неизвестный lease не присваивать. После работы забрать проверенные logs/metrics и закрыть свой server; очистить только свои неиспользуемые воспроизводимые файлы согласно RESOURCE_POLICY.
 
-Следующая реализация — C1 builder по уже скачанным S2-трассам (CPU, без LB). LoRA/C3 не стартовать, пока FP8/dequant не честный. Длительные NSU GPU-задачи по-прежнему через очередь, блоки ≤2 ч.
+Следующая реализация — локальный черновик C2 (`tmp/writeup-draft/`), без Kaggle publish. LoRA/C3 не стартовать, пока FP8/dequant не честный. C4/S4 на LB — только после terminal S3 и фразы сабмита.
