@@ -50,7 +50,7 @@
   "compute_migration": {
     "revision_date": "2026-09-08",
     "status": "p0c_27b_loaded_on_a100",
-    "next_task": "C4_waiting_submit_phrase",
+    "next_task": "S4_phase_b_pending",
     "required_before_next_new_submission": true,
     "resources_source": "C:/Users/Dmitry/Desktop/Kaggle/Kaggle Agents/external-resources/SETUP_STATUS.md",
     "linux_project_root": "/home/scientists/gluz_d_s/kaggle/projects/arc-prize-2026-arc-agi-3",
@@ -154,7 +154,7 @@
   },
   "community_track": {
     "revision_date": "2026-09-08",
-    "next_task": "C4_waiting_submit_phrase",
+    "next_task": "S4_phase_b_pending",
     "tasks": [
       {
         "id": "C1",
@@ -185,10 +185,10 @@
       {
         "id": "C4",
         "name": "lb_verify_method",
-        "status": "waiting_submit_phrase",
+        "status": "phase_b_pending",
         "publication": "not_applicable",
         "candidate": "S4",
-        "remainder": "S3 rejected. S4 packaged on Flash v3. Phase B only after засабмить следующее решение. COMPLETE Public > 0.03 would make publication_eligible, still not auto-public"
+        "remainder": "S4 kernel v7 submitted ref 56097508 PENDING. Do not publish C1/C2. Do not send again."
       }
     ]
   },
@@ -260,14 +260,24 @@
     {
       "id": "S4",
       "name": "semantic_no_impact_guard",
-      "status": "packaged_waiting_submit_phrase",
+      "status": "phase_b_pending",
       "parent_policy": "current_champion",
       "parent_kernel_version": 3,
       "parent_submission_ref": 55959595,
       "parent_public_score": 3.39,
       "single_change": "HUD-insensitive semantic diff and confirmed state-action no-impact memory",
       "kernel_dir": "tmp/kernels/s4-no-impact",
-      "notes": "S3 rejected; parent remains Flash v3. C4 candidate. CPU tests OK. Do not Phase B until user says засабмить следующее решение. Do not publish C1/C2 until this method COMPLETE Public > 0.03 plus publish phrase."
+      "kernel_version": 7,
+      "phase_a_status": "COMPLETE",
+      "phase_a_mode": "kaggle_smoke",
+      "phase_a_runtime_s": 635,
+      "phase_a_smoke_games": 2,
+      "phase_a_smoke_actions": 8,
+      "submission_ref": 56097508,
+      "public_score": null,
+      "delta_vs_parent": null,
+      "decision": "pending_score",
+      "notes": "Phase A COMPLETE kernel v7 smoke 2 games/8 actions. Phase B ref 56097508 PENDING. Not stacked on S1/S2/S3. Champion remains Flash v3. Do not publish C1/C2. Do not send again."
     },
     {
       "id": "S5",
@@ -292,12 +302,12 @@
     }
   ],
   "last_submission": {
-    "date": "2026-09-07",
-    "submission_ref": 56075811,
-    "status": "COMPLETE",
-    "public_score": 2.77,
-    "message": "S3 cross-level transfer: keep confirmed mechanics, drop layout/plan on Flash v3 parent (kernel v6)",
+    "date": "2026-09-08",
+    "submission_ref": 56097508,
+    "status": "PENDING",
+    "public_score": null,
+    "message": "S4 semantic no-impact: HUD-insensitive repeats on Flash v3 parent (kernel v7)",
     "kernel_slug": "dmitriigluzdov/duck-qwen3-8-flash-next-nvfp4-mtp",
-    "kernel_version": 6
+    "kernel_version": 7
   }
 }

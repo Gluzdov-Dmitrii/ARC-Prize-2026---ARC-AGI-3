@@ -153,6 +153,18 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - Next experiment ID: **S4** (semantic no-impact on champion v3). C4 LB verify waits for `засабмить следующее решение`. Dataset/writeup stay private.
 - Artifact/report links: `reports/SUBMIT_2026-09-07_S3.md`
 
+### 2026-09-08 — S4 / C4 — semantic_no_impact_guard
+
+- Parent: `dmitriigluzdov/duck-qwen3-8-flash-next-nvfp4-mtp` v3, submission ref 55959595, Public 3.39. Not stacked on rejected S1/S2/S3.
+- Single causal change: HUD-insensitive semantic diff (top 2 rows) and confirmed `(semantic_state, action)` no-impact memory; no global ban.
+- Model/checkpoint/license: `keithtyser/qwen3-8-flash-next-nvfp4/PyTorch/radixark-modelopt-fp4/1`
+- Local tests: `python -m unittest tests.test_p0_s4 tests.test_community_dataset tests.test_s1_deterministic_control tests.test_s2_memory_capture tests.test_s3_cross_level_transfer -v` — 40/40 OK
+- Phase A: kernel **v7** COMPLETE; smoke `kaggle_smoke` 2 games / 8 actions / 53s benchmark (~635 s notebook including setup); tokens 9162; `SMOKE_AUDIT` passed; S4 telemetry written; teardown `shutdown_ok=false` after audit, notebook COMPLETE. Not a public-25.
+- Phase B: submission ref **56097508**, message as in `reports/SUBMIT_2026-09-08_S4.md`, status **PENDING**, Public score **не измерено**. One send; CLI `0 submissions remaining today.`
+- Decision: pending_score; do not adopt/reject; do not publish C1/C2; do not send again.
+- Champion after send: Flash v3 (3.39) unchanged
+- Next experiment ID: **S4** until 56097508 is COMPLETE or ERROR
+
 ## Шаблон записи Sx
 
 Скопировать секцию и заполнить после каждого подготовленного/отправленного варианта.
