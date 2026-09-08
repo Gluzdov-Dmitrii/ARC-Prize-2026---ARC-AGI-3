@@ -147,6 +147,7 @@
       "method_must_match_submitted_kernel": true,
       "flash_v3_does_not_unlock_c1_c2": true,
       "rejected_s1_s2_do_not_unlock_publication": true,
+      "rejected_s3_does_not_unlock_publication": true,
       "eligible": false,
       "published": false
     }
