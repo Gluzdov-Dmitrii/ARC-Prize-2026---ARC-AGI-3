@@ -142,6 +142,17 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - C1 остаётся `local_draft_verified`. C2 — локальный outline в gitignored `tmp/writeup-draft/`. C4 — ждать terminal S3, затем проверять метод (скорее S4) на LB.
 - S3/ref 56075811 не закрывали. Champion Flash v3 / 3.39. Phase B и publish не делали.
 
+### 2026-09-08 — S3 score closeout
+
+- Phase B terminal: submission ref **56075811** COMPLETE, Public **2.77** (read-only `kaggle competitions submissions` 2026-09-08). No new send.
+- Delta: vs parent 3.39 = **-0.62**; vs historical best 3.39 = **-0.62**; vs Flash v3 unlucky repeat 2.95 = **-0.18**; vs rejected S2 2.72 = **+0.05**; vs rejected S1 2.71 = **+0.06**; vs own baseline 0.03 = **+2.74**
+- LB snapshot 2026-09-08: rank **165/2879**, leader **11.04**, third **7.63**, 15th **4.74**, 16th **4.71**. Displayed team score remains **3.39** (Flash v3).
+- Classification: algorithmic (Phase A COMPLETE, Phase B COMPLETE, no proven infra failure)
+- Decision: **reject**. Do not adopt. Do not stack S3 into S4.
+- Champion after decision: Flash v3 (kernel v3, ref 55959595, 3.39)
+- Next experiment ID: **S4** (semantic no-impact on champion v3). C4 LB verify waits for `засабмить следующее решение`. Dataset/writeup stay private.
+- Artifact/report links: `reports/SUBMIT_2026-09-07_S3.md`
+
 ## Шаблон записи Sx
 
 Скопировать секцию и заполнить после каждого подготовленного/отправленного варианта.

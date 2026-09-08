@@ -9,14 +9,14 @@
     "hidden_public_lb_games": 55,
     "hidden_private_lb_games": 55,
     "leaderboard_snapshot": {
-      "date": "2026-09-07",
-      "team_rank": 138,
-      "team_count": 2847,
-      "leader_score": 7.91,
-      "third_place_score": 7.51,
+      "date": "2026-09-08",
+      "team_rank": 165,
+      "team_count": 2879,
+      "leader_score": 11.04,
+      "third_place_score": 7.63,
       "approx_gold_cutoff_rank": "15-16",
-      "approx_gold_cutoff_score": 4.33,
-      "note": "top-15 is 4.34, 16th is 4.33 on 2026-09-07 public board; our best Public remains 3.39"
+      "approx_gold_cutoff_score": 4.71,
+      "note": "15th is 4.74, 16th is 4.71 on 2026-09-08 public board; our best Public remains 3.39 (S3 2.77 is not displayed as best)"
     }
   },
   "execution_policy": {
@@ -50,7 +50,7 @@
   "compute_migration": {
     "revision_date": "2026-09-08",
     "status": "p0c_27b_loaded_on_a100",
-    "next_task": "C2_local_writeup_draft",
+    "next_task": "C4_waiting_submit_phrase",
     "required_before_next_new_submission": true,
     "resources_source": "C:/Users/Dmitry/Desktop/Kaggle/Kaggle Agents/external-resources/SETUP_STATUS.md",
     "linux_project_root": "/home/scientists/gluz_d_s/kaggle/projects/arc-prize-2026-arc-agi-3",
@@ -153,7 +153,7 @@
   },
   "community_track": {
     "revision_date": "2026-09-08",
-    "next_task": "C2_local_writeup_draft",
+    "next_task": "C4_waiting_submit_phrase",
     "tasks": [
       {
         "id": "C1",
@@ -168,9 +168,9 @@
       {
         "id": "C2",
         "name": "writeup_notebook",
-        "status": "local_draft",
+        "status": "local_draft_expanded",
         "publication": "private",
-        "remainder": "tmp/writeup-draft outline; not a public kernel",
+        "remainder": "tmp/writeup-draft expanded with S3 2.77 closeout and per-game HUD table; not a public kernel",
         "path": "tmp/writeup-draft/README.md"
       },
       {
@@ -184,13 +184,14 @@
       {
         "id": "C4",
         "name": "lb_verify_method",
-        "status": "waiting_s3_terminal",
+        "status": "waiting_submit_phrase",
         "publication": "not_applicable",
-        "remainder": "COMPLETE Phase B of the drafted method (likely S4) with Public > 0.03; then publication_eligible, still not auto-public"
+        "candidate": "S4",
+        "remainder": "S3 rejected. S4 packaged on Flash v3. Phase B only after засабмить следующее решение. COMPLETE Public > 0.03 would make publication_eligible, still not auto-public"
       }
     ]
   },
-  "next_experiment_id": "S3",
+  "next_experiment_id": "S4",
   "experiments": [
     {
       "id": "S1",
@@ -236,7 +237,7 @@
     {
       "id": "S3",
       "name": "cross_level_transfer",
-      "status": "phase_b_pending",
+      "status": "rejected",
       "parent_policy": "current_champion",
       "parent_kernel_version": 3,
       "parent_submission_ref": 55959595,
@@ -248,22 +249,24 @@
       "phase_a_public25_mean": 8.46,
       "phase_a_public25_actions": 3848,
       "submission_ref": 56075811,
-      "public_score": null,
-      "delta_vs_parent": null,
-      "decision": "pending_score",
-      "notes": "Phase A COMPLETE kernel v6; Phase B ref 56075811 PENDING. Champion remains Flash v3 until score."
+      "public_score": 2.77,
+      "delta_vs_parent": -0.62,
+      "delta_vs_best": -0.62,
+      "decision": "reject",
+      "classification": "algorithmic",
+      "notes": "COMPLETE 2.77 vs parent/best 3.39; below -0.50 threshold. Not stacked into S4. Champion remains Flash v3."
     },
     {
       "id": "S4",
       "name": "semantic_no_impact_guard",
-      "status": "packaged_waiting_s3_and_validation",
+      "status": "packaged_waiting_submit_phrase",
       "parent_policy": "current_champion",
       "parent_kernel_version": 3,
       "parent_submission_ref": 55959595,
       "parent_public_score": 3.39,
       "single_change": "HUD-insensitive semantic diff and confirmed state-action no-impact memory",
       "kernel_dir": "tmp/kernels/s4-no-impact",
-      "notes": "CPU packaging and unit tests are the local residual. Not stacked on S1/S2/S3. C4 LB verify of this method waits for terminal S3 plus submit phrase. Do not publish C1/C2 from this packaging until COMPLETE Public > 0.03 on this method plus publish phrase."
+      "notes": "S3 rejected; parent remains Flash v3. C4 candidate. CPU tests OK. Do not Phase B until user says засабмить следующее решение. Do not publish C1/C2 until this method COMPLETE Public > 0.03 plus publish phrase."
     },
     {
       "id": "S5",
@@ -290,8 +293,8 @@
   "last_submission": {
     "date": "2026-09-07",
     "submission_ref": 56075811,
-    "status": "PENDING",
-    "public_score": null,
+    "status": "COMPLETE",
+    "public_score": 2.77,
     "message": "S3 cross-level transfer: keep confirmed mechanics, drop layout/plan on Flash v3 parent (kernel v6)",
     "kernel_slug": "dmitriigluzdov/duck-qwen3-8-flash-next-nvfp4-mtp",
     "kernel_version": 6

@@ -20,7 +20,7 @@ C:\Users\Dmitry\Desktop\Kaggle\ARC Prize 2026 - ARC-AGI-3
 5) git status/diff/log;
 6) C:\Users\Dmitry\Desktop\Kaggle\Kaggle Agents\external-resources\AGENT_PROMPT.md и README, SETUP_STATUS, ACCESS, WORKFLOW, RESOURCE_POLICY.
 
-Очередь: C1 локальный датасет → C2 локальный черновик → C4 LB-проверка метода (обычно S4) → решение о публикации. C3 LoRA — после честного FP8, тоже private до гейта. S4–S7 — backlog. S1/S2 rejected. S3/ref 56075811 закрывать только по terminal score; champion до этого Flash v3. Пока S3 pending — CPU/черновики можно, Phase B и publish нельзя.
+Очередь: C1 локальный датасет → C2 локальный черновик → C4 LB-проверка метода (S4, parent Flash v3). C3 LoRA — после честного FP8, тоже private до гейта. S1/S2/S3 rejected (2.71/2.72/2.77). Champion Flash v3 / 3.39. S4 Phase B только после «засабмить следующее решение». Publish нельзя без COMPLETE > 0.03 у S4 и фразы публикации.
 
 Не делай: kaggle datasets create/version в public, kernel metadata isPrivate=false, kaggle kernels update с публичным доступом, рекламу community release. Черновик writeup только в tmp/writeup-draft/ (gitignore).
 
@@ -29,10 +29,10 @@ C:\Users\Dmitry\Desktop\Kaggle\ARC Prize 2026 - ARC-AGI-3
 Авторизация:
 - Phase B только если пользователь написал «засабмить следующее решение». Ровно одна попытка. Kernel push ≠ submit.
 - Публикация только если написал «опубликовать для сообщества» и перечислил dataset/writeup/weights. Сабмит эту фразу не заменяет.
-- Даже с фразой сабмита откажись, если не закрыт phase_b_pending или нет локального residual.
+- Даже с фразой сабмита откажись, если не закрыт phase_b_pending или нет локального residual. S3 уже закрыт.
 - Даже с фразой публикации откажись, если нет COMPLETE score > 0.03 у того же метода.
 
-Обычный день: закрой S3 в журнале если score уже есть; иначе не трогай kernel v6. Делай community_track.next_task (сейчас C2 local draft). Не публикуй hidden games, transcripts, токены.
+Обычный день: S3 закрыт (2.77 reject). Делай community_track.next_task (C2 local draft). S4 не пушь и не сабмить без фразы. Не публикуй hidden games, transcripts, токены.
 
 После «засабмить следующее решение»: preflight, parent = champion, одна гипотеза (C4/S4 если это проверка метода черновика), короткий smoke, один submit, журнал. Кандидат должен быть методом из черновика, не чужим форком.
 

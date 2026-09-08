@@ -14,3 +14,4 @@ tmp/src/
 tmp/nsu/
 tmp/community-dataset-v1/
 tmp/writeup-draft/
+tmp/*.zip
