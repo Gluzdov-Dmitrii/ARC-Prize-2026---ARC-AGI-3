@@ -287,21 +287,22 @@
     {
       "id": "S4b",
       "name": "outer_hud_no_impact",
-      "status": "packaged_waiting_phase_a",
+      "status": "phase_a_running",
       "parent_policy": "current_champion",
       "parent_kernel_version": 7,
       "parent_submission_ref": 56097508,
       "parent_public_score": 3.70,
       "single_change": "same S4 no-impact guard with top and bottom two HUD rows stripped",
       "kernel_dir": "tmp/kernels/s4b-outer2",
-      "kernel_version": null,
-      "phase_a_status": null,
+      "kernel_slug": "dmitriigluzdov/arc-agi-3-s4b-outer-hud-no-impact-flash-nvfp4",
+      "kernel_version": 8,
+      "phase_a_status": "RUNNING",
       "submission_ref": null,
       "public_score": null,
       "delta_vs_parent": null,
       "decision": "ready_not_submitted",
       "classification": null,
-      "notes": "Local C1: outer2 hud_only 487 vs S4 top-only 226 (+261). Notebook prose rewritten (credits kept, Tufa first-person removed). Do not Phase B without submit phrase. 27B LoRA still blocked; S4b is Flash policy, not a new checkpoint."
+      "notes": "Local C1: outer2 hud_only 487 vs S4 top-only 226 (+261). Notebook prose rewritten. Kernel title change renamed the Kaggle slug; future pushes must use dmitriigluzdov/arc-agi-3-s4b-outer-hud-no-impact-flash-nvfp4. Do not Phase B without submit phrase. Do not re-push while v8 is RUNNING."
     },
     {
       "id": "S5",

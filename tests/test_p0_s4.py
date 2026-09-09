@@ -314,6 +314,7 @@ class NotebookS4bTests(unittest.TestCase):
         meta = json.loads(
             (notebook.parent / "kernel-metadata.json").read_text(encoding="utf-8")
         )
+        self.assertEqual(meta.get("id"), "dmitriigluzdov/arc-agi-3-s4b-outer-hud-no-impact-flash-nvfp4")
         self.assertTrue(meta.get("is_private"))
         self.assertFalse(meta.get("enable_internet"))
         self.assertEqual(meta.get("machine_shape"), "NvidiaRtxPro6000")

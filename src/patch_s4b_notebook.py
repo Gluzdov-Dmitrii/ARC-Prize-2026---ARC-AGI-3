@@ -28,6 +28,8 @@ PARENT_META = PARENT_DIR / "kernel-metadata.json"
 NOTEBOOK_DIR = ROOT / "tmp" / "kernels" / "s4b-outer2"
 NOTEBOOK_PATH = NOTEBOOK_DIR / "duck-qwen3-8-flash-next-nvfp4-mtp.ipynb"
 S4B_MARKER = "# === S4b outer HUD strip on S4 parent ==="
+KERNEL_SLUG = "dmitriigluzdov/arc-agi-3-s4b-outer-hud-no-impact-flash-nvfp4"
+KERNEL_TITLE = "ARC-AGI-3 S4b outer-HUD no-impact (Flash NVFP4)"
 
 
 def hook_block(p0: str, s4: str) -> str:
@@ -82,7 +84,8 @@ def patch_notebook() -> None:
     shutil.copy2(PARENT_META, NOTEBOOK_DIR / "kernel-metadata.json")
     meta_path = NOTEBOOK_DIR / "kernel-metadata.json"
     meta = json.loads(meta_path.read_text(encoding="utf-8"))
-    meta["title"] = "ARC-AGI-3 S4b outer-HUD no-impact (Flash NVFP4)"
+    meta["id"] = KERNEL_SLUG
+    meta["title"] = KERNEL_TITLE
     meta["is_private"] = True
     meta["enable_internet"] = False
     meta["machine_shape"] = "NvidiaRtxPro6000"
