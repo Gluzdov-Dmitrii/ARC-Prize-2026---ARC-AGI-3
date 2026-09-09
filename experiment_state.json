@@ -296,13 +296,13 @@
       "kernel_dir": "tmp/kernels/s4b-outer2",
       "kernel_slug": "dmitriigluzdov/arc-agi-3-s4b-outer-hud-no-impact-flash-nvfp4",
       "kernel_version": 8,
-      "phase_a_status": "RUNNING",
+      "phase_a_status": "ERROR",
       "submission_ref": null,
       "public_score": null,
       "delta_vs_parent": null,
       "decision": "ready_not_submitted",
       "classification": null,
-      "notes": "Local C1: outer2 hud_only 487 vs S4 top-only 226 (+261). Notebook prose rewritten. Kernel title change renamed the Kaggle slug; future pushes must use dmitriigluzdov/arc-agi-3-s4b-outer-hud-no-impact-flash-nvfp4. Do not Phase B without submit phrase. Do not re-push while v8 is RUNNING."
+      "notes": "v8 ERROR: install_s4_hooks parameter shadowed hud_bottom_rows(). Getter renamed to current_hud_bottom_rows; notebook repacked. Local C1: outer2 hud_only 487 vs S4 top-only 226. Do not Phase B without submit phrase."
     },
     {
       "id": "S5",

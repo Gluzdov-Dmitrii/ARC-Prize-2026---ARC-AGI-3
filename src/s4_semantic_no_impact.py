@@ -67,7 +67,7 @@ def set_hud_bottom_rows(bottom_rows: int) -> None:
         _HUD["bottom_rows"] = int(bottom_rows)
 
 
-def hud_bottom_rows() -> int:
+def current_hud_bottom_rows() -> int:
     with _LOCK:
         return int(_HUD["bottom_rows"])
 
@@ -79,7 +79,7 @@ def strip_hud(
     bottom_rows: int | None = None,
 ) -> Grid:
     top = HUD_TOP_ROWS if top_rows is None else top_rows
-    bottom = hud_bottom_rows() if bottom_rows is None else bottom_rows
+    bottom = current_hud_bottom_rows() if bottom_rows is None else bottom_rows
     if len(grid) <= top + bottom:
         return [list(row) for row in grid]
     end = len(grid) - bottom if bottom else len(grid)
@@ -309,7 +309,7 @@ def install_s4_hooks(
             "HUD-insensitive semantic diff and confirmed state-action no-impact memory",
         ),
         "hud_top_rows": HUD_TOP_ROWS,
-        "hud_bottom_rows": hud_bottom_rows(),
+        "hud_bottom_rows": current_hud_bottom_rows(),
         "confirm_repeats": CONFIRM_REPEATS,
         "global_ban": False,
         "s1_not_stacked": True,

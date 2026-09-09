@@ -202,6 +202,16 @@ class SemanticNoImpactTests(unittest.TestCase):
         self.assertEqual(semantic_key(base), semantic_key(bottom_only))
         self.assertNotEqual(semantic_key(base), semantic_key(moved))
 
+    def test_install_kwarg_does_not_shadow_bottom_getter(self):
+        from src.s4_semantic_no_impact import current_hud_bottom_rows
+
+        def install_like(*, hud_bottom_rows: int = 0) -> int:
+            set_hud_bottom_rows(hud_bottom_rows)
+            return current_hud_bottom_rows()
+
+        self.assertEqual(install_like(hud_bottom_rows=2), 2)
+        self.assertEqual(current_hud_bottom_rows(), 2)
+
 
 class EvalPanelTests(unittest.TestCase):
     def test_panels_partition_the_public_set(self):
