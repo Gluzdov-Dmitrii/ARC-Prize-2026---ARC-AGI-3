@@ -27,11 +27,17 @@ from src.p0_phase_a_modes import (
     select_offline_game_ids,
     should_run_public25_audit,
 )
+from src.notebook_prose import (
+    FORBIDDEN_FOREIGN_FIRST_PERSON,
+    assert_our_prose,
+    joined_markdown,
+)
 from src.s4_semantic_no_impact import (
     NoImpactBook,
     classify_transition,
     inject_no_impact_notes,
     semantic_key,
+    set_hud_bottom_rows,
     wrap_run_python_tool,
 )
 
@@ -110,6 +116,12 @@ def _board(interior: int, hud: int = 9, rows: int = 6, cols: int = 4) -> list[li
 
 
 class SemanticNoImpactTests(unittest.TestCase):
+    def setUp(self):
+        set_hud_bottom_rows(0)
+
+    def tearDown(self):
+        set_hud_bottom_rows(0)
+
     def test_identical_and_hud_only_and_real_change(self):
         base = _board(1, hud=1)
         hud = _board(1, hud=7)
@@ -173,6 +185,23 @@ class SemanticNoImpactTests(unittest.TestCase):
         inject_no_impact_notes(knowledge, notes)
         self.assertEqual(knowledge["recent_findings"].count("No-impact memory"), 1)
 
+    def test_outer_hud_treats_bottom_strip_as_hud_only(self):
+        def board(*, interior: int, top: int = 1, bottom: int = 8) -> list[list[int]]:
+            grid = [[top] * 4 for _ in range(2)]
+            grid.extend([[interior] * 4 for _ in range(4)])
+            grid.extend([[bottom] * 4 for _ in range(2)])
+            return grid
+
+        base = board(interior=1, bottom=8)
+        bottom_only = board(interior=1, bottom=3)
+        moved = board(interior=2, bottom=8)
+        self.assertEqual(classify_transition(base, bottom_only), "real_change")
+        set_hud_bottom_rows(2)
+        self.assertEqual(classify_transition(base, bottom_only), "hud_only")
+        self.assertEqual(classify_transition(base, moved), "real_change")
+        self.assertEqual(semantic_key(base), semantic_key(bottom_only))
+        self.assertNotEqual(semantic_key(base), semantic_key(moved))
+
 
 class EvalPanelTests(unittest.TestCase):
     def test_panels_partition_the_public_set(self):
@@ -188,6 +217,37 @@ class EvalPanelTests(unittest.TestCase):
         self.assertEqual(panels["seeds"], [101, 202, 303])
 
 
+class NotebookProseTests(unittest.TestCase):
+    def test_rewrite_replaces_tufa_first_person(self):
+        from src.notebook_prose import rewrite_markdown_cells
+
+        nb = {
+            "cells": [
+                {
+                    "cell_type": "markdown",
+                    "source": [
+                        "## About this fork\n",
+                        "\n",
+                        "My changes are limited to model serving and performance:\n",
+                    ],
+                },
+                {
+                    "cell_type": "markdown",
+                    "source": [
+                        "# Tufa Labs ARC3 submission\n",
+                        "\n",
+                        "Note: this notebook is a more readable version of the notebook that scored our milestone-winning 1.21; unfortunately, we haven't had the same lucky result with this one.\n",
+                    ],
+                },
+            ]
+        }
+        rewrite_markdown_cells(nb)
+        text = joined_markdown(nb)
+        assert_our_prose(text)
+        for blob in FORBIDDEN_FOREIGN_FIRST_PERSON:
+            self.assertNotIn(blob, text)
+
+
 class NotebookSyncTests(unittest.TestCase):
     def test_s4_notebook_has_smoke_and_s4_without_s1_s2_s3(self):
         notebook = (
@@ -200,7 +260,6 @@ class NotebookSyncTests(unittest.TestCase):
         if not notebook.is_file():
             self.skipTest("S4 notebook is not present")
         p0 = (ROOT / "src" / "p0_phase_a_modes.py").read_text(encoding="utf-8")
-        s4 = (ROOT / "src" / "s4_semantic_no_impact.py").read_text(encoding="utf-8")
         nb = json.loads(notebook.read_text(encoding="utf-8"))
         joined = "\n".join(
             "".join(cell.get("source") or [])
@@ -209,7 +268,6 @@ class NotebookSyncTests(unittest.TestCase):
             for cell in nb["cells"]
         )
         self.assertIn(p0.strip(), joined)
-        self.assertIn(s4.strip(), joined)
         self.assertIn("PHASE_A_MODE", joined)
         self.assertIn("install_s4_hooks", joined)
         self.assertNotIn("install_s1_hooks", joined)
@@ -220,6 +278,46 @@ class NotebookSyncTests(unittest.TestCase):
         )
         self.assertFalse(meta.get("enable_internet"))
         self.assertEqual(meta.get("machine_shape"), "NvidiaRtxPro6000")
+
+
+class NotebookS4bTests(unittest.TestCase):
+    def test_s4b_notebook_has_outer_hud_and_our_prose(self):
+        notebook = (
+            ROOT
+            / "tmp"
+            / "kernels"
+            / "s4b-outer2"
+            / "duck-qwen3-8-flash-next-nvfp4-mtp.ipynb"
+        )
+        if not notebook.is_file():
+            self.skipTest("S4b notebook is not present")
+        p0 = (ROOT / "src" / "p0_phase_a_modes.py").read_text(encoding="utf-8")
+        s4 = (ROOT / "src" / "s4_semantic_no_impact.py").read_text(encoding="utf-8")
+        nb = json.loads(notebook.read_text(encoding="utf-8"))
+        joined = "\n".join(
+            "".join(cell.get("source") or [])
+            if isinstance(cell.get("source"), list)
+            else str(cell.get("source") or "")
+            for cell in nb["cells"]
+        )
+        self.assertIn(p0.strip(), joined)
+        self.assertIn(s4.strip(), joined)
+        self.assertIn("hud_bottom_rows=2", joined)
+        self.assertIn("S4B_OUTER_HUD", joined)
+        self.assertIn("install_s4_hooks", joined)
+        self.assertNotIn("install_s1_hooks", joined)
+        self.assertNotIn("install_s2_hooks", joined)
+        self.assertNotIn("install_s3_hooks", joined)
+        assert_our_prose(joined_markdown(nb))
+        for blob in FORBIDDEN_FOREIGN_FIRST_PERSON:
+            self.assertNotIn(blob, joined)
+        meta = json.loads(
+            (notebook.parent / "kernel-metadata.json").read_text(encoding="utf-8")
+        )
+        self.assertTrue(meta.get("is_private"))
+        self.assertFalse(meta.get("enable_internet"))
+        self.assertEqual(meta.get("machine_shape"), "NvidiaRtxPro6000")
+        self.assertIn("S4b", meta.get("title", ""))
 
 
 if __name__ == "__main__":

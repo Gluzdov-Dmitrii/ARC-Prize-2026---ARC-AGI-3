@@ -165,6 +165,28 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - Champion after send: Flash v3 (3.39) unchanged
 - Next experiment ID: **S4** until 56097508 is COMPLETE or ERROR
 
+### 2026-09-09 — S4 score closeout
+
+- Phase B terminal: submission ref **56097508** COMPLETE, Public **3.70** (read-only `kaggle competitions submissions` 2026-09-09). No new send.
+- Delta: vs parent Flash v3 3.39 = **+0.31**; vs historical serving-only best 3.39 = **+0.31**; vs Flash v3 unlucky repeat 2.95 = **+0.75**; vs rejected S3 2.77 = **+0.93**; vs own baseline 0.03 = **+3.67**
+- LB snapshot 2026-09-09 (CSV `2026-09-09T03:43:01Z`): rank **105/2900**, leader **11.04**, third **7.63**, 15th **4.90**, 16th **4.82**. Displayed team score is **3.70**.
+- Classification: algorithmic (Phase A COMPLETE, Phase B COMPLETE). Effect size **below** the +0.50 heuristic, so not a proven lift; still the new historical best.
+- Decision: **provisional_adopt** as working champion on user direction 2026-09-09 («по LB не плохо»). Do not stack S1–S3. Parent for the next notebook is S4, not Flash v3-only.
+- Publication: `value_policy.kaggle_public_release.eligible=true` because S4 COMPLETE 3.70 > 0.03. `published=false`. Do not open C1/C2 without `опубликовать для сообщества`.
+- Champion after decision: S4 (kernel v7, ref 56097508, 3.70)
+- Next experiment ID: **S4b** (outer HUD strip on S4 parent)
+
+### 2026-09-09 — S4b — outer_hud_no_impact (packaged, not submitted)
+
+- Parent: kernel v7, submission ref 56097508, Public 3.70
+- Single causal change: same S4 no-impact guard with **top and bottom two** HUD rows stripped (`hud_bottom_rows=2`). S1/S2/S3 not stacked.
+- Local residual: C1 already counted outer2 `hud_only` **487** vs S4 top-only **226** (+261). Unit tests cover bottom-strip classification. Notebook markdown rewritten: keep Tufa/Keith credits; drop Tufa first-person including the milestone-1.21 note.
+- Model/checkpoint: same Flash NVFP4. A100 27B LoRA still blocked (native FP8). Live NSU 2026-09-09: both A100 **0 MiB / 0%**, queue empty. A 27B finetune does not enter this Flash kernel.
+- Local tests: `python -m unittest tests.test_p0_s4 tests.test_community_dataset tests.test_s1_deterministic_control tests.test_s2_memory_capture tests.test_s3_cross_level_transfer` — 43/43 OK
+- Phase A: not pushed at packaging time if later noted; Phase B: **not sent** (no submit phrase)
+- Decision: `ready_not_submitted`. Wait for kernel smoke COMPLETE, then `засабмить следующее решение`.
+- Artifact/report links: `tmp/kernels/s4b-outer2/`, `src/s4_semantic_no_impact.py`, `src/notebook_prose.py`, `src/patch_s4b_notebook.py`
+
 ## Шаблон записи Sx
 
 Скопировать секцию и заполнить после каждого подготовленного/отправленного варианта.

@@ -4,11 +4,11 @@
 
 Переносим CPU-тесты, анализ трасс, локальный датасет C1 и модельные эксперименты на собственные/NSU ресурсы. Kaggle — короткий smoke, скрытый rerun и (только после LB-гейта) опциональный public writeup. Не создавать public Dataset/Notebook до COMPLETE score > 0.03 у описываемого метода. Критерий: [COMMUNITY_TRACK.md](COMMUNITY_TRACK.md).
 
-P0a packaging уже в репозитории (`src/p0_phase_a_modes.py`, notebook `tmp/kernels/s4-no-impact`). P0c: на `nsu-a100` стоит `py3.11-cu124-vllm-v1` и официальный `Qwen/Qwen3.8-27B-FP8`; native FP8 quantizer ещё падает — это блокер честного C3 LoRA. P0b harness и P0d paired baseline не закрыты. Flash NVFP4 на A100 не подтверждён.
+P0a packaging уже в репозитории (`src/p0_phase_a_modes.py`, notebook `tmp/kernels/s4b-outer2` на родителе S4). P0c: на `nsu-a100` стоит `py3.11-cu124-vllm-v1` и официальный `Qwen/Qwen3.8-27B-FP8`; native FP8 quantizer ещё падает — это блокер честного C3 LoRA. P0b harness и P0d paired baseline не закрыты. Flash NVFP4 на A100 не подтверждён.
 
-Источник ресурсов: `C:\Users\Dmitry\Desktop\Kaggle\Kaggle Agents\external-resources\AGENT_PROMPT.md` и связанные README, ACCESS, SETUP_STATUS, WORKFLOW, RESOURCE_POLICY. Live check 2026-09-07: `mode=DIRECT_USER_AUTHORIZED`, очередь пуста, обе A100 idle, driver 550.54.15, NFS home ~7.0T свободно, команда `quota` отсутствует. Stdlib-venv сохранены; отдельный ML env `py3.11-cu124-vllm-v1` устанавливается на `ngpu01`. Это не аренда GPU.
+Источник ресурсов: `C:\Users\Dmitry\Desktop\Kaggle\Kaggle Agents\external-resources\AGENT_PROMPT.md` и связанные README, ACCESS, SETUP_STATUS, WORKFLOW, RESOURCE_POLICY. Live check 2026-09-09: `mode=DIRECT_USER_AUTHORIZED`, очередь пуста (все RELEASED), обе A100 0 MiB / 0%, driver 550.54.15, NFS home ~7.0T свободно. Stdlib-venv не трогаем; ML env `py3.11-cu124-vllm-v1` на `ngpu01`. Это не аренда GPU.
 
-S1=2.71, S2=2.72 и S3=2.77 отклонены. S3 v6/ref 56075811 COMPLETE. Историю не переписывать. Лучший сохранённый вариант — Flash v3, 3.39. S4 ждёт фразу сабмита.
+S1=2.71, S2=2.72 и S3=2.77 отклонены. S4 v7/ref 56097508 COMPLETE **3.70** — working champion. Историю не переписывать. Следующий notebook — S4b outer HUD; Phase B только после фразы сабмита. 27B LoRA в этот Flash-kernel не входит.
 
 ## Что расходует Kaggle
 

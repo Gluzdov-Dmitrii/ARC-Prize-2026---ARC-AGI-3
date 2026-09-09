@@ -18,7 +18,7 @@
 
 ## Публикация для сообщества
 
-Гейт **включён**. Открытый Kaggle Dataset, public writeup-kernel и public Kaggle Model **запрещены**, пока метод черновика не прошёл лидерборд. C1/C2 сейчас только локальные черновики; `publication_eligible=false`.
+Гейт **включён**. Открытый Kaggle Dataset, public writeup-kernel и public Kaggle Model **запрещены**, пока нет фразы `опубликовать для сообщества`. C1/C2 локальные черновики. S4 COMPLETE **3.70** делает `publication_eligible=true`; eligible score **сам ничего не публикует**.
 
 Порядок:
 
@@ -33,7 +33,8 @@
 
 | Результат | Почему недостаточно |
 |---|---|
-| Flash v3 / 3.39 | Это lineage чужого notebook, не подтверждение HUD-датасета, S4 или LoRA |
+| Flash v3 / 3.39 | Serving-only lineage; не единственное подтверждение HUD-датасета |
+| S4 / 3.70 | Открывает eligibility (> 0.03), но не публикацию без фразы |
 | S1 / 2.71 и S2 / 2.72 | Сабмиты выше 0.03, но отвергнутые гипотезы; не success-story для community release |
 | S3 / 2.77 | COMPLETE, но reject vs champion (−0.62). Не подтверждение C1/S4 |
 | Локальные counts 1808/226/487 | Воспроизводимая разметка, не LB |
@@ -47,14 +48,14 @@ ARC Prize — code competition: медаль Competitions появляется �
 
 ## Очередь C
 
-S3/ref 56075811 COMPLETE Public **2.77**, reject (−0.62 vs 3.39). Не стекать в S4. Champion — Flash v3. Черновики C1/C2 локальные. C4 = S4 после фразы `засабмить следующее решение`.
+S4/ref **56097508** COMPLETE Public **3.70** (working champion, +0.31 vs 3.39). Не стекать S1–S3. C1/C2 eligible, остаются private. Следующий harness — **S4b** (outer HUD) на родителе S4, Phase B только после `засабмить следующее решение`.
 
 | ID | Остаток | Где | Публикация |
 |---|---|---|---|
-| **C1 dataset v1** | Пары кадров `identical` / `hud_only` / `interior_change` (S4: верхние 2 строки) плюс `label_outer2` (верх+низ, 487); схема; сплит 8/8/9 | CPU, S2 `artifacts/*_events.jsonl` (5599 кадров, 5574 пары: identical 1808; top-2 hud 226 / interior 3540; outer2 hud 487 / interior 3279) | Только локально, пока нет COMPLETE score > 0.03 у метода, который эти лейблы использует (S4 или явное обучение на C1) |
+| **C1 dataset v1** | Пары кадров `identical` / `hud_only` / `interior_change` (S4: верхние 2 строки) плюс `label_outer2` (верх+низ, 487); схема; сплит 8/8/9 | CPU, S2 `artifacts/*_events.jsonl` (5599 кадров, 5574 пары: identical 1808; top-2 hud 226 / interior 3540; outer2 hud 487 / interior 3279) | Eligible после S4 3.70, всё ещё только локально до фразы публикации |
 | **C2 writeup** | Черновик: S1/S2 rejects, разброс 3.39↔2.95, HUD-статистика, короткая Phase A, стенд 27B | `tmp/writeup-draft/` (gitignore) | Kaggle public notebook только после LB-гейта и фразы `опубликовать для сообщества` |
 | **C3 LoRA 27B** | Адаптер + lockfile + paired eval vs `Qwen/Qwen3.8-27B-FP8` | Одна A100, блоки ≤2 ч | Сначала починить FP8. Публичные веса — тот же LB-гейт |
-| **C4 LB verify** | Сабмит метода из черновика (обычно S4 на Flash v3 parent), не клон | Короткий Kaggle smoke, затем `засабмить следующее решение` | Это проверка, не публикация. После COMPLETE > 0.03 — `publication_eligible`, решение об открытии отдельное |
+| **C4 LB verify** | S4 уже COMPLETE 3.70. Следующая проверка метода — S4b outer HUD, не клон | Короткий Kaggle smoke, затем `засабмить следующее решение` | Это проверка, не публикация. Eligibility уже есть; открытие отдельное |
 
 S4–S7 — backlog harness. Их не гоняем по календарю, но **C4 как раз и есть** «проверить на LB, что метод сабмитится», а не погоня за золотом. Если C3 дал прирост на 27B, это не доказательство Flash; перенос на Kaggle — отдельная гипотеза.
 
@@ -85,4 +86,4 @@ S4–S7 — backlog harness. Их не гоняем по календарю, н�
 
 ## Первый конкретный шаг
 
-C1 уже собран локально. C2 черновик в `tmp/writeup-draft/`. S4/C4 отправлен: kernel v7, ref **56097508 PENDING**. Не повторять send. Не публиковать.
+C1 уже собран локально. C2 черновик в `tmp/writeup-draft/`. S4/C4 закрыт: kernel v7, ref **56097508 COMPLETE 3.70**. S4b упакован, не сабмитить без фразы. Не публиковать.

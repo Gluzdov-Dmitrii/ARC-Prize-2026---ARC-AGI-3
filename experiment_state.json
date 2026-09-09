@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "updated_at": "2026-09-08",
+  "updated_at": "2026-09-09",
   "competition": {
     "slug": "arc-prize-2026-arc-agi-3",
     "submission_limit_per_day": 1,
@@ -9,14 +9,14 @@
     "hidden_public_lb_games": 55,
     "hidden_private_lb_games": 55,
     "leaderboard_snapshot": {
-      "date": "2026-09-08",
-      "team_rank": 165,
-      "team_count": 2879,
+      "date": "2026-09-09",
+      "team_rank": 105,
+      "team_count": 2900,
       "leader_score": 11.04,
       "third_place_score": 7.63,
       "approx_gold_cutoff_rank": "15-16",
-      "approx_gold_cutoff_score": 4.71,
-      "note": "15th is 4.74, 16th is 4.71 on 2026-09-08 public board; our best Public remains 3.39 (S3 2.77 is not displayed as best)"
+      "approx_gold_cutoff_score": 4.90,
+      "note": "CSV 2026-09-09T03:43:01Z; 15th 4.90, 16th 4.82; our displayed Public is S4 3.70 (rank 105/2900)"
     }
   },
   "execution_policy": {
@@ -28,6 +28,7 @@
       "S2",
       "S3",
       "S4",
+      "S4b",
       "S6",
       "S7",
       "S5"
@@ -48,9 +49,9 @@
     "validation_protocol": "EXTERNAL_COMPUTE_PLAN.md"
   },
   "compute_migration": {
-    "revision_date": "2026-09-08",
+    "revision_date": "2026-09-09",
     "status": "p0c_27b_loaded_on_a100",
-    "next_task": "S4_phase_b_pending",
+    "next_task": "S4b_phase_a_then_submit_phrase",
     "required_before_next_new_submission": true,
     "resources_source": "C:/Users/Dmitry/Desktop/Kaggle/Kaggle Agents/external-resources/SETUP_STATUS.md",
     "linux_project_root": "/home/scientists/gluz_d_s/kaggle/projects/arc-prize-2026-arc-agi-3",
@@ -60,7 +61,7 @@
     "proxy_model_role": "A100 screening only; not a Kaggle champion replacement",
     "full_flash_external_compatibility": "unverified",
     "proxy_model_policy": "Official Qwen3.8-27B-FP8 on one A100 for paired screening; proxy results do not establish Flash improvement",
-    "live_nsu_check_utc": "2026-09-07T17:16:00Z",
+    "live_nsu_check_utc": "2026-09-09T03:33:00Z",
     "remote_readiness_from_documents": {
       "project_directories": "provisioned",
       "baseline_venvs": "stdlib_only_preserved",
@@ -91,15 +92,16 @@
     ]
   },
   "current_champion": {
-    "label": "Flash v3",
+    "label": "S4 semantic no-impact (working champion)",
     "kernel_slug": "dmitriigluzdov/duck-qwen3-8-flash-next-nvfp4-mtp",
-    "kernel_version": 3,
-    "submission_ref": 55959595,
-    "best_public_score": 3.39,
+    "kernel_version": 7,
+    "submission_ref": 56097508,
+    "best_public_score": 3.70,
     "model_source": "keithtyser/qwen3-8-flash-next-nvfp4/PyTorch/radixark-modelopt-fp4/1",
     "model_family": "Qwen3.8-Flash-Next NVFP4 MTP3",
     "seed_mode": "stochastic (-1)",
-    "status": "champion"
+    "status": "provisional_adopt",
+    "note": "Public 3.70 vs Flash v3 parent 3.39 is +0.31, below the +0.50 heuristic; user 2026-09-09 accepted it as the working parent. Historical serving-only best remains 3.39/2.95."
   },
   "repeat_observations": [
     {
@@ -148,20 +150,21 @@
       "flash_v3_does_not_unlock_c1_c2": true,
       "rejected_s1_s2_do_not_unlock_publication": true,
       "rejected_s3_does_not_unlock_publication": true,
-      "eligible": false,
+      "eligible": true,
+      "eligible_because": "S4 kernel v7 / ref 56097508 COMPLETE Public 3.70 > baseline 0.03",
       "published": false
     }
   },
   "community_track": {
-    "revision_date": "2026-09-08",
-    "next_task": "S4_phase_b_pending",
+    "revision_date": "2026-09-09",
+    "next_task": "S4b_packaged_waiting_phase_a_and_submit_phrase",
     "tasks": [
       {
         "id": "C1",
         "name": "public_trace_label_dataset",
         "status": "local_draft_verified",
         "publication": "private",
-        "remainder": "schema, builder, tests; S2 pairs verified locally: identical 1808, S4 top-2 hud 226, outer2 hud 487",
+        "remainder": "schema, builder, tests; S2 pairs verified locally: identical 1808, S4 top-2 hud 226, outer2 hud 487; S4b uses outer2 on the S4 parent",
         "schema": "src/community_dataset_schema.json",
         "builder": "src/build_community_dataset.py",
         "note": "Not a Kaggle Dataset until LB gate plus publish phrase"
@@ -171,7 +174,7 @@
         "name": "writeup_notebook",
         "status": "local_draft_expanded",
         "publication": "private",
-        "remainder": "tmp/writeup-draft expanded with S3 2.77 closeout and per-game HUD table; not a public kernel",
+        "remainder": "tmp/writeup-draft expanded with S3 2.77 closeout and S4 3.70; not a public kernel",
         "path": "tmp/writeup-draft/README.md"
       },
       {
@@ -185,14 +188,14 @@
       {
         "id": "C4",
         "name": "lb_verify_method",
-        "status": "phase_b_pending",
+        "status": "s4_complete_publication_eligible",
         "publication": "not_applicable",
-        "candidate": "S4",
-        "remainder": "S4 kernel v7 submitted ref 56097508 PENDING. Do not publish C1/C2. Do not send again."
+        "candidate": "S4b",
+        "remainder": "S4 ref 56097508 COMPLETE 3.70 opens C1/C2 eligibility; still private until publish phrase. Next LB candidate is S4b outer HUD on S4 parent. Do not submit without the submit phrase."
       }
     ]
   },
-  "next_experiment_id": "S4",
+  "next_experiment_id": "S4b",
   "experiments": [
     {
       "id": "S1",
@@ -260,8 +263,8 @@
     {
       "id": "S4",
       "name": "semantic_no_impact_guard",
-      "status": "phase_b_pending",
-      "parent_policy": "current_champion",
+      "status": "complete",
+      "parent_policy": "flash_v3_then_working_champion",
       "parent_kernel_version": 3,
       "parent_submission_ref": 55959595,
       "parent_public_score": 3.39,
@@ -274,10 +277,31 @@
       "phase_a_smoke_games": 2,
       "phase_a_smoke_actions": 8,
       "submission_ref": 56097508,
+      "public_score": 3.70,
+      "delta_vs_parent": 0.31,
+      "delta_vs_best": 0.31,
+      "decision": "provisional_adopt",
+      "classification": "algorithmic_below_plus50_heuristic",
+      "notes": "COMPLETE 3.70 vs Flash v3 parent 3.39 = +0.31 (below +0.50). User 2026-09-09: treat as working champion / historical best. Not stacked on S1/S2/S3. C1/C2 publication_eligible but unpublished. Next parent is S4, not Flash v3-only."
+    },
+    {
+      "id": "S4b",
+      "name": "outer_hud_no_impact",
+      "status": "packaged_waiting_phase_a",
+      "parent_policy": "current_champion",
+      "parent_kernel_version": 7,
+      "parent_submission_ref": 56097508,
+      "parent_public_score": 3.70,
+      "single_change": "same S4 no-impact guard with top and bottom two HUD rows stripped",
+      "kernel_dir": "tmp/kernels/s4b-outer2",
+      "kernel_version": null,
+      "phase_a_status": null,
+      "submission_ref": null,
       "public_score": null,
       "delta_vs_parent": null,
-      "decision": "pending_score",
-      "notes": "Phase A COMPLETE kernel v7 smoke 2 games/8 actions. Phase B ref 56097508 PENDING. Not stacked on S1/S2/S3. Champion remains Flash v3. Do not publish C1/C2. Do not send again."
+      "decision": "ready_not_submitted",
+      "classification": null,
+      "notes": "Local C1: outer2 hud_only 487 vs S4 top-only 226 (+261). Notebook prose rewritten (credits kept, Tufa first-person removed). Do not Phase B without submit phrase. 27B LoRA still blocked; S4b is Flash policy, not a new checkpoint."
     },
     {
       "id": "S5",
@@ -304,8 +328,8 @@
   "last_submission": {
     "date": "2026-09-08",
     "submission_ref": 56097508,
-    "status": "PENDING",
-    "public_score": null,
+    "status": "COMPLETE",
+    "public_score": 3.70,
     "message": "S4 semantic no-impact: HUD-insensitive repeats on Flash v3 parent (kernel v7)",
     "kernel_slug": "dmitriigluzdov/duck-qwen3-8-flash-next-nvfp4-mtp",
     "kernel_version": 7

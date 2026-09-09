@@ -18,11 +18,13 @@ S4_EXPERIMENT_ID = "S4"
 S4_TELEMETRY_NAME = "s4_telemetry.json"
 S4_PATCH_FLAG = "_arc_s4_patched"
 HUD_TOP_ROWS = 2
+HUD_BOTTOM_ROWS = 0  # S4 default: top strip only. S4b sets 2 via set_hud_bottom_rows.
 CONFIRM_REPEATS = 2
 
 Grid = list[list[int]]
 
 _LOCK = threading.Lock()
+_HUD = {"top_rows": HUD_TOP_ROWS, "bottom_rows": HUD_BOTTOM_ROWS}
 _COUNTERS = {
     "transitions": 0,
     "identical": 0,
@@ -58,14 +60,39 @@ def parse_grid(value: Any) -> Grid | None:
     return rows
 
 
-def strip_hud(grid: Grid, *, top_rows: int = HUD_TOP_ROWS) -> Grid:
-    if len(grid) <= top_rows:
+def set_hud_bottom_rows(bottom_rows: int) -> None:
+    if bottom_rows < 0:
+        raise ValueError("bottom_rows must be >= 0")
+    with _LOCK:
+        _HUD["bottom_rows"] = int(bottom_rows)
+
+
+def hud_bottom_rows() -> int:
+    with _LOCK:
+        return int(_HUD["bottom_rows"])
+
+
+def strip_hud(
+    grid: Grid,
+    *,
+    top_rows: int | None = None,
+    bottom_rows: int | None = None,
+) -> Grid:
+    top = HUD_TOP_ROWS if top_rows is None else top_rows
+    bottom = hud_bottom_rows() if bottom_rows is None else bottom_rows
+    if len(grid) <= top + bottom:
         return [list(row) for row in grid]
-    return [list(row) for row in grid[top_rows:]]
+    end = len(grid) - bottom if bottom else len(grid)
+    return [list(row) for row in grid[top:end]]
 
 
-def semantic_key(grid: Grid, *, top_rows: int = HUD_TOP_ROWS) -> str:
-    interior = strip_hud(grid, top_rows=top_rows)
+def semantic_key(
+    grid: Grid,
+    *,
+    top_rows: int | None = None,
+    bottom_rows: int | None = None,
+) -> str:
+    interior = strip_hud(grid, top_rows=top_rows, bottom_rows=bottom_rows)
     payload = json.dumps(interior, separators=(",", ":"), ensure_ascii=True)
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
@@ -74,11 +101,14 @@ def classify_transition(
     before: Grid,
     after: Grid,
     *,
-    top_rows: int = HUD_TOP_ROWS,
+    top_rows: int | None = None,
+    bottom_rows: int | None = None,
 ) -> str:
     if before == after:
         return "identical"
-    if semantic_key(before, top_rows=top_rows) == semantic_key(after, top_rows=top_rows):
+    if semantic_key(before, top_rows=top_rows, bottom_rows=bottom_rows) == semantic_key(
+        after, top_rows=top_rows, bottom_rows=bottom_rows
+    ):
         return "hud_only"
     return "real_change"
 
@@ -235,9 +265,11 @@ def install_s4_hooks(
     bundle_dir: Path | None = None,
     extra: dict[str, Any] | None = None,
     source_text: str | None = None,
+    hud_bottom_rows: int = HUD_BOTTOM_ROWS,
 ) -> dict[str, Any]:
     from inference.agent import tool_agent as ta
 
+    set_hud_bottom_rows(hud_bottom_rows)
     book = NoImpactBook()
     if not getattr(ta.ToolAgent._run_python_tool, S4_PATCH_FLAG, False):
         ta.ToolAgent._run_python_tool = wrap_run_python_tool(  # type: ignore[method-assign]
@@ -271,11 +303,13 @@ def install_s4_hooks(
         bm.run = wrapped_run
 
     payload = {
-        "experiment_id": S4_EXPERIMENT_ID,
-        "single_change": (
-            "HUD-insensitive semantic diff and confirmed state-action no-impact memory"
+        "experiment_id": (extra or {}).get("experiment_id", S4_EXPERIMENT_ID),
+        "single_change": (extra or {}).get(
+            "single_change",
+            "HUD-insensitive semantic diff and confirmed state-action no-impact memory",
         ),
         "hud_top_rows": HUD_TOP_ROWS,
+        "hud_bottom_rows": hud_bottom_rows(),
         "confirm_repeats": CONFIRM_REPEATS,
         "global_ban": False,
         "s1_not_stacked": True,
