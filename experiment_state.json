@@ -51,7 +51,7 @@
   "compute_migration": {
     "revision_date": "2026-09-09",
     "status": "p0c_27b_loaded_on_a100",
-    "next_task": "S4b_phase_a_then_submit_phrase",
+    "next_task": "S4b_phase_a_complete_waiting_submit_phrase",
     "required_before_next_new_submission": true,
     "resources_source": "C:/Users/Dmitry/Desktop/Kaggle/Kaggle Agents/external-resources/SETUP_STATUS.md",
     "linux_project_root": "/home/scientists/gluz_d_s/kaggle/projects/arc-prize-2026-arc-agi-3",
@@ -157,7 +157,7 @@
   },
   "community_track": {
     "revision_date": "2026-09-09",
-    "next_task": "S4b_packaged_waiting_phase_a_and_submit_phrase",
+    "next_task": "S4b_waiting_submit_phrase",
     "tasks": [
       {
         "id": "C1",
@@ -287,7 +287,7 @@
     {
       "id": "S4b",
       "name": "outer_hud_no_impact",
-      "status": "phase_a_queued",
+      "status": "phase_a_complete_waiting_submit",
       "parent_policy": "current_champion",
       "parent_kernel_version": 7,
       "parent_submission_ref": 56097508,
@@ -296,13 +296,17 @@
       "kernel_dir": "tmp/kernels/s4b-outer2",
       "kernel_slug": "dmitriigluzdov/arc-agi-3-s4b-outer-hud-no-impact-flash-nvfp4",
       "kernel_version": 9,
-      "phase_a_status": "QUEUED",
+      "phase_a_status": "COMPLETE",
+      "phase_a_mode": "kaggle_smoke",
+      "phase_a_runtime_s": 742,
+      "phase_a_smoke_games": 2,
+      "phase_a_smoke_actions": 8,
       "submission_ref": null,
       "public_score": null,
       "delta_vs_parent": null,
       "decision": "ready_not_submitted",
       "classification": null,
-      "notes": "v8 ERROR: install_s4_hooks parameter shadowed hud_bottom_rows(). Fixed getter current_hud_bottom_rows. v9 pushed after the fix; Phase A QUEUED at last check. Do not Phase B without submit phrase and v9 COMPLETE."
+      "notes": "Phase A COMPLETE kernel v9 smoke 2 games/8 actions, hud_bottom_rows=2, confirmed_no_impact=4. Teardown shutdown_ok=false / vllm_gpu_survivors=1 (same class as S4). Do not Phase B without submit phrase."
     },
     {
       "id": "S5",
