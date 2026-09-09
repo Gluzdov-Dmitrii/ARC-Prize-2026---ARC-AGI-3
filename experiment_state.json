@@ -287,7 +287,7 @@
     {
       "id": "S4b",
       "name": "outer_hud_no_impact",
-      "status": "phase_a_running",
+      "status": "phase_a_queued",
       "parent_policy": "current_champion",
       "parent_kernel_version": 7,
       "parent_submission_ref": 56097508,
@@ -295,14 +295,14 @@
       "single_change": "same S4 no-impact guard with top and bottom two HUD rows stripped",
       "kernel_dir": "tmp/kernels/s4b-outer2",
       "kernel_slug": "dmitriigluzdov/arc-agi-3-s4b-outer-hud-no-impact-flash-nvfp4",
-      "kernel_version": 8,
-      "phase_a_status": "ERROR",
+      "kernel_version": 9,
+      "phase_a_status": "QUEUED",
       "submission_ref": null,
       "public_score": null,
       "delta_vs_parent": null,
       "decision": "ready_not_submitted",
       "classification": null,
-      "notes": "v8 ERROR: install_s4_hooks parameter shadowed hud_bottom_rows(). Getter renamed to current_hud_bottom_rows; notebook repacked. Local C1: outer2 hud_only 487 vs S4 top-only 226. Do not Phase B without submit phrase."
+      "notes": "v8 ERROR: install_s4_hooks parameter shadowed hud_bottom_rows(). Fixed getter current_hud_bottom_rows. v9 pushed after the fix; Phase A QUEUED at last check. Do not Phase B without submit phrase and v9 COMPLETE."
     },
     {
       "id": "S5",

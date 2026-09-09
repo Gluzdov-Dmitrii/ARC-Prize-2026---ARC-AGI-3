@@ -183,7 +183,7 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - Local residual: C1 already counted outer2 `hud_only` **487** vs S4 top-only **226** (+261). Unit tests cover bottom-strip classification. Notebook markdown rewritten: keep Tufa/Keith credits; drop Tufa first-person including the milestone-1.21 note.
 - Model/checkpoint: same Flash NVFP4. A100 27B LoRA still blocked (native FP8). Live NSU 2026-09-09: both A100 **0 MiB / 0%**, queue empty. A 27B finetune does not enter this Flash kernel.
 - Local tests: `python -m unittest tests.test_p0_s4 tests.test_community_dataset tests.test_s1_deterministic_control tests.test_s2_memory_capture tests.test_s3_cross_level_transfer` — 43/43 OK
-- Phase A: kernel **v8** ERROR after `PHASE_A_MODE kaggle_smoke` — `TypeError: 'int' object is not callable` because `install_s4_hooks(hud_bottom_rows=2)` shadowed `hud_bottom_rows()`. Fixed by renaming the getter to `current_hud_bottom_rows`. v8 did load vLLM (`VLLM_SETUP_COMPLETE` ~400s). Do not treat v8 as a scoring run. Phase B: **not sent**.
+- Phase A: kernel **v8** ERROR after `PHASE_A_MODE kaggle_smoke` — `TypeError: 'int' object is not callable` because `install_s4_hooks(hud_bottom_rows=2)` shadowed `hud_bottom_rows()`. Fixed by renaming the getter to `current_hud_bottom_rows`. v8 did load vLLM (`VLLM_SETUP_COMPLETE` ~400s). **v9** pushed with the fix; last status **QUEUED**. Do not treat v8 as a scoring run. Phase B: **not sent**.
 - Decision: `ready_not_submitted`. Wait for kernel smoke COMPLETE, then `засабмить следующее решение`.
 - Artifact/report links: `tmp/kernels/s4b-outer2/`, `src/s4_semantic_no_impact.py`, `src/notebook_prose.py`, `src/patch_s4b_notebook.py`
 
