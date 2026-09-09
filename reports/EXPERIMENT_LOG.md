@@ -187,6 +187,13 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - Decision: `ready_not_submitted`. Phase A gate passed. Wait for `засабмить следующее решение`.
 - Artifact/report links: `tmp/kernels/s4b-outer2/`, `src/s4_semantic_no_impact.py`, `src/notebook_prose.py`, `src/patch_s4b_notebook.py`
 
+### 2026-09-09 — S4b Phase B send
+
+- Phase B: submission ref **56122822**, message as in `reports/SUBMIT_2026-09-09_S4b.md`, status **PENDING**, Public score **не измерено**. One send; CLI `0 submissions remaining today.`
+- Decision: pending_score; do not adopt/reject; do not publish C1/C2; do not send again.
+- Champion after send: S4 (3.70) unchanged
+- Next experiment ID: **S4b** until 56122822 is COMPLETE or ERROR
+
 ## Шаблон записи Sx
 
 Скопировать секцию и заполнить после каждого подготовленного/отправленного варианта.

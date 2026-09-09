@@ -51,7 +51,7 @@
   "compute_migration": {
     "revision_date": "2026-09-09",
     "status": "p0c_27b_loaded_on_a100",
-    "next_task": "S4b_phase_a_complete_waiting_submit_phrase",
+    "next_task": "S4b_phase_b_pending",
     "required_before_next_new_submission": true,
     "resources_source": "C:/Users/Dmitry/Desktop/Kaggle/Kaggle Agents/external-resources/SETUP_STATUS.md",
     "linux_project_root": "/home/scientists/gluz_d_s/kaggle/projects/arc-prize-2026-arc-agi-3",
@@ -157,7 +157,7 @@
   },
   "community_track": {
     "revision_date": "2026-09-09",
-    "next_task": "S4b_waiting_submit_phrase",
+    "next_task": "S4b_phase_b_pending",
     "tasks": [
       {
         "id": "C1",
@@ -188,10 +188,10 @@
       {
         "id": "C4",
         "name": "lb_verify_method",
-        "status": "s4_complete_publication_eligible",
+        "status": "s4b_phase_b_pending",
         "publication": "not_applicable",
         "candidate": "S4b",
-        "remainder": "S4 ref 56097508 COMPLETE 3.70 opens C1/C2 eligibility; still private until publish phrase. Next LB candidate is S4b outer HUD on S4 parent. Do not submit without the submit phrase."
+        "remainder": "S4b kernel v9 submitted ref 56122822 PENDING. Do not publish C1/C2. Do not send again."
       }
     ]
   },
@@ -287,7 +287,7 @@
     {
       "id": "S4b",
       "name": "outer_hud_no_impact",
-      "status": "phase_a_complete_waiting_submit",
+      "status": "phase_b_pending",
       "parent_policy": "current_champion",
       "parent_kernel_version": 7,
       "parent_submission_ref": 56097508,
@@ -301,12 +301,12 @@
       "phase_a_runtime_s": 742,
       "phase_a_smoke_games": 2,
       "phase_a_smoke_actions": 8,
-      "submission_ref": null,
+      "submission_ref": 56122822,
       "public_score": null,
       "delta_vs_parent": null,
-      "decision": "ready_not_submitted",
+      "decision": "pending_score",
       "classification": null,
-      "notes": "Phase A COMPLETE kernel v9 smoke 2 games/8 actions, hud_bottom_rows=2, confirmed_no_impact=4. Teardown shutdown_ok=false / vllm_gpu_survivors=1 (same class as S4). Do not Phase B without submit phrase."
+      "notes": "Phase A COMPLETE kernel v9. Phase B ref 56122822 PENDING. Not stacked on S1/S2/S3. Champion remains S4 3.70 until terminal. Do not publish C1/C2. Do not send again."
     },
     {
       "id": "S5",
@@ -331,12 +331,12 @@
     }
   ],
   "last_submission": {
-    "date": "2026-09-08",
-    "submission_ref": 56097508,
-    "status": "COMPLETE",
-    "public_score": 3.70,
-    "message": "S4 semantic no-impact: HUD-insensitive repeats on Flash v3 parent (kernel v7)",
-    "kernel_slug": "dmitriigluzdov/duck-qwen3-8-flash-next-nvfp4-mtp",
-    "kernel_version": 7
+    "date": "2026-09-09",
+    "submission_ref": 56122822,
+    "status": "PENDING",
+    "public_score": null,
+    "message": "S4b outer HUD no-impact: top+bottom strip on S4 parent 3.70 (kernel v9)",
+    "kernel_slug": "dmitriigluzdov/arc-agi-3-s4b-outer-hud-no-impact-flash-nvfp4",
+    "kernel_version": 9
   }
 }
