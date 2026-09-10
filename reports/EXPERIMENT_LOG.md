@@ -213,12 +213,19 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - Local residual: `src/s6_scheduled_simplification.py`, unit tests (trim, merge, no-overwrite, S4 note keep, wrappers), packager `src/patch_s6_notebook.py`, notebook `tmp/kernels/s6-simplify/`.
 - Model/checkpoint: same Flash NVFP4. No 27B swap.
 - Local tests: `python -m unittest tests.test_s6_scheduled_simplification tests.test_p0_s4 tests.test_community_dataset tests.test_s1_deterministic_control tests.test_s2_memory_capture tests.test_s3_cross_level_transfer` — 55/55 OK
-- Phase A: kernel **v10** pushed 2026-09-10 (`kaggle kernels push`, not a submit). Live slug remains `dmitriigluzdov/arc-agi-3-s4b-outer-hud-no-impact-flash-nvfp4` (same `id_no`); metadata title is S6. Wait for COMPLETE smoke before any Phase B.
+- Phase A: kernel **v10** COMPLETE 2026-09-10: `PHASE_A_MODE kaggle_smoke`; `S6_SCHEDULED_SIMPLIFY keep=8`; `OFFLINE_SELECTION games=2`; `SMOKE_AUDIT runs=2 actions=8`; benchmark 40s (tn36+lf52); tokens 6072; S4 telemetry hud_bottom_rows=0 transitions=7 identical=1 hud_only=4 real_change=2 confirmed_no_impact=1; S6 telemetry history_trim_calls=6 compactions=0; placeholder `submission.parquet` 2648 B. Teardown `shutdown_ok=false` after audit (same class as S4); notebook COMPLETE.
 - Phase B: **not sent**. Wait for `засабмить следующее решение`.
 - Decision: `ready_not_submitted`.
 - Champion after packaging: S4 3.70 unchanged
 - Next experiment ID: **S6**
 - Artifact/report links: `tmp/kernels/s6-simplify/`, `src/s6_scheduled_simplification.py`, `src/notebook_prose.py`, `src/patch_s6_notebook.py`
+
+### 2026-09-10 — S6 Phase B send
+
+- Phase B: submission ref **56137205**, message as in `reports/SUBMIT_2026-09-10_S6.md`, status **PENDING**, Public score **не измерено**. One send; CLI `0 submissions remaining today.`
+- Decision: pending_score; do not adopt/reject; do not publish C1/C2; do not send again.
+- Champion after send: S4 (3.70) unchanged
+- Next experiment ID: **S6** until 56137205 is COMPLETE or ERROR
 
 ## Шаблон записи Sx
 

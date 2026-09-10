@@ -20,7 +20,7 @@ C:\Users\Dmitry\Desktop\Kaggle\ARC Prize 2026 - ARC-AGI-3
 5) git status/diff/log;
 6) C:\Users\Dmitry\Desktop\Kaggle\Kaggle Agents\external-resources\AGENT_PROMPT.md и README, SETUP_STATUS, ACCESS, WORKFLOW, RESOURCE_POLICY.
 
-Очередь: C1 локальный датасет → C2 локальный черновик → C4: S4 COMPLETE 3.70; S4b rejected 2.77; дальше S6 на родителе S4. C3 LoRA — после честного FP8, тоже private до фразы публикации. S1/S2/S3/S4b rejected (2.71/2.72/2.77/2.77). Working champion S4 / 3.70. S6 Phase B только после «засабмить следующее решение». Publish нельзя без фразы публикации. 3.70 eligible, но пользователь считает скор незаметным — C1/C2 не открывать.
+Очередь: C1 локальный датасет → C2 локальный черновик → C4: S4 COMPLETE 3.70; S4b rejected 2.77; S6 Phase B PENDING ref 56137205. C3 LoRA — после честного FP8, тоже private до фразы публикации. S1/S2/S3/S4b rejected (2.71/2.72/2.77/2.77). Working champion S4 / 3.70. Publish нельзя без фразы публикации. 3.70 eligible, но пользователь считает скор незаметным — C1/C2 не открывать.
 
 Не делай: kaggle datasets create/version в public, kernel metadata isPrivate=false, kaggle kernels update с публичным доступом, рекламу community release. Черновик writeup только в tmp/writeup-draft/ (gitignore).
 
@@ -29,12 +29,12 @@ C:\Users\Dmitry\Desktop\Kaggle\ARC Prize 2026 - ARC-AGI-3
 Авторизация:
 - Phase B только если пользователь написал «засабмить следующее решение». Ровно одна попытка. Kernel push ≠ submit.
 - Публикация только если написал «опубликовать для сообщества» и перечислил dataset/writeup/weights. Сабмит эту фразу не заменяет.
-- Даже с фразой сабмита откажись, если не закрыт phase_b_pending или нет локального residual. S4b/ref 56122822 COMPLETE 2.77 reject — не сабмить повторно.
+- Даже с фразой сабмита откажись, если не закрыт phase_b_pending или нет локального residual. S6/ref 56137205 PENDING — не сабмить повторно.
 - Даже с фразой публикации откажись, если нет COMPLETE score > 0.03 у того же метода.
 
-Обычный день: S4b/ref 56122822 COMPLETE 2.77 reject. Champion S4 / 3.70. S6 упакован. Не сабмить без новой фразы. Не публикуй C1/C2.
+Обычный день: S6/ref 56137205 PENDING. Не сабмить повторно. Не публикуй C1/C2. Закрой S6 в журнале когда появится terminal score.
 
-После «засабмить следующее решение»: preflight, parent = champion (сейчас S4 / 3.70), одна гипотеза (S6 если это следующий ноутбук), короткий smoke, один submit, журнал. Кандидат должен быть методом из черновика, не чужим форком.
+После «засабмить следующее решение»: preflight, parent = champion (сейчас S4 / 3.70), одна гипотеза, короткий smoke, один submit, журнал. Кандидат должен быть методом из черновика, не чужим форком. S6/ref 56137205 PENDING — не сабмить повторно.
 
 Формат ответа: какой C/S-ID; какой локальный residual; публикация (private / eligible / запрещена и почему); если был submit — ref/status/score; что дальше. Не предлагай «давай сразу выложим датасет».
 ```

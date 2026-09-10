@@ -51,7 +51,7 @@
   "compute_migration": {
     "revision_date": "2026-09-10",
     "status": "p0c_27b_loaded_on_a100",
-    "next_task": "S6_phase_a_packaged",
+    "next_task": "S6_phase_b_pending",
     "required_before_next_new_submission": true,
     "resources_source": "C:/Users/Dmitry/Desktop/Kaggle/Kaggle Agents/external-resources/SETUP_STATUS.md",
     "linux_project_root": "/home/scientists/gluz_d_s/kaggle/projects/arc-prize-2026-arc-agi-3",
@@ -158,7 +158,7 @@
   },
   "community_track": {
     "revision_date": "2026-09-10",
-    "next_task": "S6_packaged_wait_submit_phrase",
+    "next_task": "S6_phase_b_pending",
     "tasks": [
       {
         "id": "C1",
@@ -189,10 +189,10 @@
       {
         "id": "C4",
         "name": "lb_verify_method",
-        "status": "s6_packaged",
+        "status": "s6_phase_b_pending",
         "publication": "not_applicable",
         "candidate": "S6",
-        "remainder": "S4b ref 56122822 COMPLETE 2.77 rejected. S6 packaged on S4 parent; Phase B only after засабмить следующее решение. Do not publish C1/C2."
+        "remainder": "S6 kernel v10 submitted ref 56137205 PENDING. Do not publish C1/C2. Do not send again."
       }
     ]
   },
@@ -320,7 +320,7 @@
     {
       "id": "S6",
       "name": "scheduled_simplification",
-      "status": "packaged",
+      "status": "phase_b_pending",
       "parent_policy": "current_champion",
       "parent_kernel_version": 7,
       "parent_submission_ref": 56097508,
@@ -330,9 +330,17 @@
       "kernel_slug": "dmitriigluzdov/arc-agi-3-s4b-outer-hud-no-impact-flash-nvfp4",
       "intended_kernel_slug": "dmitriigluzdov/arc-agi-3-s6-scheduled-simplification-flash-nvfp4",
       "kernel_version": 10,
-      "phase_a_status": "running",
-      "decision": "ready_not_submitted",
-      "notes": "S4 retained (hud_bottom_rows=0). S1/S2/S3/S4b not stacked. Local tests 55/55. Kernel v10 pushed 2026-09-10 for Phase A smoke; live slug still the S4b name (id_no 132850984). Phase B only after засабмить следующее решение. Do not publish C1/C2."
+      "phase_a_status": "COMPLETE",
+      "phase_a_mode": "kaggle_smoke",
+      "phase_a_runtime_s": 40,
+      "phase_a_smoke_games": 2,
+      "phase_a_smoke_actions": 8,
+      "submission_ref": 56137205,
+      "public_score": null,
+      "delta_vs_parent": null,
+      "decision": "pending_score",
+      "classification": null,
+      "notes": "Phase A COMPLETE kernel v10. Phase B ref 56137205 PENDING. S4 retained hud_bottom_rows=0. S1/S2/S3/S4b not stacked. Champion remains S4 3.70 until terminal. Do not publish C1/C2. Do not send again."
     },
     {
       "id": "S7",
@@ -343,12 +351,12 @@
     }
   ],
   "last_submission": {
-    "date": "2026-09-09",
-    "submission_ref": 56122822,
-    "status": "COMPLETE",
-    "public_score": 2.77,
-    "message": "S4b outer HUD no-impact: top+bottom strip on S4 parent 3.70 (kernel v9)",
+    "date": "2026-09-10",
+    "submission_ref": 56137205,
+    "status": "PENDING",
+    "public_score": null,
+    "message": "S6 scheduled simplification: 8-turn history on S4 parent 3.70 (kernel v10)",
     "kernel_slug": "dmitriigluzdov/arc-agi-3-s4b-outer-hud-no-impact-flash-nvfp4",
-    "kernel_version": 9
+    "kernel_version": 10
   }
 }
