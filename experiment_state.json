@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "updated_at": "2026-09-09",
+  "updated_at": "2026-09-10",
   "competition": {
     "slug": "arc-prize-2026-arc-agi-3",
     "submission_limit_per_day": 1,
@@ -9,14 +9,14 @@
     "hidden_public_lb_games": 55,
     "hidden_private_lb_games": 55,
     "leaderboard_snapshot": {
-      "date": "2026-09-09",
-      "team_rank": 105,
-      "team_count": 2900,
+      "date": "2026-09-10",
+      "team_rank": 121,
+      "team_count": 2928,
       "leader_score": 11.04,
       "third_place_score": 7.63,
       "approx_gold_cutoff_rank": "15-16",
-      "approx_gold_cutoff_score": 4.90,
-      "note": "CSV 2026-09-09T03:43:01Z; 15th 4.90, 16th 4.82; our displayed Public is S4 3.70 (rank 105/2900)"
+      "approx_gold_cutoff_score": 5.05,
+      "note": "CSV 2026-09-10T03:25:05Z; 15th 5.05, 16th 4.99; displayed Public remains S4 3.70 (rank 121/2928). S4b 2.77 did not replace the best score."
     }
   },
   "execution_policy": {
@@ -49,9 +49,9 @@
     "validation_protocol": "EXTERNAL_COMPUTE_PLAN.md"
   },
   "compute_migration": {
-    "revision_date": "2026-09-09",
+    "revision_date": "2026-09-10",
     "status": "p0c_27b_loaded_on_a100",
-    "next_task": "S4b_phase_b_pending",
+    "next_task": "S6_phase_a_packaged",
     "required_before_next_new_submission": true,
     "resources_source": "C:/Users/Dmitry/Desktop/Kaggle/Kaggle Agents/external-resources/SETUP_STATUS.md",
     "linux_project_root": "/home/scientists/gluz_d_s/kaggle/projects/arc-prize-2026-arc-agi-3",
@@ -152,19 +152,20 @@
       "rejected_s3_does_not_unlock_publication": true,
       "eligible": true,
       "eligible_because": "S4 kernel v7 / ref 56097508 COMPLETE Public 3.70 > baseline 0.03",
-      "published": false
+      "published": false,
+      "hold_reason": "User 2026-09-10: current Public 3.70 is not attention-worthy for a community release; keep C1/C2 private even though eligible. S4b 2.77 does not change this."
     }
   },
   "community_track": {
-    "revision_date": "2026-09-09",
-    "next_task": "S4b_phase_b_pending",
+    "revision_date": "2026-09-10",
+    "next_task": "S6_packaged_wait_submit_phrase",
     "tasks": [
       {
         "id": "C1",
         "name": "public_trace_label_dataset",
         "status": "local_draft_verified",
         "publication": "private",
-        "remainder": "schema, builder, tests; S2 pairs verified locally: identical 1808, S4 top-2 hud 226, outer2 hud 487; S4b uses outer2 on the S4 parent",
+        "remainder": "schema, builder, tests; S2 pairs verified locally: identical 1808, S4 top-2 hud 226, outer2 hud 487; S4b outer2 rejected on LB",
         "schema": "src/community_dataset_schema.json",
         "builder": "src/build_community_dataset.py",
         "note": "Not a Kaggle Dataset until LB gate plus publish phrase"
@@ -174,7 +175,7 @@
         "name": "writeup_notebook",
         "status": "local_draft_expanded",
         "publication": "private",
-        "remainder": "tmp/writeup-draft expanded with S3 2.77 closeout and S4 3.70; not a public kernel",
+        "remainder": "tmp/writeup-draft expanded with S3 2.77, S4 3.70, S4b reject 2.77; not a public kernel",
         "path": "tmp/writeup-draft/README.md"
       },
       {
@@ -188,14 +189,14 @@
       {
         "id": "C4",
         "name": "lb_verify_method",
-        "status": "s4b_phase_b_pending",
+        "status": "s6_packaged",
         "publication": "not_applicable",
-        "candidate": "S4b",
-        "remainder": "S4b kernel v9 submitted ref 56122822 PENDING. Do not publish C1/C2. Do not send again."
+        "candidate": "S6",
+        "remainder": "S4b ref 56122822 COMPLETE 2.77 rejected. S6 packaged on S4 parent; Phase B only after засабмить следующее решение. Do not publish C1/C2."
       }
     ]
   },
-  "next_experiment_id": "S4b",
+  "next_experiment_id": "S6",
   "experiments": [
     {
       "id": "S1",
@@ -287,7 +288,7 @@
     {
       "id": "S4b",
       "name": "outer_hud_no_impact",
-      "status": "phase_b_pending",
+      "status": "rejected",
       "parent_policy": "current_champion",
       "parent_kernel_version": 7,
       "parent_submission_ref": 56097508,
@@ -302,11 +303,12 @@
       "phase_a_smoke_games": 2,
       "phase_a_smoke_actions": 8,
       "submission_ref": 56122822,
-      "public_score": null,
-      "delta_vs_parent": null,
-      "decision": "pending_score",
-      "classification": null,
-      "notes": "Phase A COMPLETE kernel v9. Phase B ref 56122822 PENDING. Not stacked on S1/S2/S3. Champion remains S4 3.70 until terminal. Do not publish C1/C2. Do not send again."
+      "public_score": 2.77,
+      "delta_vs_parent": -0.93,
+      "delta_vs_best": -0.93,
+      "decision": "reject",
+      "classification": "algorithmic",
+      "notes": "COMPLETE 2.77 vs S4 parent/best 3.70 = -0.93 (below -0.50). Equals rejected S3. Smoke had real_change=0 vs S4 smoke real_change=3; outer strip likely treated interior motion as HUD. Not stacked into S6. Champion remains S4 3.70. Do not publish C1/C2."
     },
     {
       "id": "S5",
@@ -318,9 +320,19 @@
     {
       "id": "S6",
       "name": "scheduled_simplification",
-      "status": "pending",
+      "status": "packaged",
       "parent_policy": "current_champion",
-      "single_change": "periodic structured transcript compaction and shorter recent history"
+      "parent_kernel_version": 7,
+      "parent_submission_ref": 56097508,
+      "parent_public_score": 3.70,
+      "single_change": "periodic structured transcript compaction and 8-turn recent history on retained S4",
+      "kernel_dir": "tmp/kernels/s6-simplify",
+      "kernel_slug": "dmitriigluzdov/arc-agi-3-s4b-outer-hud-no-impact-flash-nvfp4",
+      "intended_kernel_slug": "dmitriigluzdov/arc-agi-3-s6-scheduled-simplification-flash-nvfp4",
+      "kernel_version": 10,
+      "phase_a_status": "running",
+      "decision": "ready_not_submitted",
+      "notes": "S4 retained (hud_bottom_rows=0). S1/S2/S3/S4b not stacked. Local tests 55/55. Kernel v10 pushed 2026-09-10 for Phase A smoke; live slug still the S4b name (id_no 132850984). Phase B only after засабмить следующее решение. Do not publish C1/C2."
     },
     {
       "id": "S7",
@@ -333,8 +345,8 @@
   "last_submission": {
     "date": "2026-09-09",
     "submission_ref": 56122822,
-    "status": "PENDING",
-    "public_score": null,
+    "status": "COMPLETE",
+    "public_score": 2.77,
     "message": "S4b outer HUD no-impact: top+bottom strip on S4 parent 3.70 (kernel v9)",
     "kernel_slug": "dmitriigluzdov/arc-agi-3-s4b-outer-hud-no-impact-flash-nvfp4",
     "kernel_version": 9

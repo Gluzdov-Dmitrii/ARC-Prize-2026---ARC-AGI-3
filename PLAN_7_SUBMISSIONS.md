@@ -12,9 +12,9 @@
 
 Не клонируем чужие открытые notebooks как работу. Не гоняем S4–S7 по календарю. Датасет и writeup **сначала локальные черновики**. Открытая публикация на Kaggle — только после COMPLETE Phase B этого метода со score > 0.03 и отдельной фразы `опубликовать для сообщества`. S4 / 3.70 открывает eligibility, но не публикацию.
 
-Очередь: **C1 локальный датасет → C2 локальный черновик writeup → C4 проверка на LB (S4 COMPLETE; далее S4b) → решение о публикации**. C3 LoRA — параллельно после честного FP8, тоже без public release до фразы. Harness S5–S7 — backlog.
+Очередь: **C1 локальный датасет → C2 локальный черновик writeup → C4 проверка на LB (S4 COMPLETE; S4b rejected; далее S6) → решение о публикации**. C3 LoRA — параллельно после честного FP8, тоже без public release до фразы. Harness S5/S7 — backlog.
 
-S1=2.71, S2=2.72, S3=2.77 отклонены. Working champion — **S4 / 3.70** (parent Flash v3 3.39, delta +0.31). Следующий harness — **S4b**, только после фразы `засабмить следующее решение`. Native FP8 27B ещё сломан.
+S1=2.71, S2=2.72, S3=2.77, S4b=2.77 отклонены. Working champion — **S4 / 3.70** (parent Flash v3 3.39, delta +0.31). Следующий harness — **S6** (8-turn history + transcript compaction на родителе S4), только после фразы `засабмить следующее решение`. Native FP8 27B ещё сломан. C1/C2 eligible, но пользователь 2026-09-10: 3.70 не заметный для публикации.
 
 ## Изменение из-за дефицита Kaggle GPU
 
@@ -37,8 +37,8 @@ ARC-AGI-3 — интерактивный benchmark: агент без инстр
 
 ## Где мы сейчас (медаль — факт доски, не критерий отбора)
 
-- Лучший наш Public LB: **3.70** (S4). Serving-only Flash v3: **3.39** и unlucky repeat **2.95**. Одиночное изменение меньше примерно 0.5 нельзя считать доказанным улучшением; S4 +0.31 принят как working champion по решению 2026-09-09.
-- Снимок 2026-09-09: rank **105/2900**, лидер 11.04, 15-е 4.90, 16-е 4.82.
+- Лучший наш Public LB: **3.70** (S4). Serving-only Flash v3: **3.39** и unlucky repeat **2.95**. Одиночное изменение меньше примерно 0.5 нельзя считать доказанным улучшением; S4 +0.31 принят как working champion по решению 2026-09-09. S4b outer HUD **2.77** (ref 56122822) отклонён (−0.93).
+- Снимок 2026-09-10: rank **121/2928**, лидер 11.04, 15-е 5.05, 16-е 4.99. Отображаемый score остаётся 3.70.
 - Private набор специально другие игры. Public-охота и форки чужих notebooks не оставляют residual для сообщества и плохо переносятся.
 
 Рабочая цель: локальное решение с тестами и черновиком для сообщества, затем **проверка сабмитом выше бейзлайна 0.03**, и только потом — решение, открывать ли датасет/writeup. Expert→Master по Notebooks/Datasets не обгоняет этот гейт.
@@ -94,7 +94,7 @@ ARC-AGI-3 — интерактивный benchmark: агент без инстр
 
 ## Backlog harness (S1–S7)
 
-Таблица сохраняет исходные гипотезы и их IDs. Это не очередь «обязательно сжечь 7 слотов». S1/S2/S3 отклонены. S4 provisional_adopt 3.70. S4b — кандидат на S4 parent; на LB только после фразы сабмита.
+Таблица сохраняет исходные гипотезы и их IDs. Это не очередь «обязательно сжечь 7 слотов». S1/S2/S3/S4b отклонены. S4 provisional_adopt 3.70. S6 — кандидат на S4 parent; на LB только после фразы сабмита.
 
 | ID | Единственное изменение | Гипотеза и критерий |
 |---|---|---|
@@ -102,9 +102,9 @@ ARC-AGI-3 — интерактивный benchmark: агент без инстр
 | **S2 — Memory capture fix** | Structured-memory extractor читает размеченные факты и из `reasoning`, и из `content`, с прежними лимитами длины. | Сейчас полезные world/goal/action facts из reasoning могут теряться. Unit tests должны доказать capture, dedup и caps. Сравнивать с champion. |
 | **S3 — Cross-level transfer** | На переходе уровня сохранять только подтверждённые controls, action effects и goal invariants; очищать координаты, layout и текущий план. | Поздние уровни дороже и обычно развивают ту же механику. Нужны тесты, что универсальные факты остаются, а layout-specific данные исчезают. |
 | **S4 — Semantic no-impact guard** | Считать diff без верхних двух строк HUD/timer; запоминать `(semantic_state, action)` как no-impact после подтверждённого повторения и сообщать это модели. Не делать безусловный глобальный ban. | COMPLETE Public **3.70**. Working champion. Residual: фикстуры, C1 top-2 labels. |
-| **S4b — Outer HUD strip** | Тот же S4 guard, но strip **верх+низ** по две строки. Одна гипотеза на родителе S4. | C1: 487 outer hud_only vs 226 top-only. Упакован `tmp/kernels/s4b-outer2`. |
+| **S4b — Outer HUD strip** | Тот же S4 guard, но strip **верх+низ** по две строки. Одна гипотеза на родителе S4. | COMPLETE Public **2.77**. Reject −0.93 vs S4. Не стекать. |
 | **S5 — Animation-aware observation** | Передавать full actionable frame плюс компактную последовательность последних animation frames; явно маркировать, где анимация, а где новое состояние. Другую память/policy не менять. | Модель перестанет планировать по промежуточному кадру и увидит причинный эффект действия. Ограничить изображения/токены, чтобы не потерять throughput. |
-| **S6 — Scheduled simplification** | Периодически сворачивать длинный transcript в verified facts, disproved hypotheses, open questions и current plan; держать около 8 последних assistant turns вместо 30. | Освободить context/KV-cache и уменьшить зацикливание без полной исполняемой world model. Gate: не меньше обработанных игр и не хуже soft-deadline margin. |
+| **S6 — Scheduled simplification** | Периодически сворачивать длинный transcript в verified facts, disproved hypotheses, open questions и current plan; держать около 8 последних assistant turns вместо 30. | Освободить context/KV-cache и уменьшить зацикливание без полной исполняемой world model. Gate: не меньше обработанных игр и не хуже soft-deadline margin. Упакован `tmp/kernels/s6-simplify` на родителе S4. |
 | **S7 — Adaptive compute scheduler** | На основе semantic progress/stuck signals ограничивать время на безнадёжно застрявшие игры, сначала гарантировать обслуживание всех 110, затем отдавать остаток прогрессирующим играм и поздним уровням. | Повысить coverage в пределах 9 часов. Родитель — лучший подтверждённый champion после S1–S6; никаких новых prompt/memory изменений. |
 
 Не включать в этот спринт generic state graph: доступная абляция показала регрессию. ACTION7/API-completeness оставить в backlog отдельным экспериментом после проверки, что action действительно объявлен gateway; не смешивать с S5.

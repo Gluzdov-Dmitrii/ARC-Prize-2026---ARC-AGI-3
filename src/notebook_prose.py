@@ -21,8 +21,9 @@ This private notebook continues other people's public work, then adds a policy c
 
 **What we added**
 
-- **S4** — ignore the top two HUD rows when deciding whether an action changed the interior; after two confirmed no-interior-change repeats of the same `(semantic state, action)`, tell the model. No global action ban. Reset on level change.
-- **This notebook (S4b)** — the same guard, but the ignored HUD strip is the **top and bottom two rows**. Local public-25 traces labeled 226 top-only HUD-only pairs vs 487 outer-strip HUD-only pairs; S4 never saw the extra 261 bottom-strip cases.
+- **S4** — ignore the top two HUD rows when deciding whether an action changed the interior; after two confirmed no-interior-change repeats of the same `(semantic state, action)`, tell the model. No global action ban. Reset on level change. Public **3.70**; retained here.
+- **S4b** — same guard with top **and** bottom two HUD rows. Public **2.77**; rejected (−0.93 vs S4). Not stacked.
+- **This notebook (S6)** — keep the last **8 assistant turns** instead of Duck's 30; when older turns are dropped, fold labeled facts into verified world/goal/action memory, disproved hypotheses, open questions, and the current plan. S4 top-HUD no-impact stays. S1/S2/S3/S4b are not stacked.
 
 **Scores (our account, Public LB)**
 
@@ -31,13 +32,14 @@ This private notebook continues other people's public work, then adds a policy c
 | Tufa Duck original (their public notebooks) | their milestone writeup, not this fork |
 | Our Flash NVFP4 serving-only (kernel v3) | 3.39, unlucky repeat 2.95 |
 | S1 / S2 / S3 policy tries | 2.71 / 2.72 / 2.77 — rejected, not stacked |
-| S4 top-HUD no-impact (kernel v7) | **3.70** |
-| This notebook (S4b outer HUD) | not yet submitted |
+| S4 top-HUD no-impact (kernel v7) | **3.70** (working champion) |
+| S4b outer HUD (kernel v9) | 2.77 — rejected |
+| This notebook (S6 scheduled simplification) | not yet submitted |
 
 Public scores on this competition are noisy (same Flash v3 moved 3.39 ↔ 2.95). Treat a single delta as a signal, not a proof. Code from Tufa/Keith remains with credit; the commentary in this notebook is ours.
 """
 
-INTRO = """# ARC-AGI-3 — outer-HUD no-impact on Flash NVFP4
+INTRO = """# ARC-AGI-3 — scheduled simplification on Flash NVFP4
 
 ![Tufa Labs](attachment:tufa_labs.png)
 
@@ -47,9 +49,9 @@ The attached solver is Tufa Labs' Duck harness. The serving stack is Keith Tyser
 
 This notebook installs the ARC runtime from the competition wheelhouse, imports the bundled Duck snapshot, loads the pickled benchmark, plays the games, and writes `/kaggle/working`. A real competition rerun (`KAGGLE_IS_COMPETITION_RERUN`) uses production budgets and the live Arcade. An interactive Save & Run is a **short smoke** (two public games, capped actions) so we can confirm the checkpoint loads without burning the 9-hour hidden rerun.
 
-**Policy in this version.** After two confirmed repeats that leave the interior identical — including frames that only change the top or bottom HUD strips — the agent is told that action is no-impact in that semantic state. Interior motion is not banned.
+**Policy in this version.** S4 top-HUD no-impact is retained. On top of that, persistent chat history is capped at eight assistant turns; dropped turns are compacted into structured memory instead of remaining as a long REPL dump.
 
-Solver code lives in the attached dataset; this notebook is the Kaggle wrapper plus our HUD no-impact hook.
+Solver code lives in the attached dataset; this notebook is the Kaggle wrapper plus our S4 guard and S6 simplification hook.
 """
 
 SECTION_HEADERS = {
@@ -80,8 +82,9 @@ target and pointing the benchmark's outputs at the Kaggle working directory.
 """,
     "6. Customization hook": """## 6. Customization hook
 
-Solver settings and our S4b outer-HUD no-impact guard are applied here after the bundled Duck
-runtime has loaded. Production budgets stay on the competition rerun; Save & Run stays a short smoke.
+Solver settings, the retained S4 top-HUD no-impact guard, and S6 scheduled transcript
+simplification are applied here after the bundled Duck runtime has loaded. Production budgets
+stay on the competition rerun; Save & Run stays a short smoke.
 """,
     "7. Run the benchmark": """## 7. Run the benchmark
 

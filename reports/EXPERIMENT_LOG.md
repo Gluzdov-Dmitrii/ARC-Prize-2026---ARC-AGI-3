@@ -194,6 +194,32 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - Champion after send: S4 (3.70) unchanged
 - Next experiment ID: **S4b** until 56122822 is COMPLETE or ERROR
 
+### 2026-09-10 — S4b score closeout
+
+- Phase B terminal: submission ref **56122822** COMPLETE, Public **2.77** (read-only `kaggle competitions submissions` 2026-09-10). No new send.
+- Delta: vs S4 parent 3.70 = **−0.93**; vs historical best 3.70 = **−0.93**; vs Flash v3 3.39 = **−0.62**; vs rejected S3 2.77 = **0.00**; vs own baseline 0.03 = **+2.74**
+- LB snapshot 2026-09-10 (CSV `2026-09-10T03:25:05Z`): rank **121/2928**, leader **11.04**, third **7.63**, 15th **5.05**, 16th **4.99**. Displayed team score remains **3.70** (S4). Rank drop vs 105/2900 is other teams moving, not S4b replacing the best.
+- Classification: algorithmic (Phase A COMPLETE, Phase B COMPLETE). Smoke telemetry `real_change=0` vs S4 smoke `real_change=3` — outer strip likely treated interior motion as HUD.
+- Decision: **reject**. Do not adopt. Do not stack S4b into S6.
+- Publication: still eligible via S4 3.70; `published=false`. User 2026-09-10: 3.70 is an honest local result but not noticeable enough to open C1/C2.
+- Champion after decision: S4 (kernel v7, ref 56097508, 3.70)
+- Next experiment ID: **S6** (scheduled simplification on S4 parent)
+- Artifact/report links: `reports/SUBMIT_2026-09-09_S4b.md`
+
+### 2026-09-10 — S6 — scheduled_simplification (packaged, not submitted)
+
+- Parent: kernel v7, submission ref 56097508, Public 3.70. S4 top-HUD retained (`hud_bottom_rows=0`). S1/S2/S3/S4b not stacked.
+- Single causal change: cap Duck persistent history at **8 assistant turns** (default 30); when older turns drop, fold labeled facts into verified world/goal/action memory, disproved hypotheses, open questions, and current plan. Do not overwrite a newer plan. Preserve S4 no-impact notes.
+- Local residual: `src/s6_scheduled_simplification.py`, unit tests (trim, merge, no-overwrite, S4 note keep, wrappers), packager `src/patch_s6_notebook.py`, notebook `tmp/kernels/s6-simplify/`.
+- Model/checkpoint: same Flash NVFP4. No 27B swap.
+- Local tests: `python -m unittest tests.test_s6_scheduled_simplification tests.test_p0_s4 tests.test_community_dataset tests.test_s1_deterministic_control tests.test_s2_memory_capture tests.test_s3_cross_level_transfer` — 55/55 OK
+- Phase A: kernel **v10** pushed 2026-09-10 (`kaggle kernels push`, not a submit). Live slug remains `dmitriigluzdov/arc-agi-3-s4b-outer-hud-no-impact-flash-nvfp4` (same `id_no`); metadata title is S6. Wait for COMPLETE smoke before any Phase B.
+- Phase B: **not sent**. Wait for `засабмить следующее решение`.
+- Decision: `ready_not_submitted`.
+- Champion after packaging: S4 3.70 unchanged
+- Next experiment ID: **S6**
+- Artifact/report links: `tmp/kernels/s6-simplify/`, `src/s6_scheduled_simplification.py`, `src/notebook_prose.py`, `src/patch_s6_notebook.py`
+
 ## Шаблон записи Sx
 
 Скопировать секцию и заполнить после каждого подготовленного/отправленного варианта.
