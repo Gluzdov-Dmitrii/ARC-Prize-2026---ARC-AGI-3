@@ -227,6 +227,33 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - Champion after send: S4 (3.70) unchanged
 - Next experiment ID: **S6** until 56137205 is COMPLETE or ERROR
 
+### 2026-09-11 — S6 score closeout
+
+- Phase B terminal: submission ref **56137205** COMPLETE, Public **2.82**
+- Delta: vs S4 parent 3.70 = **−0.88**; vs historical best 3.70 = **−0.88**; vs Flash v3 3.39 = **−0.57**; vs rejected S4b 2.77 = **+0.05**
+- LB snapshot 2026-09-11 (CSV `2026-09-11T04:54:47Z`): rank **142/2961**, leader **11.04**, third **7.69**, 15th **5.07**, 16th **5.05**. Displayed team score remains **3.70** (S4).
+- Classification: algorithmic (Phase A COMPLETE, Phase B COMPLETE). Smoke too short to drop 8 assistant turns (`compactions=0`); LB still regressed.
+- Decision: **reject**. Do not adopt. Do not stack 8-turn history into S7.
+- Publication: still eligible via S4 3.70; `published=false`.
+- Champion after decision: S4 (kernel v7, ref 56097508, 3.70)
+- Next experiment ID: **S7** (adaptive scheduler on S4 parent)
+- Artifact/report links: `reports/SUBMIT_2026-09-10_S6.md`
+- Notes: teardown `shutdown_ok=false` after Phase A is the same class as S4/S4b, not a solver crash.
+
+### 2026-09-11 — S7 — adaptive_compute_scheduler (packaged)
+
+- Parent: kernel v7, submission ref 56097508, Public 3.70. S4 top-HUD retained (`hud_bottom_rows=0`). S1/S2/S3/S4b/S6 not stacked.
+- Single causal change: coverage-first per-game wall budgets (remaining waves = leftover games / concurrency); stuck early-stop after 8 no-interior-progress actions using S4 `classify_transition`; leftover time to progressing / late-level games up to Duck `max_runtime_s_per_game`. No new prompt/memory. Smoke disables stuck cuts when `max_actions_per_game=4`.
+- Local residual: `src/s7_adaptive_scheduler.py`, unit tests (wave cap, stuck, HUD-only vs real_change, wrappers), packager `src/patch_s7_notebook.py`, notebook `tmp/kernels/s7-scheduler/`.
+- Model/checkpoint: same Flash NVFP4. No 27B swap.
+- Local tests: `python -m unittest tests.test_s7_adaptive_scheduler tests.test_p0_s4 tests.test_s6_scheduled_simplification tests.test_community_dataset tests.test_s1_deterministic_control tests.test_s2_memory_capture tests.test_s3_cross_level_transfer` — 71/71 OK
+- Phase A: kernel **v11** COMPLETE 2026-09-11: `PHASE_A_MODE kaggle_smoke`; `S7_ADAPTIVE_SCHEDULER stuck_enabled=False`; `OFFLINE_SELECTION games=2`; `SMOKE_AUDIT runs=2 actions=8`; benchmark 62s (tn36+lf52); S4 telemetry hud_bottom_rows=0 transitions=9 identical=3 hud_only=3 real_change=3 confirmed_no_impact=2; S7 book started=2 finished=2 stuck_cuts=0 coverage_cuts=0 last_cap_s=180; placeholder `submission.parquet` 2648 B. Teardown `shutdown_ok=true`.
+- Phase B: submission ref **56159941**, message as in `reports/SUBMIT_2026-09-11_S7.md`, status **PENDING**, Public score **не измерено**. One send; CLI `0 submissions remaining today.`
+- Decision: pending_score; do not adopt/reject; do not publish C1/C2; do not send again.
+- Champion after send: S4 (3.70) unchanged
+- Next experiment ID: **S7** until 56159941 is COMPLETE or ERROR
+- Artifact/report links: `tmp/kernels/s7-scheduler/`, `src/s7_adaptive_scheduler.py`, `src/patch_s7_notebook.py`, `reports/SUBMIT_2026-09-11_S7.md`
+
 ## Шаблон записи Sx
 
 Скопировать секцию и заполнить после каждого подготовленного/отправленного варианта.
