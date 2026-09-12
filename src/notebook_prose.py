@@ -24,7 +24,8 @@ This private notebook continues other people's public work, then adds a policy c
 - **S4** — ignore the top two HUD rows when deciding whether an action changed the interior; after two confirmed no-interior-change repeats of the same `(semantic state, action)`, tell the model. No global action ban. Reset on level change. Public **3.70**; retained here.
 - **S4b** — same guard with top **and** bottom two HUD rows. Public **2.77**; rejected (−0.93 vs S4). Not stacked.
 - **S6** — keep the last 8 assistant turns instead of Duck's 30 and fold dropped turns into structured memory. Public **2.82**; rejected (−0.88 vs S4). Not stacked.
-- **This notebook (S7)** — coverage-first per-game wall budgets and stuck early-stop on no interior progress, so all hidden games get a first slice and leftover time goes to progressing / later levels. S4 top-HUD no-impact stays. S1/S2/S3/S4b/S6 are not stacked.
+- **S7** — coverage-first per-game wall budgets and stuck early-stop. Public **2.82**; rejected (−0.88 vs S4). Not stacked.
+- **This notebook (S5)** — attach a compact labeled sequence of last-action **animation** stills, then the full **actionable** settled frame. S4 top-HUD no-impact stays. S1/S2/S3/S4b/S6/S7 are not stacked.
 
 **Scores (our account, Public LB)**
 
@@ -36,12 +37,13 @@ This private notebook continues other people's public work, then adds a policy c
 | S4 top-HUD no-impact (kernel v7) | **3.70** (working champion) |
 | S4b outer HUD (kernel v9) | 2.77 — rejected |
 | S6 scheduled simplification (kernel v10) | 2.82 — rejected |
-| This notebook (S7 adaptive scheduler) | not yet submitted |
+| S7 adaptive scheduler (kernel v11) | 2.82 — rejected |
+| This notebook (S5 animation-aware observation) | not yet submitted |
 
 Public scores on this competition are noisy (same Flash v3 moved 3.39 ↔ 2.95). Treat a single delta as a signal, not a proof. Code from Tufa/Keith remains with credit; the commentary in this notebook is ours.
 """
 
-INTRO = """# ARC-AGI-3 — adaptive scheduler on Flash NVFP4
+INTRO = """# ARC-AGI-3 — animation-aware observation on Flash NVFP4
 
 ![Tufa Labs](attachment:tufa_labs.png)
 
@@ -51,9 +53,9 @@ The attached solver is Tufa Labs' Duck harness. The serving stack is Keith Tyser
 
 This notebook installs the ARC runtime from the competition wheelhouse, imports the bundled Duck snapshot, loads the pickled benchmark, plays the games, and writes `/kaggle/working`. A real competition rerun (`KAGGLE_IS_COMPETITION_RERUN`) uses production budgets and the live Arcade. An interactive Save & Run is a **short smoke** (two public games, capped actions) so we can confirm the checkpoint loads without burning the 9-hour hidden rerun.
 
-**Policy in this version.** S4 top-HUD no-impact is retained. On top of that, game wall time is allocated coverage-first across the hidden set: stuck games (no interior progress) stop early, and leftover time goes to games that are progressing or on later levels.
+**Policy in this version.** S4 top-HUD no-impact is retained. On top of that, user turns attach a compact labeled sequence of in-between animation stills from the last action, then the full settled actionable frame so the model does not plan on a mid-motion image.
 
-Solver code lives in the attached dataset; this notebook is the Kaggle wrapper plus our S4 guard and S7 scheduler hook.
+Solver code lives in the attached dataset; this notebook is the Kaggle wrapper plus our S4 guard and S5 observation hook.
 """
 
 SECTION_HEADERS = {
@@ -84,8 +86,8 @@ target and pointing the benchmark's outputs at the Kaggle working directory.
 """,
     "6. Customization hook": """## 6. Customization hook
 
-Solver settings, the retained S4 top-HUD no-impact guard, and S7 adaptive compute
-scheduling are applied here after the bundled Duck runtime has loaded. Production budgets
+Solver settings, the retained S4 top-HUD no-impact guard, and S5 animation-aware
+observation are applied here after the bundled Duck runtime has loaded. Production budgets
 stay on the competition rerun; Save & Run stays a short smoke.
 """,
     "7. Run the benchmark": """## 7. Run the benchmark

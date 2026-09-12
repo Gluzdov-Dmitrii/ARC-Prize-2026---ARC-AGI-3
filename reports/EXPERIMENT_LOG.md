@@ -254,6 +254,30 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - Next experiment ID: **S7** until 56159941 is COMPLETE or ERROR
 - Artifact/report links: `tmp/kernels/s7-scheduler/`, `src/s7_adaptive_scheduler.py`, `src/patch_s7_notebook.py`, `reports/SUBMIT_2026-09-11_S7.md`
 
+### 2026-09-12 — S7 score closeout
+
+- Phase B terminal: submission ref **56159941** COMPLETE, Public **2.82**
+- Delta: vs S4 parent 3.70 = **−0.88**; vs historical best 3.70 = **−0.88**; vs rejected S6 2.82 = **0.00**
+- Classification: algorithmic (Phase A COMPLETE, Phase B COMPLETE)
+- Decision: **reject**. Do not adopt. Do not stack S7 scheduler into S5.
+- Publication: still eligible via S4 3.70; `published=false`
+- Champion after decision: S4 (kernel v7, ref 56097508, 3.70)
+- Next experiment ID: **S5** (animation-aware observation on S4 parent)
+- Artifact/report links: `reports/SUBMIT_2026-09-11_S7.md`
+
+### 2026-09-12 — S5 — animation_aware_observation (Phase A COMPLETE + Phase B send)
+
+- Parent: kernel v7, submission ref 56097508, Public 3.70. S4 top-HUD retained. S1/S2/S3/S4b/S6/S7 not stacked.
+- Single causal change: capture TAAF `animation_frames` after each action; attach up to 3 labeled in-between stills (downscaled 8×) then the full actionable settled frame. Empty animation falls back to Duck's single current-grid image.
+- Local residual: `src/s5_animation_aware.py`, tests, packager `src/patch_s5_notebook.py`, notebook `tmp/kernels/s5-animation/`.
+- Local tests: 81/81 OK including S5
+- Phase A: kernel **v12** COMPLETE 2026-09-12: `PHASE_A_MODE kaggle_smoke budget_s=180.0 concurrency=2 analyzer_timeout=120.0 action_cap=4`; `S5_ANIMATION_AWARE max_images=3 upscale=8`; `OFFLINE_SELECTION games=2`; `SMOKE_AUDIT runs=2 actions=8`; benchmark ~61s (tn36+lf52); S4 telemetry hud_top_rows=2 hud_bottom_rows=0 transitions=11 identical=4 hud_only=2 real_change=5 confirmed_no_impact=2; S5 counters actions_observed=8 animation_frames_raw=18 animation_frames_attached=7 animation_sequences=3 actionable_images=3 duck_fallback_turns=4; placeholder `submission.parquet` 2648 B. Teardown `shutdown_ok=false` after SMOKE_AUDIT is the same class as S4, not a solver crash.
+- Phase B: submission ref **56176662**, message as in `reports/SUBMIT_2026-09-12_S5.md`, status **PENDING**, Public score **не измерено**. One send; CLI `0 submissions remaining today.`
+- Decision: pending_score; do not adopt/reject; do not publish C1/C2; do not send again.
+- Champion after send: S4 (3.70) unchanged
+- Next experiment ID: **S5** until 56176662 is COMPLETE or ERROR
+- Artifact/report links: `tmp/kernels/s5-animation/`, `src/s5_animation_aware.py`, `src/patch_s5_notebook.py`, `reports/SUBMIT_2026-09-12_S5.md`
+
 ## Шаблон записи Sx
 
 Скопировать секцию и заполнить после каждого подготовленного/отправленного варианта.
