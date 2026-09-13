@@ -278,6 +278,30 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - Next experiment ID: **S5** until 56176662 is COMPLETE or ERROR
 - Artifact/report links: `tmp/kernels/s5-animation/`, `src/s5_animation_aware.py`, `src/patch_s5_notebook.py`, `reports/SUBMIT_2026-09-12_S5.md`
 
+### 2026-09-13 — S5 score closeout
+
+- Phase B terminal: submission ref **56176662** COMPLETE, Public **3.13**
+- Delta: vs S4 parent 3.70 = **−0.57**; vs historical best 3.70 = **−0.57**; vs Flash v3 3.39 = **−0.26**
+- Classification: algorithmic (Phase A COMPLETE, Phase B COMPLETE)
+- Decision: **reject**. Do not adopt. Do not stack animation stills into S8.
+- Publication: still eligible via S4 3.70; `published=false`
+- Champion after decision: S4 (kernel v7, ref 56097508, 3.70)
+- Next experiment ID: **S8** (ACTION7/UNDO completeness on S4 parent)
+- Artifact/report links: `reports/SUBMIT_2026-09-12_S5.md`
+
+### 2026-09-13 — S8 — action7_undo_completeness (Phase A COMPLETE + Phase B send)
+
+- Parent: kernel v7, submission ref 56097508, Public 3.70. S4 top-HUD retained. S1/S2/S3/S4b/S5/S6/S7 not stacked.
+- Single causal change: patch Duck ENGINE_TO_MODEL_ACTION so gateway ACTION7 maps to model UNDO and is executable; hint only when UNDO is in the current valid set. Do not invent ACTION7 when the frame omits it.
+- Local residual: `src/s8_action7_undo.py`, tests, packager `src/patch_s8_notebook.py`, notebook `tmp/kernels/s8-action7/`.
+- Local tests: 89/89 OK including S8
+- Phase A: kernel **v13** COMPLETE 2026-09-13: `PHASE_A_MODE kaggle_smoke budget_s=180.0 concurrency=2 analyzer_timeout=120.0 action_cap=4`; `S8_ACTION7_UNDO engine=ACTION7 model=UNDO`; `OFFLINE_SELECTION games=2`; `SMOKE_AUDIT runs=2 actions=8`; telemetry ~28s after load (log ~584s with vLLM); S4 hud_bottom_rows=0 transitions=6 identical=1 hud_only=4 real_change=1 confirmed_no_impact=1; S8 maps_patched=1 undo_listed=3 undo_requested=0 undo_parsed=0; placeholder `submission.parquet` 2648 B. Teardown `shutdown_ok=false` after SMOKE_AUDIT is the same class as S4.
+- Phase B: submission ref **56205735**, message as in `reports/SUBMIT_2026-09-13_S8.md`, status **PENDING**, Public score **не измерено**. One send; CLI `0 submissions remaining today.`
+- Decision: pending_score; do not adopt/reject; do not publish C1/C2; do not send again.
+- Champion after send: S4 (3.70) unchanged
+- Next experiment ID: **S8** until 56205735 is COMPLETE or ERROR
+- Artifact/report links: `tmp/kernels/s8-action7/`, `src/s8_action7_undo.py`, `src/patch_s8_notebook.py`, `reports/SUBMIT_2026-09-13_S8.md`
+
 ## Шаблон записи Sx
 
 Скопировать секцию и заполнить после каждого подготовленного/отправленного варианта.

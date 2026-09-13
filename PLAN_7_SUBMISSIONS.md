@@ -12,9 +12,9 @@
 
 Не клонируем чужие открытые notebooks как работу. Не гоняем S4–S7 по календарю. Датасет и writeup **сначала локальные черновики**. Открытая публикация на Kaggle — только после COMPLETE Phase B этого метода со score > 0.03 и отдельной фразы `опубликовать для сообщества`. S4 / 3.70 открывает eligibility, но не публикацию.
 
-Очередь: **C1 локальный датасет → C2 локальный черновик writeup → C4 проверка на LB (S4 COMPLETE; S4b/S6/S7 rejected; S5 PENDING) → решение о публикации**. C3 LoRA — параллельно после честного FP8, тоже без public release до фразы. Harness S5 — текущая C4-проверка, не backlog.
+Очередь: **C1 локальный датасет → C2 локальный черновик writeup → C4 проверка на LB (S4 COMPLETE; S4b/S6/S7/S5 rejected; S8 PENDING) → решение о публикации**. C3 LoRA — параллельно после честного FP8, тоже без public release до фразы.
 
-S1=2.71, S2=2.72, S3=2.77, S4b=2.77, S6=2.82, S7=2.82 отклонены. Working champion — **S4 / 3.70** (parent Flash v3 3.39, delta +0.31). S5 Phase B **PENDING** ref 56176662 kernel v12. Native FP8 27B ещё сломан. C1/C2 eligible, но пользователь 2026-09-10: 3.70 не заметный для публикации.
+S1=2.71, S2=2.72, S3=2.77, S4b=2.77, S6=2.82, S7=2.82, S5=3.13 отклонены. Working champion — **S4 / 3.70** (parent Flash v3 3.39, delta +0.31). S8 Phase B **PENDING** ref 56205735 kernel v13. Native FP8 27B ещё сломан. C1/C2 eligible, но пользователь 2026-09-10: 3.70 не заметный для публикации.
 
 ## Изменение из-за дефицита Kaggle GPU
 
@@ -94,7 +94,7 @@ ARC-AGI-3 — интерактивный benchmark: агент без инстр
 
 ## Backlog harness (S1–S7)
 
-Таблица сохраняет исходные гипотезы и их IDs. Это не очередь «обязательно сжечь 7 слотов». S1/S2/S3/S4b/S6/S7 отклонены. S4 provisional_adopt 3.70. S5 на LB (kernel v12 / ref 56176662 PENDING).
+Таблица сохраняет исходные гипотезы и их IDs. Это не очередь «обязательно сжечь 7 слотов». S1/S2/S3/S4b/S6/S7/S5 отклонены. S4 provisional_adopt 3.70. S8 на LB (kernel v13 / ref 56205735 PENDING).
 
 | ID | Единственное изменение | Гипотеза и критерий |
 |---|---|---|
@@ -103,11 +103,12 @@ ARC-AGI-3 — интерактивный benchmark: агент без инстр
 | **S3 — Cross-level transfer** | На переходе уровня сохранять только подтверждённые controls, action effects и goal invariants; очищать координаты, layout и текущий план. | Поздние уровни дороже и обычно развивают ту же механику. Нужны тесты, что универсальные факты остаются, а layout-specific данные исчезают. |
 | **S4 — Semantic no-impact guard** | Считать diff без верхних двух строк HUD/timer; запоминать `(semantic_state, action)` как no-impact после подтверждённого повторения и сообщать это модели. Не делать безусловный глобальный ban. | COMPLETE Public **3.70**. Working champion. Residual: фикстуры, C1 top-2 labels. |
 | **S4b — Outer HUD strip** | Тот же S4 guard, но strip **верх+низ** по две строки. Одна гипотеза на родителе S4. | COMPLETE Public **2.77**. Reject −0.93 vs S4. Не стекать. |
-| **S5 — Animation-aware observation** | Передавать full actionable frame плюс компактную последовательность последних animation frames; явно маркировать, где анимация, а где новое состояние. Другую память/policy не менять. | Phase B **PENDING** ref 56176662 kernel v12 на родителе S4 3.70. Не сабмитить повторно. |
+| **S5 — Animation-aware observation** | Передавать full actionable frame плюс компактную последовательность последних animation frames; явно маркировать, где анимация, а где новое состояние. Другую память/policy не менять. | COMPLETE Public **3.13**. Reject −0.57 vs S4. Не стекать animation stills. |
 | **S6 — Scheduled simplification** | Периодически сворачивать длинный transcript в verified facts, disproved hypotheses, open questions и current plan; держать около 8 последних assistant turns вместо 30. | COMPLETE Public **2.82**. Reject −0.88 vs S4. Не стекать 8-turn history. |
 | **S7 — Adaptive compute scheduler** | На основе semantic progress/stuck signals ограничивать время на безнадёжно застрявшие игры, сначала гарантировать обслуживание всех 110, затем отдавать остаток прогрессирующим играм и поздним уровням. | COMPLETE Public **2.82**. Reject −0.88 vs S4. Не стекать coverage-first/stuck-cut. |
+| **S8 — ACTION7/UNDO completeness** | Добавить ACTION7 ↔ UNDO в Duck action-name table; показывать и исполнять UNDO только если gateway его объявил. | Phase B **PENDING** ref 56205735 kernel v13 на родителе S4 3.70. Не сабмитить повторно. |
 
-Не включать в этот спринт generic state graph: доступная абляция показала регрессию. ACTION7/API-completeness оставить в backlog отдельным экспериментом после проверки, что action действительно объявлен gateway; не смешивать с S5.
+Не включать в этот спринт generic state graph: доступная абляция показала регрессию. ACTION7/API-completeness — текущий S8, не смешивать с S5.
 
 Основания для выбранных направлений: [официальный разбор Milestone 1](https://arcprize.org/blog/arc-prize-2026-milestone-1), [открытые Duck ablations](https://github.com/sonpham-org/arc-3), [Schema paper](https://arxiv.org/abs/2607.15439), [NVIDIA AVO report](https://developer.nvidia.com/blog/nvidia-avo-reaches-100-on-arc-agi-3-demonstrating-a-frontier-level-general-purpose-architecture-for-long-horizon-autonomous-agents/).
 

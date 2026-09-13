@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "updated_at": "2026-09-12",
+  "updated_at": "2026-09-13",
   "competition": {
     "slug": "arc-prize-2026-arc-agi-3",
     "submission_limit_per_day": 1,
@@ -31,7 +31,8 @@
       "S4b",
       "S6",
       "S7",
-      "S5"
+      "S5",
+      "S8"
     ],
     "promotion_threshold_public_delta": 0.5,
     "rejection_threshold_public_delta": -0.5,
@@ -51,7 +52,7 @@
   "compute_migration": {
     "revision_date": "2026-09-10",
     "status": "p0c_27b_loaded_on_a100",
-    "next_task": "S5_phase_b_pending",
+    "next_task": "S8_phase_b_pending",
     "required_before_next_new_submission": true,
     "resources_source": "C:/Users/Dmitry/Desktop/Kaggle/Kaggle Agents/external-resources/SETUP_STATUS.md",
     "linux_project_root": "/home/scientists/gluz_d_s/kaggle/projects/arc-prize-2026-arc-agi-3",
@@ -153,12 +154,12 @@
       "eligible": true,
       "eligible_because": "S4 kernel v7 / ref 56097508 COMPLETE Public 3.70 > baseline 0.03",
       "published": false,
-      "hold_reason": "User 2026-09-10: current Public 3.70 is not attention-worthy for a community release; keep C1/C2 private even though eligible. S4b 2.77, S6 2.82, and S7 2.82 do not change this."
+      "hold_reason": "User 2026-09-10: current Public 3.70 is not attention-worthy for a community release; keep C1/C2 private even though eligible. S4b 2.77, S6 2.82, S7 2.82, and S5 3.13 do not change this."
     }
   },
   "community_track": {
-    "revision_date": "2026-09-12",
-    "next_task": "S5_phase_b_pending",
+    "revision_date": "2026-09-13",
+    "next_task": "S8_phase_b_pending",
     "tasks": [
       {
         "id": "C1",
@@ -189,14 +190,14 @@
       {
         "id": "C4",
         "name": "lb_verify_method",
-        "status": "s5_phase_b_pending",
+        "status": "s8_phase_b_pending",
         "publication": "not_applicable",
-        "candidate": "S5",
-        "remainder": "S5 kernel v12 submitted ref 56176662 PENDING. Do not publish C1/C2. Do not send again."
+        "candidate": "S8",
+        "remainder": "S8 kernel v13 submitted ref 56205735 PENDING. Do not publish C1/C2. Do not send again."
       }
     ]
   },
-  "next_experiment_id": "S5",
+  "next_experiment_id": "S8",
   "experiments": [
     {
       "id": "S1",
@@ -364,7 +365,7 @@
     {
       "id": "S5",
       "name": "animation_aware_observation",
-      "status": "phase_b_pending",
+      "status": "rejected",
       "parent_policy": "current_champion",
       "parent_kernel_version": 7,
       "parent_submission_ref": 56097508,
@@ -379,20 +380,45 @@
       "phase_a_smoke_games": 2,
       "phase_a_smoke_actions": 8,
       "submission_ref": 56176662,
+      "public_score": 3.13,
+      "delta_vs_parent": -0.57,
+      "delta_vs_best": -0.57,
+      "decision": "reject",
+      "classification": "algorithmic",
+      "notes": "COMPLETE 3.13 vs S4 parent/best 3.70 = -0.57 (below -0.50). Do not stack animation stills into S8. Champion remains S4 3.70. Do not publish C1/C2."
+    },
+    {
+      "id": "S8",
+      "name": "action7_undo_completeness",
+      "status": "phase_b_pending",
+      "parent_policy": "current_champion",
+      "parent_kernel_version": 7,
+      "parent_submission_ref": 56097508,
+      "parent_public_score": 3.70,
+      "single_change": "map gateway ACTION7 to model UNDO so listed undo is executable",
+      "kernel_dir": "tmp/kernels/s8-action7",
+      "kernel_slug": "dmitriigluzdov/arc-agi-3-s7-adaptive-scheduler-flash-nvfp4",
+      "kernel_version": 13,
+      "phase_a_status": "COMPLETE",
+      "phase_a_mode": "kaggle_smoke",
+      "phase_a_runtime_s": 28,
+      "phase_a_smoke_games": 2,
+      "phase_a_smoke_actions": 8,
+      "submission_ref": 56205735,
       "public_score": null,
       "delta_vs_parent": null,
       "decision": "pending_score",
       "classification": null,
-      "notes": "Phase A COMPLETE kernel v12. Phase B ref 56176662 PENDING. S4 retained hud_bottom_rows=0. S1/S2/S3/S4b/S6/S7 not stacked. Champion remains S4 3.70 until terminal. Do not publish C1/C2. Do not send again."
+      "notes": "Phase A COMPLETE kernel v13. Phase B ref 56205735 PENDING. undo_listed=3 in smoke. S4 retained hud_bottom_rows=0. S1/S2/S3/S4b/S5/S6/S7 not stacked. Champion remains S4 3.70 until terminal. Do not publish C1/C2. Do not send again."
     }
   ],
   "last_submission": {
-    "date": "2026-09-12",
-    "submission_ref": 56176662,
+    "date": "2026-09-13",
+    "submission_ref": 56205735,
     "status": "PENDING",
     "public_score": null,
-    "message": "S5 animation-aware observation: labeled stills plus actionable frame on S4 parent 3.70 (kernel v12)",
+    "message": "S8 ACTION7 undo completeness: map listed ACTION7 to UNDO on S4 parent 3.70 (kernel v13)",
     "kernel_slug": "dmitriigluzdov/arc-agi-3-s7-adaptive-scheduler-flash-nvfp4",
-    "kernel_version": 12
+    "kernel_version": 13
   }
 }
