@@ -49,16 +49,16 @@ ARC Prize — code competition: медаль Competitions появляется �
 
 ## Очередь C
 
-S4/ref **56097508** COMPLETE Public **3.70** (working champion, +0.31 vs 3.39). Не стекать S1–S3, S4b (2.77), S6 (2.82), S7 (2.82) и S5 (3.13). C1/C2 eligible, остаются private. S5/ref **56176662 COMPLETE 3.13** — reject. S8/ref **56205735 PENDING** kernel v13 — не сабмитить повторно.
+S4/ref **56097508** COMPLETE Public **3.70** (working champion, +0.31 vs 3.39). Не стекать S1–S3, S4b (2.77), S6 (2.82), S7 (2.82), S5 (3.13) и S8 (3.10). C1/C2 eligible, остаются private. S8/ref **56205735 COMPLETE 3.10** — reject. S9/ref **56221692 PENDING** kernel v14 — не сабмитить повторно.
 
 | ID | Остаток | Где | Публикация |
 |---|---|---|---|
 | **C1 dataset v1** | Пары кадров `identical` / `hud_only` / `interior_change` (S4: верхние 2 строки) плюс `label_outer2` (верх+низ, 487); схема; сплит 8/8/9 | CPU, S2 `artifacts/*_events.jsonl` (5599 кадров, 5574 пары: identical 1808; top-2 hud 226 / interior 3540; outer2 hud 487 / interior 3279) | Eligible после S4 3.70, всё ещё только локально до фразы публикации |
 | **C2 writeup** | Черновик: S1/S2 rejects, разброс 3.39↔2.95, HUD-статистика, короткая Phase A, стенд 27B | `tmp/writeup-draft/` (gitignore) | Kaggle public notebook только после LB-гейта и фразы `опубликовать для сообщества` |
 | **C3 LoRA 27B** | Адаптер + lockfile + paired eval vs `Qwen/Qwen3.8-27B-FP8` | Одна A100, блоки ≤2 ч | Сначала починить FP8. Публичные веса — тот же LB-гейт |
-| **C4 LB verify** | S4 COMPLETE 3.70. S4b/S6/S7/S5 COMPLETE 2.77/2.82/2.82/3.13 — reject. S8 kernel v13 / ref 56205735 PENDING | Короткий Kaggle smoke COMPLETE; один Phase B уже отправлен | Это проверка, не публикация. Eligibility уже есть; открытие отдельное |
+| **C4 LB verify** | S4 COMPLETE 3.70. S4b/S6/S7/S5/S8 COMPLETE 2.77/2.82/2.82/3.13/3.10 — reject. S9 kernel v14 / ref 56221692 PENDING | Короткий Kaggle smoke COMPLETE; один Phase B уже отправлен | Это проверка, не публикация. Eligibility уже есть; открытие отдельное |
 
-S8 — текущая C4-проверка на LB (PENDING). Если C3 дал прирост на 27B, это не доказательство Flash; перенос на Kaggle — отдельная гипотеза.
+S9 — текущая C4-проверка на LB (PENDING). Если C3 дал прирост на 27B, это не доказательство Flash; перенос на Kaggle — отдельная гипотеза.
 
 ## Дообучение: что реалистично
 
@@ -69,7 +69,7 @@ S8 — текущая C4-проверка на LB (PENDING). Если C3 дал 
 
 ## Как решаем, слать ли на LB
 
-1. Есть terminal предыдущего Phase B. S8/ref 56205735 PENDING — не слать повторно, пока не COMPLETE/ERROR.
+1. Есть terminal предыдущего Phase B. S9/ref 56221692 PENDING — не слать повторно, пока не COMPLETE/ERROR.
 2. Есть локальный residual (хеш, схема, тест, черновик). Не требуется уже опубликованный Kaggle Dataset.
 3. Локальный/NSU gate по EXTERNAL_COMPUTE_PLAN.md пройден.
 4. Пользователь написал `засабмить следующее решение`.
@@ -87,4 +87,4 @@ S8 — текущая C4-проверка на LB (PENDING). Если C3 дал 
 
 ## Первый конкретный шаг
 
-C1 уже собран локально. C2 черновик в `tmp/writeup-draft/`. S4/C4 закрыт: kernel v7, ref **56097508 COMPLETE 3.70**. S4b/S6/S7/S5 закрыты reject. S8/ref **56205735 PENDING**. Не публиковать. Не слать повторно.
+C1 уже собран локально. C2 черновик в `tmp/writeup-draft/`. S4/C4 закрыт: kernel v7, ref **56097508 COMPLETE 3.70**. S4b/S6/S7/S5/S8 закрыты reject. S9/ref **56221692 PENDING**. Не публиковать. Не слать повторно.

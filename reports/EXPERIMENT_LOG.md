@@ -302,6 +302,31 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - Next experiment ID: **S8** until 56205735 is COMPLETE or ERROR
 - Artifact/report links: `tmp/kernels/s8-action7/`, `src/s8_action7_undo.py`, `src/patch_s8_notebook.py`, `reports/SUBMIT_2026-09-13_S8.md`
 
+### 2026-09-14 — S8 score closeout
+
+- Phase B terminal: submission ref **56205735** COMPLETE, Public **3.10**
+- Delta: vs S4 parent 3.70 = **−0.60**; vs historical best 3.70 = **−0.60**; vs Flash v3 3.39 = **−0.29**; vs rejected S5 3.13 = **−0.03**
+- Classification: algorithmic (Phase A COMPLETE, Phase B COMPLETE)
+- Decision: **reject**. Do not adopt. Do not stack ACTION7/UNDO into S9.
+- Publication: still eligible via S4 3.70; `published=false`
+- Champion after decision: S4 (kernel v7, ref 56097508, 3.70)
+- Next experiment ID: **S9** (consecutive RESET wipe guard on S4 parent)
+- Artifact/report links: `reports/SUBMIT_2026-09-13_S8.md`
+- Notes: every non-S4 policy hook since Flash v3 landed ~2.71–3.13. S9 is an engine-boundary score-safety guard (drop a second RESET), not another prompt/memory/scheduler hook.
+
+### 2026-09-14 — S9 — consecutive_reset_wipe_guard (Phase A COMPLETE + Phase B send)
+
+- Parent: kernel v7, submission ref 56097508, Public 3.70. S4 top-HUD retained. S1/S2/S3/S4b/S5/S6/S7/S8 not stacked.
+- Single causal change: drop a parsed RESET when `last_engine_action == RESET`; drop extra RESETs inside one batch after the first; leave Duck auto-RESET on GAME_OVER; first RESET after a real move stays allowed.
+- Local residual: `src/s9_reset_guard.py`, tests, packager `src/patch_s9_notebook.py`, notebook `tmp/kernels/s9-reset-guard/`.
+- Local tests: 96/96 OK including S9
+- Phase A: kernel **v14** COMPLETE 2026-09-14: `PHASE_A_MODE kaggle_smoke budget_s=180.0 concurrency=2 analyzer_timeout=120.0 action_cap=4`; `S9_RESET_GUARD session_wrapped=True`; `OFFLINE_SELECTION games=2`; `SMOKE_AUDIT runs=2 actions=8`; telemetry ~66s after load (log ~608s with vLLM); S4 hud_bottom_rows=0 transitions=9 identical=2 hud_only=4 real_change=3 confirmed_no_impact=1; S9 batches_seen=10 resets_seen=0 resets_dropped=0; placeholder `submission.parquet` 2648 B. First push hit GPU session cap; did not cancel other kernels. Teardown `shutdown_ok=false` after SMOKE_AUDIT is the same class as S4.
+- Phase B: submission ref **56221692**, message as in `reports/SUBMIT_2026-09-14_S9.md`, status **PENDING**, Public score **не измерено**. One send; CLI `0 submissions remaining today.`
+- Decision: pending_score; do not adopt/reject; do not publish C1/C2; do not send again.
+- Champion after send: S4 (3.70) unchanged
+- Next experiment ID: **S9** until 56221692 is COMPLETE or ERROR
+- Artifact/report links: `tmp/kernels/s9-reset-guard/`, `src/s9_reset_guard.py`, `src/patch_s9_notebook.py`, `reports/SUBMIT_2026-09-14_S9.md`
+
 ## Шаблон записи Sx
 
 Скопировать секцию и заполнить после каждого подготовленного/отправленного варианта.

@@ -26,7 +26,8 @@ This private notebook continues other people's public work, then adds a policy c
 - **S6** — keep the last 8 assistant turns instead of Duck's 30 and fold dropped turns into structured memory. Public **2.82**; rejected (−0.88 vs S4). Not stacked.
 - **S7** — coverage-first per-game wall budgets and stuck early-stop. Public **2.82**; rejected (−0.88 vs S4). Not stacked.
 - **S5** — labeled animation stills plus the actionable settled frame. Public **3.13**; rejected (−0.57 vs S4). Not stacked.
-- **This notebook (S8)** — map gateway **ACTION7** to model **UNDO** so listed undo is executable. S4 top-HUD no-impact stays. S1/S2/S3/S4b/S5/S6/S7 are not stacked.
+- **S8** — map gateway ACTION7 to model UNDO. Public **3.10**; rejected (−0.60 vs S4). Not stacked.
+- **This notebook (S9)** — drop a **consecutive RESET** so a second RESET cannot wipe completed levels. S4 top-HUD no-impact stays. S1/S2/S3/S4b/S5/S6/S7/S8 are not stacked.
 
 **Scores (our account, Public LB)**
 
@@ -40,12 +41,13 @@ This private notebook continues other people's public work, then adds a policy c
 | S6 scheduled simplification (kernel v10) | 2.82 — rejected |
 | S7 adaptive scheduler (kernel v11) | 2.82 — rejected |
 | S5 animation-aware observation (kernel v12) | 3.13 — rejected |
-| This notebook (S8 ACTION7 undo completeness) | not yet submitted |
+| S8 ACTION7 undo completeness (kernel v13) | 3.10 — rejected |
+| This notebook (S9 consecutive RESET wipe guard) | not yet submitted |
 
 Public scores on this competition are noisy (same Flash v3 moved 3.39 ↔ 2.95). Treat a single delta as a signal, not a proof. Code from Tufa/Keith remains with credit; the commentary in this notebook is ours.
 """
 
-INTRO = """# ARC-AGI-3 — ACTION7 undo completeness on Flash NVFP4
+INTRO = """# ARC-AGI-3 — consecutive RESET wipe guard on Flash NVFP4
 
 ![Tufa Labs](attachment:tufa_labs.png)
 
@@ -55,9 +57,9 @@ The attached solver is Tufa Labs' Duck harness. The serving stack is Keith Tyser
 
 This notebook installs the ARC runtime from the competition wheelhouse, imports the bundled Duck snapshot, loads the pickled benchmark, plays the games, and writes `/kaggle/working`. A real competition rerun (`KAGGLE_IS_COMPETITION_RERUN`) uses production budgets and the live Arcade. An interactive Save & Run is a **short smoke** (two public games, capped actions) so we can confirm the checkpoint loads without burning the 9-hour hidden rerun.
 
-**Policy in this version.** S4 top-HUD no-impact is retained. On top of that, Duck's action-name table maps gateway ACTION7 to model UNDO, so undo is listed and executable only when the current frame advertises it.
+**Policy in this version.** S4 top-HUD no-impact is retained. On top of that, a model RESET is dropped when the previous executed engine action was already RESET, because two RESETs in a row restart the whole game and wipe completed levels. Duck auto-RESET on GAME_OVER is unchanged.
 
-Solver code lives in the attached dataset; this notebook is the Kaggle wrapper plus our S4 guard and S8 ACTION7 mapping.
+Solver code lives in the attached dataset; this notebook is the Kaggle wrapper plus our S4 guard and S9 RESET wipe guard.
 """
 
 SECTION_HEADERS = {
@@ -88,8 +90,8 @@ target and pointing the benchmark's outputs at the Kaggle working directory.
 """,
     "6. Customization hook": """## 6. Customization hook
 
-Solver settings, the retained S4 top-HUD no-impact guard, and S8 ACTION7/UNDO
-mapping are applied here after the bundled Duck runtime has loaded. Production budgets
+Solver settings, the retained S4 top-HUD no-impact guard, and S9 consecutive-RESET
+wipe guard are applied here after the bundled Duck runtime has loaded. Production budgets
 stay on the competition rerun; Save & Run stays a short smoke.
 """,
     "7. Run the benchmark": """## 7. Run the benchmark
