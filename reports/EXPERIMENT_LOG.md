@@ -327,6 +327,54 @@ Leaderboard snapshot 2026-09-05: team rank ≈92/2803, leader ≈7.51, third ≈
 - Next experiment ID: **S9** until 56221692 is COMPLETE or ERROR
 - Artifact/report links: `tmp/kernels/s9-reset-guard/`, `src/s9_reset_guard.py`, `src/patch_s9_notebook.py`, `reports/SUBMIT_2026-09-14_S9.md`
 
+### 2026-09-14 — P0c/P0d — NSU Qwen3.8-27B-FP8 load unblock
+
+- S9/ref **56221692** checked read-only via Kaggle CLI: still **PENDING**. No Phase B send, no publication.
+- Scope: NSU external compute only; no LoRA/training, no Kaggle Dataset/notebook/model release.
+- Added residual scripts: `src/nsu_qwen38_fp8_probe.py`, `src/nsu_a100_27b_fp8_load_smoke.py`, `src/nsu_launch_27b_fp8_load_smoke.py`.
+- Config probe on `ngpu01`, env `py3.11-cu124-vllm-v1`, torch `2.6.0+cu124`, Transformers `5.16.1`: native `FineGrainedFP8HfQuantizer.update_tp_plan()` fails because `_experts_implementation=None` leads to `layer_overrides.get`; `top_deepgemm_megamoe`, `top_and_text_deepgemm_megamoe`, and `none_override_guard` pass config-only.
+- Leased A100 retry `arc3-fp8-load-smoke-retry1-20260914T0950Z`: `none_override_guard`, `quantization_config_present=true`, A100 `sm_80` falls back from native FP8 kernels to bf16 dequantization.
+- Load smoke result: **OK**, `load_elapsed_s=13.9` on warm cache, `generate_elapsed_s=3.5`, text `Say OK.\n\nOK.`, `missing_count=0`, `unexpected_count=0`, `unexpected_scale_inv_count=0`, peak allocated `51.15 GiB`. First cold-ish attempt loaded in `118.8s` but the receipt crashed after load due local `set` slicing bug; reservation released.
+- Classification: infrastructure/residual. This unblocks honest 27B proxy loading versus the earlier `quantization_config=None` workaround, but it is **not** a quality baseline and does not prove Kaggle Flash NVFP4 compatibility.
+- Decision: P0c `complete_with_fp8_dequant_smoke`; P0d remains `pending_after_fp8_load_smoke`. C3 LoRA remains deferred until paired baseline/validation.
+- Artifact/report links: `reports/NSU_FP8_PROBE_2026-09-14.md`, `reports/NSU_FP8_PROBE_2026-09-14.json`, `reports/NSU_FP8_LOAD_SMOKE_2026-09-14.json`.
+
+### 2026-09-15 — S9 score closeout + LB lag snapshot
+
+- Phase B terminal: submission ref **56221692** COMPLETE, Public **2.81**.
+- Delta: vs S4 parent/best 3.70 = **-0.89**; vs Flash v3 3.39 = **-0.58**; vs rejected S8 3.10 = **-0.29**.
+- Classification: algorithmic (Phase A COMPLETE, Phase B COMPLETE, no proven infrastructure failure).
+- Decision: **reject**. Do not adopt. Do not stack consecutive RESET guard into the next local candidate.
+- LB snapshot 2026-09-15: leader **Tufa Labs 18.81**, third **8.44**, 15th **5.68**, 16th **5.66**. Displayed team score remains **S4 3.70**.
+- Lag: S4 trails leader by **15.11** and current 15th by **1.98**. Latest S9 trails S4 by **0.89** and leader by **16.00**.
+- Champion after decision: S4 (kernel v7, ref 56097508, 3.70).
+- P0d remains pending: Qwen3.8-27B-FP8 dequant load smoke OK on A100, but no quality baseline yet.
+
+### 2026-09-15 — External baseline fork — Wuliao Duck Anim
+
+- User requested measuring the current top open solution against LB and then comparing it to our local work.
+- Discovery: `kaggle kernels list --competition arc-prize-2026-arc-agi-3 --sort-by scoreDescending` placed `wuliao0/duck-qwen3-8-anim-base` first. Original kernel status at check: **RUNNING**, so no direct reliance on a floating public run.
+- Source: public notebook `wuliao0/duck-qwen3-8-anim-base`, title **Duck Qwen3.8 Anim Base**, author `wuliao_0`, lastRunTime `2026-09-15T01:45:33.513000`.
+- Private fork: `dmitriigluzdov/arc3-external-baseline-wuliao-duck-anim`, version **1**, title **ARC3 External Baseline - Wuliao Duck Anim**.
+- Behavior change: none to solver/runtime. Local change is metadata/attribution/private fork only, to measure an external baseline without mixing it into our method lineage.
+- Phase A status after push: **RUNNING**. No Phase B submission yet in this entry.
+- Publication: forbidden. This is an external baseline measurement, not a community release or our AGI-agent method.
+
+### 2026-09-15 — EXB1 Phase B send
+
+- Preflight: last LB submission before EXB1 was S9/ref 56221692 on 2026-09-14; current date 2026-09-15; EXB1 private fork v1 status **COMPLETE**.
+- Phase B: submission ref **56248712**, message `EXB1 external Wuliao Duck Anim private fork v1; solver unchanged; compare to S4 3.70`, status **PENDING**, Public score **не измерено**.
+- CLI after send: `0 submissions remaining today.`
+- Decision: pending_score. Do not send again. Do not publish. Keep S4 3.70 as our local champion until EXB1 terminal score is known and interpreted as an external baseline, not our method.
+
+### 2026-09-16 - EXB1 closeout and S4R1 reproducibility control
+
+- EXB1 ref 56248712 COMPLETE Public 2.92; delta vs S4 3.70 is -0.78, vs S9 2.81 is +0.11. Keep S4 working champion.
+- User authorized one useful LB submission today. Selected exact S4 v7 repeat to measure stochastic reproducibility before more policy ablations. No solver changes; this is a control measurement, not a new improvement.
+- Kernel id 132850984 is now named `dmitriigluzdov/arc-agi-3-s7-adaptive-scheduler-flash-nvfp4`; original S4 slug returns 404. Both local metadata files confirm the same kernel id. Explicitly submitted historical version 7, not latest version 14.
+- S4R1 ref **56275704**, submitted 2026-09-16 09:51:09.413000, **PENDING**. CLI reports 0 submissions remaining today. Do not resubmit.
+- Interpretation: compare to original S4 3.70; report both observations, not just their maximum. Two runs cannot establish statistical significance. Flash v3 previously varied 3.39 to 2.95.
+
 ## Шаблон записи Sx
 
 Скопировать секцию и заполнить после каждого подготовленного/отправленного варианта.

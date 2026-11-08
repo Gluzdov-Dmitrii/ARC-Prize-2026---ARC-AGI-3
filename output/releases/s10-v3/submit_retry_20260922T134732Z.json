@@ -1,0 +1,17 @@
+{
+  "at": "2026-09-22T13:47:32.090637+00:00",
+  "kernel": "dmitriigluzdov/arc3-s10-scoped-memory",
+  "version": 3,
+  "competition": "arc-prize-2026-arc-agi-3",
+  "file_name": "submission.parquet",
+  "message": "S10 scoped no-impact memory: isolated agent/path/level, fresh single-action attribution, bounded cache; formatted v3; S4 parent 3.70/3.38",
+  "authorization": "User explicitly requested another submission attempt on 2026-09-22",
+  "phase_a_status_before_attempt": "QUEUED",
+  "notebook_sha256": "a9b9773004c08a8d2914efd106326f1f776df26ca5fcbe90a68215c73b97e814",
+  "submission_ref": null,
+  "status": "REJECTED_HTTP_ERROR",
+  "http_status": 400,
+  "response_body": "{\"error\":{\"code\":400,\"message\":\"Submission not allowed:  Internal Error: Could not get Notebook Run information. Did not find provided Notebook Output File.\",\"status\":\"FAILED_PRECONDITION\"}}",
+  "history_checked_at": "2026-09-22T13:48:23.626192+00:00",
+  "s10_submissions_after_attempt": []
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "profile": "s10_scoped",
+  "run_config": {
+    "profile": "s10_scoped",
+    "mode": "smoke",
+    "panel": null,
+    "seed": -1,
+    "budgets": {
+      "max_runtime_s_per_game": 180.0,
+      "analyzer_timeout": 120.0,
+      "concurrency": 2,
+      "max_actions_per_game": 4
+    }
+  },
+  "evaluation_config": {
+    "model": "keithtyser/qwen3-8-flash-next-nvfp4/PyTorch/radixark-modelopt-fp4/1",
+    "seed": -1,
+    "budgets": {
+      "max_runtime_s_per_game": 180.0,
+      "analyzer_timeout": 120.0,
+      "concurrency": 2,
+      "max_actions_per_game": 4
+    },
+    "panel": null,
+    "serving_profile": {
+      "TAAF_VLLM_ENABLE_PREFIX_CACHING": "0",
+      "TAAF_VLLM_KV_CACHE_DTYPE": "auto",
+      "TAAF_VLLM_KV_CACHE_MEMORY_BYTES": "5368709120",
+      "TAAF_VLLM_MAX_CUDAGRAPH_CAPTURE_SIZE": "32",
+      "TAAF_VLLM_MAX_NUM_BATCHED_TOKENS": "8192",
+      "TAAF_VLLM_MAX_NUM_SEQS": "8",
+      "TAAF_VLLM_MTP_TOKENS": "3",
+      "TAAF_VLLM_OMP_THREADS": "1"
+    },
+    "input_hashes": {
+      "benchmark_initial": "7f619ac0831bfc4d138365681fc46de2f7107b54e2d62bbb3194b65d9aec1d67",
+      "deploy_target": "f0dc4b59f390862326b0e40a6ff0f8910d9e6487ae244efb1ae9ab495f79ba19",
+      "prompts": "a8e203fbe288116a24f29f6880f0657873df51fee76b0af9ef2b44cc3d0186d3",
+      "serving_setup": "037c041c9bd9dcffa9084b32f47af9cf1bf35849d5eaf2e1a3422daac098b2e2",
+      "setup_commands": "64857a575388b8fcbf177ae68da0b884e12816213d68cfcdd206032763febb6a",
+      "tool_agent": "535ee88b81b262fa5aedb785466ade9f3183a6417656fb6733427242baac7c9d"
+    }
+  },
+  "true_submission": false,
+  "candidate_source_sha256": "a247847f4a4b92eefab337940a13a7070b37c4298090aea4ec2e30f91cd6e7ec",
+  "parent_notebook_sha256": "573f82fdf1e382afcb0d4952fb060385213042e1e192bd2c376d64b4d49e112f",
+  "historical_lb": {
+    "S4": [
+      3.7,
+      3.38
+    ],
+    "S10": null
+  }
+}

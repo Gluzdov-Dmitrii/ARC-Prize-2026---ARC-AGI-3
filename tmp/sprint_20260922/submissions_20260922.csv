@@ -1,0 +1,40 @@
+ref,fileName,date,description,status,publicScore,privateScore
+
+56275704,submission.parquet,2026-09-16 09:51:09.413000,S4R1 exact S4 v7 repeat: estimate stochastic reproducibility of best 3.70; external EXB1 scored 2.92; no solver changes,SubmissionStatus.COMPLETE,3.38,
+
+56248712,submission.parquet,2026-09-15 07:23:21.147000,EXB1 external Wuliao Duck Anim private fork v1; solver unchanged; compare to S4 3.70,SubmissionStatus.COMPLETE,2.92,
+
+56221692,submission.parquet,2026-09-14 04:37:25.970000,S9 consecutive RESET wipe guard: drop second RESET so it cannot wipe completed levels on S4 parent 3.70 (kernel v14),SubmissionStatus.COMPLETE,2.81,
+
+56205735,submission.parquet,2026-09-13 11:21:06.193000,S8 ACTION7 undo completeness: map listed ACTION7 to UNDO on S4 parent 3.70 (kernel v13),SubmissionStatus.COMPLETE,3.10,
+
+56176662,submission.parquet,2026-09-12 02:30:25.923000,S5 animation-aware observation: labeled stills plus actionable frame on S4 parent 3.70 (kernel v12),SubmissionStatus.COMPLETE,3.13,
+
+56159941,submission.parquet,2026-09-11 06:14:56.130000,S7 adaptive scheduler: coverage-first budgets on S4 parent 3.70 (kernel v11),SubmissionStatus.COMPLETE,2.82,
+
+56137205,submission.parquet,2026-09-10 04:28:34.460000,S6 scheduled simplification: 8-turn history on S4 parent 3.70 (kernel v10),SubmissionStatus.COMPLETE,2.82,
+
+56122822,submission.parquet,2026-09-09 12:40:33.357000,S4b outer HUD no-impact: top+bottom strip on S4 parent 3.70 (kernel v9),SubmissionStatus.COMPLETE,2.77,
+
+56097508,submission.parquet,2026-09-08 11:43:55.727000,S4 semantic no-impact: HUD-insensitive repeats on Flash v3 parent (kernel v7),SubmissionStatus.COMPLETE,3.70,
+
+56075811,submission.parquet,2026-09-07 11:27:50.580000,"S3 cross-level transfer: keep confirmed mechanics, drop layout/plan on Flash v3 parent (kernel v6)",SubmissionStatus.COMPLETE,2.77,
+
+56051525,submission.parquet,2026-09-06 09:12:27.550000,S2 memory capture: labeled facts from reasoning and content on Flash v3 parent (kernel v5),SubmissionStatus.COMPLETE,2.72,
+
+56034166,submission.parquet,2026-09-05 13:51:01.277000,S1 deterministic control: per-game vLLM seed + read-only telemetry on Flash v3 parent (kernel v4),SubmissionStatus.COMPLETE,2.71,
+
+56011722,submission.parquet,2026-09-04 11:32:11.677000,Flash Next v3 proven Phase B harness (already COMPLETE 3.39); replace LCLD v2 ERROR with scoring Duck/TAAF Qwen3.8 NVFP4 RTX6000,SubmissionStatus.COMPLETE,2.95,
+
+56008249,submission.parquet,2026-09-04 07:59:43.307000,Retry LCLD Qwen V10 v2 after Kaggle system error 56005599 (same Phase A COMPLETE kernel),SubmissionStatus.ERROR,,
+
+56005599,submission.parquet,2026-09-04 05:19:38.057000,"LCLD Qwen V10 v2: author v7 gateway fix (empty ENVIRONMENTS_DIR + competition Arcade), Qwen3.8-27B-FP8 RTX6000",SubmissionStatus.ERROR,,
+
+55974010,submission.parquet,2026-09-03 04:05:20.037000,"Fork of vladimiryakunin/arc-prize-2026-lcld-qwen-v10 (LCLD + Qwen3.8-27B-FP8 RTX6000, env-path fallback)",SubmissionStatus.COMPLETE,0.00,
+
+55959595,submission.parquet,2026-09-02 10:33:57.113000,"Fork of keithtyser/duck-qwen3-8-flash-next-nvfp4-mtp (public 2.36-2.73, Qwen3.8 Flash Next NVFP4 RTX6000)",SubmissionStatus.COMPLETE,3.39,
+
+55944286,submission.parquet,2026-09-01 16:45:49.773000,"Fork of romantamrazov/arc-real-agi-solution V13 (public 2.31, Duck/TAAF Qwen3.8-27B-FP8 RTX6000)",SubmissionStatus.COMPLETE,2.07,
+
+52980802,submission.parquet,2026-05-24 09:14:21.423000,,SubmissionStatus.COMPLETE,0.03,
+

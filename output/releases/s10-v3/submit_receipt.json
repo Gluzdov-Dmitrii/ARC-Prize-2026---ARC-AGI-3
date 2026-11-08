@@ -1,0 +1,24 @@
+{
+  "at": "2026-09-22T13:18:01.114183+00:00",
+  "kernel": "dmitriigluzdov/arc3-s10-scoped-memory",
+  "version": 3,
+  "competition": "arc-prize-2026-arc-agi-3",
+  "file_name": "submission.parquet",
+  "status": "REJECTED_HTTP_400",
+  "submission_ref": null,
+  "accepted_submission_observed": false,
+  "server_request_count": 1,
+  "cli_error": "400 Client Error: Bad Request for url: https://api.kaggle.com/v1/competitions.CompetitionApiService/CreateCodeSubmission",
+  "server_reason_detail": "Not exposed by CLI; do not infer exact cause.",
+  "post_attempt_history": "submissions_after_attempt.csv",
+  "diagnostic_retry": "Blocked by automatic approval review before execution; no second server request",
+  "user_accepts_pending_smoke_risk": true,
+  "automatic_retry_scheduled": false,
+  "last_phase_a_observation": {
+    "status": "QUEUED",
+    "checked_at": "2026-09-22T13:23:36.777022+00:00",
+    "output_bytes": 0,
+    "source": "CLI and Kaggle visible notebook page"
+  },
+  "phase_a_run_id": 351866512
+}

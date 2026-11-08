@@ -1,0 +1,68 @@
+{
+  "schema_version": "arc3-sprint-run-v1",
+  "profile": "s10_scoped",
+  "mode": "smoke",
+  "score_source": "taaf.GameRun.final_score",
+  "score_scale": "framework-native",
+  "expected_game_ids": [
+    "tn36-ef4dde99",
+    "lf52-271a04aa"
+  ],
+  "n_passes": 1,
+  "elapsed_s": 59.314152581999906,
+  "config": {
+    "budgets": {
+      "analyzer_timeout": 120.0,
+      "concurrency": 2,
+      "max_actions_per_game": 4,
+      "max_runtime_s_per_game": 180.0
+    },
+    "input_hashes": {
+      "benchmark_initial": "7f619ac0831bfc4d138365681fc46de2f7107b54e2d62bbb3194b65d9aec1d67",
+      "deploy_target": "f0dc4b59f390862326b0e40a6ff0f8910d9e6487ae244efb1ae9ab495f79ba19",
+      "prompts": "a8e203fbe288116a24f29f6880f0657873df51fee76b0af9ef2b44cc3d0186d3",
+      "serving_setup": "037c041c9bd9dcffa9084b32f47af9cf1bf35849d5eaf2e1a3422daac098b2e2",
+      "setup_commands": "64857a575388b8fcbf177ae68da0b884e12816213d68cfcdd206032763febb6a",
+      "tool_agent": "535ee88b81b262fa5aedb785466ade9f3183a6417656fb6733427242baac7c9d"
+    },
+    "model": "keithtyser/qwen3-8-flash-next-nvfp4/PyTorch/radixark-modelopt-fp4/1",
+    "panel": null,
+    "seed": -1,
+    "serving_profile": {
+      "TAAF_VLLM_ENABLE_PREFIX_CACHING": "0",
+      "TAAF_VLLM_KV_CACHE_DTYPE": "auto",
+      "TAAF_VLLM_KV_CACHE_MEMORY_BYTES": "5368709120",
+      "TAAF_VLLM_MAX_CUDAGRAPH_CAPTURE_SIZE": "32",
+      "TAAF_VLLM_MAX_NUM_BATCHED_TOKENS": "8192",
+      "TAAF_VLLM_MAX_NUM_SEQS": "8",
+      "TAAF_VLLM_MTP_TOKENS": "3",
+      "TAAF_VLLM_OMP_THREADS": "1"
+    }
+  },
+  "games": [
+    {
+      "game_id": "tn36-ef4dde99",
+      "state": "gave_up",
+      "final_score": 0.0,
+      "levels_completed": 0,
+      "total_levels": 7,
+      "action_count": 4,
+      "runtime_s": 40.695283177999954,
+      "baselines_available": true
+    },
+    {
+      "game_id": "lf52-271a04aa",
+      "state": "gave_up",
+      "final_score": 0.0,
+      "levels_completed": 0,
+      "total_levels": 10,
+      "action_count": 4,
+      "runtime_s": 58.74722920900001,
+      "baselines_available": true
+    }
+  ],
+  "valid": true,
+  "mean_score": 0.0,
+  "quality_comparison_eligible": false,
+  "interpretation": "Framework-native scores for these games only. Smoke and competition runs are operational checks, not quality evidence; hidden baselines make local scores unsuitable for quality comparisons."
+}

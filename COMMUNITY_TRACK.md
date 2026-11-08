@@ -49,27 +49,27 @@ ARC Prize — code competition: медаль Competitions появляется �
 
 ## Очередь C
 
-S4/ref **56097508** COMPLETE Public **3.70** (working champion, +0.31 vs 3.39). Не стекать S1–S3, S4b (2.77), S6 (2.82), S7 (2.82), S5 (3.13) и S8 (3.10). C1/C2 eligible, остаются private. S8/ref **56205735 COMPLETE 3.10** — reject. S9/ref **56221692 PENDING** kernel v14 — не сабмитить повторно.
+S4/ref **56097508** COMPLETE Public **3.70** (working champion, +0.31 vs 3.39). Не стекать S1–S3, S4b (2.77), S6 (2.82), S7 (2.82), S5 (3.13), S8 (3.10) и S9 (2.81). C1/C2 eligible, остаются private. S9/ref **56221692 COMPLETE 2.81** — reject. Внешний baseline `dmitriigluzdov/arc3-external-baseline-wuliao-duck-anim` v1 запущен приватно; это измерение открытого решения, не наш метод и не публикация.
 
 | ID | Остаток | Где | Публикация |
 |---|---|---|---|
 | **C1 dataset v1** | Пары кадров `identical` / `hud_only` / `interior_change` (S4: верхние 2 строки) плюс `label_outer2` (верх+низ, 487); схема; сплит 8/8/9 | CPU, S2 `artifacts/*_events.jsonl` (5599 кадров, 5574 пары: identical 1808; top-2 hud 226 / interior 3540; outer2 hud 487 / interior 3279) | Eligible после S4 3.70, всё ещё только локально до фразы публикации |
 | **C2 writeup** | Черновик: S1/S2 rejects, разброс 3.39↔2.95, HUD-статистика, короткая Phase A, стенд 27B | `tmp/writeup-draft/` (gitignore) | Kaggle public notebook только после LB-гейта и фразы `опубликовать для сообщества` |
-| **C3 LoRA 27B** | Адаптер + lockfile + paired eval vs `Qwen/Qwen3.8-27B-FP8` | Одна A100, блоки ≤2 ч | Сначала починить FP8. Публичные веса — тот же LB-гейт |
-| **C4 LB verify** | S4 COMPLETE 3.70. S4b/S6/S7/S5/S8 COMPLETE 2.77/2.82/2.82/3.13/3.10 — reject. S9 kernel v14 / ref 56221692 PENDING | Короткий Kaggle smoke COMPLETE; один Phase B уже отправлен | Это проверка, не публикация. Eligibility уже есть; открытие отдельное |
+| **C3 LoRA 27B** | Адаптер + lockfile + paired eval vs `Qwen/Qwen3.8-27B-FP8` | Одна A100, блоки ≤2 ч | FP8 checkpoint load-smoke OK через dequant-to-bf16 `none_override_guard`; сначала P0d paired baseline. Публичные веса — тот же LB-гейт |
+| **C4 LB verify** | S4 COMPLETE 3.70. S4b/S6/S7/S5/S8/S9 COMPLETE 2.77/2.82/2.82/3.13/3.10/2.81 — reject. External Wuliao Duck Anim fork v1 Phase B ref 56248712 PENDING | Короткий Kaggle smoke COMPLETE для S9; внешний baseline COMPLETE и отправлен на LB | Это проверка, не публикация. Eligibility уже есть; открытие отдельное |
 
-S9 — текущая C4-проверка на LB (PENDING). Если C3 дал прирост на 27B, это не доказательство Flash; перенос на Kaggle — отдельная гипотеза.
+S9 закрыт reject. Текущая C4-проверка — внешний baseline на открытом Duck Anim fork; его score можно использовать как цель/литературу, но не как наш champion. Если C3 дал прирост на 27B, это не доказательство Flash; перенос на Kaggle — отдельная гипотеза.
 
 ## Дообучение: что реалистично
 
 - Цель обучения: скачанный **Qwen3.8-27B-FP8** на одной A100 (LoRA/QLoRA), не Flash NVFP4. Flash на A100 не подтверждён; драйвер 550.54.15 не тянет vLLM CUDA 13.
-- Native FP8 quantizer падает. Пока не починен, SFT на «обрезанном» bf16 — слабый учитель.
+- Native FP8 kernels на A100 недоступны (`sm_80 < 8.9`), но Transformers 5.16.1 успешно грузит checkpoint с `quantization_config` intact через dequant-to-bf16 при `none_override_guard`: `missing=0`, `unexpected=0`, generate OK. Это proxy-путь для P0d, не доказательство качества и не Kaggle Flash.
 - Данные: только открытые 25 игр и наши трассы. Сплит `src/eval_panels.json` не подбирать под score.
 - Выкладка LoRA на Kaggle — только после LB-гейта и отдельной фразы публикации.
 
 ## Как решаем, слать ли на LB
 
-1. Есть terminal предыдущего Phase B. S9/ref 56221692 PENDING — не слать повторно, пока не COMPLETE/ERROR.
+1. Есть terminal предыдущего Phase B. S9/ref 56221692 COMPLETE 2.81 и закрыт reject; повторно его не слать.
 2. Есть локальный residual (хеш, схема, тест, черновик). Не требуется уже опубликованный Kaggle Dataset.
 3. Локальный/NSU gate по EXTERNAL_COMPUTE_PLAN.md пройден.
 4. Пользователь написал `засабмить следующее решение`.
@@ -87,4 +87,4 @@ S9 — текущая C4-проверка на LB (PENDING). Если C3 дал 
 
 ## Первый конкретный шаг
 
-C1 уже собран локально. C2 черновик в `tmp/writeup-draft/`. S4/C4 закрыт: kernel v7, ref **56097508 COMPLETE 3.70**. S4b/S6/S7/S5/S8 закрыты reject. S9/ref **56221692 PENDING**. Не публиковать. Не слать повторно.
+C1 уже собран локально. C2 черновик в `tmp/writeup-draft/`. S4/C4 закрыт: kernel v7, ref **56097508 COMPLETE 3.70**. S4b/S6/S7/S5/S8/S9 закрыты reject. Внешний baseline v1 отправлен на LB: ref **56248712 PENDING**. Не публиковать. Не слать повторно S9/EXB1.

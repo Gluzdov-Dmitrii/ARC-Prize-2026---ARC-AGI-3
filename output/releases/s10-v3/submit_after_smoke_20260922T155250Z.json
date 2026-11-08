@@ -1,0 +1,13 @@
+{
+  "at": "2026-09-22T15:52:50.068295+00:00",
+  "kernel": "dmitriigluzdov/arc3-s10-scoped-memory",
+  "version": 3,
+  "competition": "arc-prize-2026-arc-agi-3",
+  "file_name": "submission.parquet",
+  "message": "S10 scoped no-impact memory: isolated agent/path/level, fresh single-action attribution, bounded cache; formatted v3; S4 parent 3.70/3.38",
+  "phase_a_status": "COMPLETE",
+  "smoke_validation": "output/releases/s10-v3/smoke_validation.json",
+  "submission_ref": 56468831,
+  "status": "ACCEPTED",
+  "server_message": ""
+}

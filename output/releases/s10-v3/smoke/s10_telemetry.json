@@ -1,0 +1,40 @@
+{
+  "bundle_dir": "/kaggle/input/datasets/keithtyser/duck-qwen38-nvfp4-mtp-vllm-smoke-v1",
+  "confirm_repeats": 2,
+  "counters": {
+    "confirmed_no_impact": 0,
+    "hud_only": 4,
+    "identical": 0,
+    "internal_errors": 0,
+    "real_change": 2,
+    "scope_resets": 0,
+    "skipped_multiple_actions": 1,
+    "skipped_no_action": 10,
+    "skipped_unverified": 0,
+    "transitions": 6
+  },
+  "experiment_id": "S10",
+  "extra": {
+    "mode": "smoke",
+    "parent_public_scores": [
+      3.7,
+      3.38
+    ],
+    "profile": "s10_scoped"
+  },
+  "finished_at_epoch": 1790091789.3792992,
+  "global_ban": false,
+  "hud_bottom_rows": 0,
+  "hud_top_rows": 2,
+  "installed_at_epoch": 1790091729.7416027,
+  "knowledge_overlay": true,
+  "max_notes_per_state": 8,
+  "max_pairs_per_path": 512,
+  "max_paths_per_agent": 8,
+  "runtime_seconds": 59.31328812200002,
+  "s4_replaced": true,
+  "single_change": "Scoped S4 memory with fresh single-primitive attribution",
+  "source_sha256": "a247847f4a4b92eefab337940a13a7070b37c4298090aea4ec2e30f91cd6e7ec",
+  "target_max_runtime_s": 32400.0,
+  "working_dir": "/kaggle/working"
+}

@@ -1,0 +1,106 @@
+{
+  "upstream": "The Duck harness and TAAF adapter, Tufa Labs",
+  "upstream_documentation": "https://tufalabs.ai/research/duck-harness/",
+  "upstream_discussion": "https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3/discussion/717133",
+  "snapshot_date": "2026-09-22",
+  "extraction": "Exact source-line slices including decorators; only class shells and attribution headers are added.",
+  "files": {
+    "tool_agent_contract.py": {
+      "source_filename": "tool_agent.py",
+      "source_sha256": "535ee88b81b262fa5aedb785466ade9f3183a6417656fb6733427242baac7c9d",
+      "fixture_sha256_lf": "8efe523bf4b0953d40dbcd52963a6fa07135e803ce7bd107037ea568b9e1cf8d",
+      "class_name": "ToolAgent",
+      "methods": {
+        "_ensure_session": {
+          "source_start_line": 975,
+          "source_end_line": 984,
+          "sha256_lf": "3c7db05d34d9bb777f57aa817117aea10baf170bd15e38df8a03e66ac5929c81"
+        },
+        "_summarize_step_sequence": {
+          "source_start_line": 1024,
+          "source_end_line": 1068,
+          "sha256_lf": "337cef21a6fd3b53fe0780e5c547262a18c73442e243dc6eaedc9fcc1477ee21"
+        },
+        "_update_summarized_knowledge_from_step_summary": {
+          "source_start_line": 1113,
+          "source_end_line": 1126,
+          "sha256_lf": "109fcce8e537bca9a692bda39cb50e332898a867530c47423ebc83fcd859f2e0"
+        },
+        "_summarized_knowledge_lines": {
+          "source_start_line": 1128,
+          "source_end_line": 1145,
+          "sha256_lf": "15bc11fc90cb5fb31646382a398d357cf9f15bfa20ef853439f8a0eb78894836"
+        },
+        "_normalize_python_actions": {
+          "source_start_line": 1378,
+          "source_end_line": 1414,
+          "sha256_lf": "a94d6ce60d8728ab4ad78e1415a51e5d6332e3682f91650679e1a845ee9bd98e"
+        },
+        "_compact_action_result": {
+          "source_start_line": 1416,
+          "source_end_line": 1451,
+          "sha256_lf": "193456c8b8e0d803a4e3be19f781d3d773f298cf3b5f726a7b269994f9744ffb"
+        },
+        "_run_python_tool": {
+          "source_start_line": 1453,
+          "source_end_line": 1588,
+          "sha256_lf": "549a27a0b85f6cf567a598fcbf549a18e447176a0167ff898bd6630a6edfbb7d"
+        }
+      }
+    },
+    "harness_session_contract.py": {
+      "source_filename": "harness_solver.py",
+      "source_sha256": "65ddfcdbe8c24fdc31246ff018b51469827b21c38995243a36a818adbed33370",
+      "fixture_sha256_lf": "71275c1036750d7e74b02a208fc5b357bc9c0f6d0079de48e4972616968888de",
+      "class_name": "_HarnessGameSession",
+      "methods": {
+        "current_frame": {
+          "source_start_line": 187,
+          "source_end_line": 192,
+          "sha256_lf": "0053f5b0f0a2cbef47882295473cec139f584562f1ad4b6b7e5f9131cf24d78f"
+        },
+        "write_runtime_state": {
+          "source_start_line": 194,
+          "source_end_line": 199,
+          "sha256_lf": "8fb73b47acaf4e29fa648626300a13b6caeeb934c167ae6d14a5828e6ed224aa"
+        },
+        "action_count": {
+          "source_start_line": 207,
+          "source_end_line": 210,
+          "sha256_lf": "3bf60d1d7c40260e87c844664e672fbf0e753867e4973ef946866739ad4220ed"
+        },
+        "_normalize_actions": {
+          "source_start_line": 491,
+          "source_end_line": 542,
+          "sha256_lf": "1dee0ad53cf63823e06b0119e60ab818fe1a6b2a0fe9b5ce18a8a1017fa3faf1"
+        },
+        "_error_payload": {
+          "source_start_line": 544,
+          "source_end_line": 550,
+          "sha256_lf": "e29bc2c74272a7affe4db1fd605772ec48515ba4f0764c5dc34630cff8e44e34"
+        },
+        "_terminal_payload": {
+          "source_start_line": 552,
+          "source_end_line": 586,
+          "sha256_lf": "b523168db2ab91919c3cab713148def86efdd0cc06618561d3667ad1a76797a7"
+        },
+        "step_env": {
+          "source_start_line": 588,
+          "source_end_line": 661,
+          "sha256_lf": "252df1779588a2fe6981deb72b45af6672a51601cc33994dc4890a54a5159904"
+        },
+        "_execute_action": {
+          "source_start_line": 667,
+          "source_end_line": 734,
+          "sha256_lf": "1608aa6aee516b3c927dde034ccfc8c058f72912f205e2f0bb03155e4e171e73"
+        }
+      }
+    },
+    "runtime_state.py": {
+      "source_filename": "runtime_state.py",
+      "source_sha256": "c32cbc4352b2e632efef33ebcb252af4f54867088a934d63fe1df5465934c5af",
+      "fixture_sha256_lf": "c32cbc4352b2e632efef33ebcb252af4f54867088a934d63fe1df5465934c5af",
+      "extraction": "Complete small runtime schema module, byte-for-byte."
+    }
+  }
+}

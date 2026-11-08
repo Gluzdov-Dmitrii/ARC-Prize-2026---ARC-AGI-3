@@ -1,0 +1,9 @@
+{
+  "kernel_slug": "dmitriigluzdov/arc3-s10-scoped-memory",
+  "kernel_version": 3,
+  "all_cell_sources_identical": true,
+  "cells": 33,
+  "local_sha256": "a9b9773004c08a8d2914efd106326f1f776df26ca5fcbe90a68215c73b97e814",
+  "remote_file_sha256": "1a108197cff8dd3937d1aa05bc2308d8d0b52d0c69056bd8fbf99d84fd1d4864",
+  "metadata_path": "tmp/sprint_20260922/remote_v3/kernel-metadata.json"
+}

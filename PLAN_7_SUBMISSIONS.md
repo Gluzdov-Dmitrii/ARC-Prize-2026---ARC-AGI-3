@@ -12,9 +12,9 @@
 
 Не клонируем чужие открытые notebooks как работу. Не гоняем S4–S7 по календарю. Датасет и writeup **сначала локальные черновики**. Открытая публикация на Kaggle — только после COMPLETE Phase B этого метода со score > 0.03 и отдельной фразы `опубликовать для сообщества`. S4 / 3.70 открывает eligibility, но не публикацию.
 
-Очередь: **C1 локальный датасет → C2 локальный черновик writeup → C4 проверка на LB (S4 COMPLETE; S4b/S6/S7/S5/S8 rejected; S9 PENDING) → решение о публикации**. C3 LoRA — параллельно после честного FP8, тоже без public release до фразы.
+Очередь: **C1 локальный датасет → C2 локальный черновик writeup → C4 проверка на LB (S4 COMPLETE; S4b/S6/S7/S5/S8/S9 rejected; external baseline Phase B PENDING ref 56248712) → решение о публикации**. C3 LoRA — параллельно после честного FP8, тоже без public release до фразы.
 
-S1=2.71, S2=2.72, S3=2.77, S4b=2.77, S6=2.82, S7=2.82, S5=3.13, S8=3.10 отклонены. Working champion — **S4 / 3.70** (parent Flash v3 3.39, delta +0.31). S9 Phase B **PENDING** ref 56221692 kernel v14. Native FP8 27B ещё сломан. C1/C2 eligible, но пользователь 2026-09-10: 3.70 не заметный для публикации.
+S1=2.71, S2=2.72, S3=2.77, S4b=2.77, S6=2.82, S7=2.82, S5=3.13, S8=3.10, S9=2.81 отклонены. Working champion — **S4 / 3.70** (parent Flash v3 3.39, delta +0.31). 2026-09-15 запущен приватный внешний baseline `dmitriigluzdov/arc3-external-baseline-wuliao-duck-anim` v1 по открытому `wuliao0/duck-qwen3-8-anim-base`; это не наш champion и не публикация. Qwen3.8-27B-FP8 теперь грузится на A100 через Transformers dequant-to-bf16 с `none_override_guard`; P0d paired baseline ещё не сделан. C1/C2 eligible, но пользователь 2026-09-10: 3.70 не заметный для публикации.
 
 ## Изменение из-за дефицита Kaggle GPU
 
@@ -37,8 +37,8 @@ ARC-AGI-3 — интерактивный benchmark: агент без инстр
 
 ## Где мы сейчас (медаль — факт доски, не критерий отбора)
 
-- Лучший наш Public LB: **3.70** (S4). Serving-only Flash v3: **3.39** и unlucky repeat **2.95**. Одиночное изменение меньше примерно 0.5 нельзя считать доказанным улучшением; S4 +0.31 принят как working champion по решению 2026-09-09. S4b outer HUD **2.77** (ref 56122822) отклонён (−0.93). S6 scheduled simplification **2.82** (ref 56137205) отклонён (−0.88). S8 ACTION7/UNDO **3.10** (ref 56205735) отклонён (−0.60).
-- Снимок 2026-09-11: rank **142/2961**, лидер 11.04, 15-е 5.07, 16-е 5.05. Отображаемый score остаётся 3.70. CLI 2026-09-14: лидер 11.04, третье 8.40, 15-е 5.57, 16-е 5.55. S8 3.10 и S4b/S6/S7/S5 не заменили displayed 3.70.
+- Лучший наш Public LB: **3.70** (S4). Serving-only Flash v3: **3.39** и unlucky repeat **2.95**. Одиночное изменение меньше примерно 0.5 нельзя считать доказанным улучшением; S4 +0.31 принят как working champion по решению 2026-09-09. S4b outer HUD **2.77** (ref 56122822), S6 **2.82**, S7 **2.82**, S5 **3.13**, S8 **3.10**, S9 **2.81** отклонены.
+- Снимок 2026-09-15: лидер **18.81**, третье **8.44**, 15-е **5.68**, 16-е **5.66**. Отображаемый score остаётся **3.70**. Отставание S4: **15.11** до лидера и **1.98** до 15-го места.
 - Private набор специально другие игры. Public-охота и форки чужих notebooks не оставляют residual для сообщества и плохо переносятся.
 
 Рабочая цель: локальное решение с тестами и черновиком для сообщества, затем **проверка сабмитом выше бейзлайна 0.03**, и только потом — решение, открывать ли датасет/writeup. Expert→Master по Notebooks/Datasets не обгоняет этот гейт.
@@ -94,7 +94,7 @@ ARC-AGI-3 — интерактивный benchmark: агент без инстр
 
 ## Backlog harness (S1–S7)
 
-Таблица сохраняет исходные гипотезы и их IDs. Это не очередь «обязательно сжечь 7 слотов». S1/S2/S3/S4b/S6/S7/S5/S8 отклонены. S4 provisional_adopt 3.70. S9 на LB (kernel v14 / ref 56221692 PENDING).
+Таблица сохраняет исходные гипотезы и их IDs. Это не очередь «обязательно сжечь 7 слотов». S1/S2/S3/S4b/S6/S7/S5/S8/S9 отклонены. S4 provisional_adopt 3.70. Внешний baseline `wuliao0/duck-qwen3-8-anim-base` запущен отдельным приватным fork v1 и не считается нашей гипотезой.
 
 | ID | Единственное изменение | Гипотеза и критерий |
 |---|---|---|
@@ -107,7 +107,7 @@ ARC-AGI-3 — интерактивный benchmark: агент без инстр
 | **S6 — Scheduled simplification** | Периодически сворачивать длинный transcript в verified facts, disproved hypotheses, open questions и current plan; держать около 8 последних assistant turns вместо 30. | COMPLETE Public **2.82**. Reject −0.88 vs S4. Не стекать 8-turn history. |
 | **S7 — Adaptive compute scheduler** | На основе semantic progress/stuck signals ограничивать время на безнадёжно застрявшие игры, сначала гарантировать обслуживание всех 110, затем отдавать остаток прогрессирующим играм и поздним уровням. | COMPLETE Public **2.82**. Reject −0.88 vs S4. Не стекать coverage-first/stuck-cut. |
 | **S8 — ACTION7/UNDO completeness** | Добавить ACTION7 ↔ UNDO в Duck action-name table; показывать и исполнять UNDO только если gateway его объявил. | COMPLETE Public **3.10**. Reject −0.60 vs S4. Не стекать UNDO. |
-| **S9 — consecutive RESET wipe guard** | Drop a RESET when the previous engine action was already RESET (and extra RESETs in one batch). Duck auto-RESET on GAME_OVER stays. | Phase B **PENDING** ref 56221692 kernel v14 на родителе S4 3.70. Не сабмитить повторно. |
+| **S9 — consecutive RESET wipe guard** | Drop a RESET when the previous engine action was already RESET (and extra RESETs in one batch). Duck auto-RESET on GAME_OVER stays. | COMPLETE Public **2.81**. Reject −0.89 vs S4. Не стекать RESET guard. |
 
 Не включать в этот спринт generic state graph: доступная абляция показала регрессию. Не складывать отвергнутые Duck-хуки (память/HUD/анимация/scheduler/UNDO) в S9.
 

@@ -1,0 +1,494 @@
+{
+  "schema_version": "arc3-instrumentation-microbenchmark-v1",
+  "created_utc": "2026-09-22T12:36:35Z",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "source_sha256": {
+    "parent_s4_embedded_source": "0c0d789783fbd944499cae6f5e37b46d24dea8077755a4ec892d35dc2486f07a",
+    "runtime_state": "b1fb068f13945f76a7ce0c03fbacbffd0df9bea4897d95c7250ff8bedc78cb11",
+    "tool_agent": "5401a28f07acc35216d807038dd8e5c711484bbbc0e0dfd29eb51408868b8728",
+    "s10": "106cb58c04e244087dbeaf10366829b40c0c961b499df843a9dec23471b5f191"
+  },
+  "method": {
+    "grid_size": [
+      64,
+      64
+    ],
+    "writer": "exact runtime.write_runtime_state (indent=2)",
+    "cache": "warm OS cache; all operations warmed once; serial randomized operation order",
+    "single_request_extra_ensures": 5,
+    "single_request_call_sites": [
+      "analyze entry",
+      "initial _tools for trim",
+      "request-loop _tools",
+      "_dispatch_tool",
+      "finally _tools for persistent history"
+    ],
+    "single_request_snapshot_reads": {
+      "S4": 2,
+      "S10": 7
+    },
+    "cpu_timer": "time.process_time",
+    "wall_timer": "time.perf_counter",
+    "stubs": "Tool body returns fresh one-action summary; original ensure is AST-extracted unchanged. S4 duck_load_grid uses exact runtime loader via import shim. Only unused grid ASCII rendering import stubbed."
+  },
+  "cases": [
+    {
+      "history_entries": 10,
+      "before_file_bytes": 740661,
+      "after_file_bytes": 809533,
+      "repeats": 11,
+      "operations": {
+        "s4_load_grid": {
+          "median_wall_ms": 60.144799994304776,
+          "min_wall_ms": 31.295299995690584,
+          "max_wall_ms": 115.38909998489544,
+          "median_cpu_ms": 31.25,
+          "wall_samples_ms": [
+            94.79469998041168,
+            115.38909998489544,
+            43.29060000600293,
+            33.62990001915023,
+            71.98289997177199,
+            36.51659999741241,
+            66.53109996113926,
+            68.85590002639219,
+            60.144799994304776,
+            33.88709999853745,
+            31.295299995690584
+          ]
+        },
+        "s10_load_snapshot": {
+          "median_wall_ms": 27.60679996572435,
+          "min_wall_ms": 16.452900017611682,
+          "max_wall_ms": 41.94240004289895,
+          "median_cpu_ms": 15.625,
+          "wall_samples_ms": [
+            38.42850000364706,
+            41.94240004289895,
+            33.662899979390204,
+            17.901199986226857,
+            19.795000029262155,
+            27.60679996572435,
+            16.452900017611682,
+            41.05199995683506,
+            40.98249995149672,
+            16.864500008523464,
+            18.737200007308275
+          ]
+        },
+        "s4_ensure_session": {
+          "median_wall_ms": 0.024800014216452837,
+          "min_wall_ms": 0.01939997309818864,
+          "max_wall_ms": 0.043199979700148106,
+          "median_cpu_ms": 0.0,
+          "wall_samples_ms": [
+            0.02770003629848361,
+            0.030099996365606785,
+            0.023999949917197227,
+            0.03649998689070344,
+            0.035100034438073635,
+            0.01939997309818864,
+            0.024500011932104826,
+            0.023200002033263445,
+            0.024800014216452837,
+            0.043199979700148106,
+            0.023900007363408804
+          ]
+        },
+        "s10_ensure_session": {
+          "median_wall_ms": 32.10499999113381,
+          "min_wall_ms": 16.966299968771636,
+          "max_wall_ms": 61.38040003133938,
+          "median_cpu_ms": 15.625,
+          "wall_samples_ms": [
+            38.28759997850284,
+            40.557999978773296,
+            35.002099990379065,
+            19.225499941967428,
+            26.964099961332977,
+            25.193799985572696,
+            32.10499999113381,
+            61.38040003133938,
+            34.75979994982481,
+            16.966299968771636,
+            19.16919997893274
+          ]
+        },
+        "s4_tool_hook": {
+          "median_wall_ms": 130.14039996778592,
+          "min_wall_ms": 71.32250000722706,
+          "max_wall_ms": 167.7668000338599,
+          "median_cpu_ms": 62.5,
+          "wall_samples_ms": [
+            155.50759999314323,
+            167.7668000338599,
+            78.50050000706688,
+            71.32250000722706,
+            158.86930003762245,
+            130.14039996778592,
+            147.16749999206513,
+            149.01449996978045,
+            124.09669999033213,
+            105.76449998188764,
+            73.36400001076981
+          ]
+        },
+        "s10_tool_hook": {
+          "median_wall_ms": 66.96520000696182,
+          "min_wall_ms": 34.5874999766238,
+          "max_wall_ms": 110.57770001934841,
+          "median_cpu_ms": 31.25,
+          "wall_samples_ms": [
+            110.57770001934841,
+            92.46409998741001,
+            61.256200016941875,
+            34.5874999766238,
+            66.96520000696182,
+            70.29080000938848,
+            61.220900039188564,
+            93.13850000035018,
+            69.59219998680055,
+            37.50390000641346,
+            38.09069999260828
+          ]
+        },
+        "s4_single_request_instrumentation": {
+          "median_wall_ms": 150.42580000590533,
+          "min_wall_ms": 64.63400000939146,
+          "max_wall_ms": 224.95400003390387,
+          "median_cpu_ms": 62.5,
+          "wall_samples_ms": [
+            185.92880002688617,
+            177.10689996602014,
+            119.53800002811477,
+            74.66460001887754,
+            162.39090001909062,
+            150.42580000590533,
+            145.87319997372106,
+            224.95400003390387,
+            151.75250003812835,
+            64.63400000939146,
+            85.45220002997667
+          ]
+        },
+        "s10_single_request_instrumentation": {
+          "median_wall_ms": 225.29640002176166,
+          "min_wall_ms": 123.64010000601411,
+          "max_wall_ms": 317.27349996799603,
+          "median_cpu_ms": 125.0,
+          "wall_samples_ms": [
+            252.30150000425056,
+            311.60740001359954,
+            256.4560999744572,
+            123.64010000601411,
+            135.41729998541996,
+            200.04379999591038,
+            268.4259999659844,
+            317.27349996799603,
+            225.29640002176166,
+            124.96579997241497,
+            126.19189999531955
+          ]
+        }
+      },
+      "loader_comparison": {
+        "delta_ms": -32.53800002858043,
+        "candidate_over_baseline": 0.4590055992926818
+      },
+      "tool_hook_comparison": {
+        "delta_ms": -63.1751999608241,
+        "candidate_over_baseline": 0.5145611971650459
+      },
+      "single_request_comparison": {
+        "delta_ms": 74.87060001585633,
+        "candidate_over_baseline": 1.4977244595868335
+      }
+    },
+    {
+      "history_entries": 100,
+      "before_file_bytes": 6939146,
+      "after_file_bytes": 7008019,
+      "repeats": 7,
+      "operations": {
+        "s4_load_grid": {
+          "median_wall_ms": 281.6185000119731,
+          "min_wall_ms": 229.0682999882847,
+          "max_wall_ms": 290.0923999841325,
+          "median_cpu_ms": 234.375,
+          "wall_samples_ms": [
+            235.3607999975793,
+            281.6185000119731,
+            286.0639999853447,
+            229.0682999882847,
+            290.0923999841325,
+            289.3020000192337,
+            244.51129999943078
+          ]
+        },
+        "s10_load_snapshot": {
+          "median_wall_ms": 136.48009998723865,
+          "min_wall_ms": 130.42820000555366,
+          "max_wall_ms": 169.44029997102916,
+          "median_cpu_ms": 125.0,
+          "wall_samples_ms": [
+            143.8338999869302,
+            169.44029997102916,
+            130.42820000555366,
+            131.5180000383407,
+            136.48009998723865,
+            136.13469997653738,
+            140.97090001450852
+          ]
+        },
+        "s4_ensure_session": {
+          "median_wall_ms": 0.037299992982298136,
+          "min_wall_ms": 0.01580000389367342,
+          "max_wall_ms": 0.05000003147870302,
+          "median_cpu_ms": 0.0,
+          "wall_samples_ms": [
+            0.036999990697950125,
+            0.01610000617802143,
+            0.01580000389367342,
+            0.03940000897273421,
+            0.044599990360438824,
+            0.05000003147870302,
+            0.037299992982298136
+          ]
+        },
+        "s10_ensure_session": {
+          "median_wall_ms": 137.7204000018537,
+          "min_wall_ms": 131.06740004150197,
+          "max_wall_ms": 164.18380005052313,
+          "median_cpu_ms": 125.0,
+          "wall_samples_ms": [
+            131.06740004150197,
+            142.97389995772392,
+            137.4530000030063,
+            137.7204000018537,
+            132.46029999572784,
+            164.18380005052313,
+            138.88039998710155
+          ]
+        },
+        "s4_tool_hook": {
+          "median_wall_ms": 531.485999992583,
+          "min_wall_ms": 490.0027000112459,
+          "max_wall_ms": 582.312099984847,
+          "median_cpu_ms": 484.375,
+          "wall_samples_ms": [
+            531.485999992583,
+            496.7323999735527,
+            530.4414000129327,
+            565.5382000259124,
+            545.8690000232309,
+            582.312099984847,
+            490.0027000112459
+          ]
+        },
+        "s10_tool_hook": {
+          "median_wall_ms": 308.11300000641495,
+          "min_wall_ms": 278.04249996552244,
+          "max_wall_ms": 341.41900000395253,
+          "median_cpu_ms": 250.0,
+          "wall_samples_ms": [
+            311.75370002165437,
+            308.11300000641495,
+            278.04249996552244,
+            325.0508999917656,
+            280.0936000421643,
+            341.41900000395253,
+            280.59529996244237
+          ]
+        },
+        "s4_single_request_instrumentation": {
+          "median_wall_ms": 548.7777999951504,
+          "min_wall_ms": 476.59610002301633,
+          "max_wall_ms": 660.2363999700174,
+          "median_cpu_ms": 437.5,
+          "wall_samples_ms": [
+            604.8701999825425,
+            548.7777999951504,
+            607.9598000505939,
+            476.59610002301633,
+            548.7653999589384,
+            660.2363999700174,
+            493.07929998030886
+          ]
+        },
+        "s10_single_request_instrumentation": {
+          "median_wall_ms": 1007.3610999970697,
+          "min_wall_ms": 928.3345000003465,
+          "max_wall_ms": 1319.153800024651,
+          "median_cpu_ms": 875.0,
+          "wall_samples_ms": [
+            1076.239700021688,
+            1007.3610999970697,
+            928.3345000003465,
+            1021.9980000401847,
+            967.6190000027418,
+            1319.153800024651,
+            996.2642000173219
+          ]
+        }
+      },
+      "loader_comparison": {
+        "delta_ms": -145.13840002473444,
+        "candidate_over_baseline": 0.48462760785046494
+      },
+      "tool_hook_comparison": {
+        "delta_ms": -223.372999986168,
+        "candidate_over_baseline": 0.5797198797535866
+      },
+      "single_request_comparison": {
+        "delta_ms": 458.58330000191927,
+        "candidate_over_baseline": 1.8356447728132803
+      }
+    },
+    {
+      "history_entries": 500,
+      "before_file_bytes": 34488361,
+      "after_file_bytes": 34557234,
+      "repeats": 5,
+      "operations": {
+        "s4_load_grid": {
+          "median_wall_ms": 526.6471999930218,
+          "min_wall_ms": 459.2123999609612,
+          "max_wall_ms": 1169.7359000099823,
+          "median_cpu_ms": 500.0,
+          "wall_samples_ms": [
+            1169.7359000099823,
+            762.8941999864765,
+            526.6471999930218,
+            459.2123999609612,
+            490.0984999840148
+          ]
+        },
+        "s10_load_snapshot": {
+          "median_wall_ms": 318.92719998722896,
+          "min_wall_ms": 259.4243999919854,
+          "max_wall_ms": 381.2379000009969,
+          "median_cpu_ms": 328.125,
+          "wall_samples_ms": [
+            351.9502999843098,
+            381.2379000009969,
+            318.92719998722896,
+            259.4243999919854,
+            263.34100001258776
+          ]
+        },
+        "s4_ensure_session": {
+          "median_wall_ms": 0.028999987989664078,
+          "min_wall_ms": 0.02589996438473463,
+          "max_wall_ms": 0.04959997022524476,
+          "median_cpu_ms": 0.0,
+          "wall_samples_ms": [
+            0.02589996438473463,
+            0.028999987989664078,
+            0.044899992644786835,
+            0.026900030206888914,
+            0.04959997022524476
+          ]
+        },
+        "s10_ensure_session": {
+          "median_wall_ms": 299.1592999896966,
+          "min_wall_ms": 264.10329999634996,
+          "max_wall_ms": 433.3337999996729,
+          "median_cpu_ms": 296.875,
+          "wall_samples_ms": [
+            433.3337999996729,
+            416.0264999954961,
+            299.1592999896966,
+            264.10329999634996,
+            299.14129996905103
+          ]
+        },
+        "s4_tool_hook": {
+          "median_wall_ms": 1141.9311999925412,
+          "min_wall_ms": 988.905300037004,
+          "max_wall_ms": 1591.0667999996804,
+          "median_cpu_ms": 1140.625,
+          "wall_samples_ms": [
+            1591.0667999996804,
+            1340.0635000434704,
+            1024.0259999991395,
+            988.905300037004,
+            1141.9311999925412
+          ]
+        },
+        "s10_tool_hook": {
+          "median_wall_ms": 722.8904999792576,
+          "min_wall_ms": 535.9679000102915,
+          "max_wall_ms": 1318.0351000046358,
+          "median_cpu_ms": 718.75,
+          "wall_samples_ms": [
+            1318.0351000046358,
+            722.8904999792576,
+            757.224100001622,
+            535.9679000102915,
+            555.5908000096679
+          ]
+        },
+        "s4_single_request_instrumentation": {
+          "median_wall_ms": 1298.8961999653839,
+          "min_wall_ms": 1006.5873000421561,
+          "max_wall_ms": 1393.4215999906883,
+          "median_cpu_ms": 1296.875,
+          "wall_samples_ms": [
+            1360.658699995838,
+            1298.8961999653839,
+            1393.4215999906883,
+            1157.391699962318,
+            1006.5873000421561
+          ]
+        },
+        "s10_single_request_instrumentation": {
+          "median_wall_ms": 1951.5291000134312,
+          "min_wall_ms": 1852.8319000033662,
+          "max_wall_ms": 3135.1142000057735,
+          "median_cpu_ms": 1937.5,
+          "wall_samples_ms": [
+            3135.1142000057735,
+            2758.3540999912657,
+            1852.8319000033662,
+            1898.963099985849,
+            1951.5291000134312
+          ]
+        }
+      },
+      "loader_comparison": {
+        "delta_ms": -207.72000000579283,
+        "candidate_over_baseline": 0.6055803581438481
+      },
+      "tool_hook_comparison": {
+        "delta_ms": -419.04070001328364,
+        "candidate_over_baseline": 0.6330420781777215
+      },
+      "single_request_comparison": {
+        "delta_ms": 652.6329000480473,
+        "candidate_over_baseline": 1.5024519280797344
+      }
+    }
+  ],
+  "limitations": [
+    "Synthetic schema-faithful states, not recorded game trajectories.",
+    "Windows local warm-cache CPU/I/O instrumentation only; not Kaggle or GPU/LLM latency.",
+    "Base harness JSON reads, prompt building, model serving, actions, and state writes excluded from timed region.",
+    "Single-request estimate follows source call sites with one Python tool and persistent history; extra requests/tools change counts.",
+    "Repeated synthetic transition causes S10 step rollback reset between iterations; this audit is not a memory-policy quality test.",
+    "Small timing samples and current host background load limit precision."
+  ],
+  "elapsed_s": 104.84283009998035,
+  "s10_counters": {
+    "transitions": 52,
+    "identical": 52,
+    "hud_only": 0,
+    "real_change": 0,
+    "confirmed_no_impact": 0,
+    "skipped_no_action": 0,
+    "skipped_multiple_actions": 0,
+    "skipped_unverified": 0,
+    "scope_resets": 50,
+    "internal_errors": 0
+  }
+}

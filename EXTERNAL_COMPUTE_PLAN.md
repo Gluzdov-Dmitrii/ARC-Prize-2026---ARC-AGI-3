@@ -4,11 +4,11 @@
 
 Переносим CPU-тесты, анализ трасс, локальный датасет C1 и модельные эксперименты на собственные/NSU ресурсы. Kaggle — короткий smoke, скрытый rerun и (только после LB-гейта) опциональный public writeup. Не создавать public Dataset/Notebook до COMPLETE score > 0.03 у описываемого метода. Критерий: [COMMUNITY_TRACK.md](COMMUNITY_TRACK.md).
 
-P0a packaging уже в репозитории (`src/p0_phase_a_modes.py`, notebook `tmp/kernels/s4b-outer2` на родителе S4). P0c: на `nsu-a100` стоит `py3.11-cu124-vllm-v1` и официальный `Qwen/Qwen3.8-27B-FP8`; native FP8 quantizer ещё падает — это блокер честного C3 LoRA. P0b harness и P0d paired baseline не закрыты. Flash NVFP4 на A100 не подтверждён.
+P0a packaging уже в репозитории (`src/p0_phase_a_modes.py`, notebook `tmp/kernels/s4b-outer2` на родителе S4). P0c: на `nsu-a100` стоит `py3.11-cu124-vllm-v1` и официальный `Qwen/Qwen3.8-27B-FP8`; 2026-09-14 `none_override_guard` прошёл A100 load-smoke через Transformers dequant-to-bf16 с `quantization_config` intact. P0b harness и P0d paired baseline не закрыты. Flash NVFP4 на A100 не подтверждён.
 
 Источник ресурсов: `C:\Users\Dmitry\Desktop\Kaggle\Kaggle Agents\external-resources\AGENT_PROMPT.md` и связанные README, ACCESS, SETUP_STATUS, WORKFLOW, RESOURCE_POLICY. Live check 2026-09-09: `mode=DIRECT_USER_AUTHORIZED`, очередь пуста (все RELEASED), обе A100 0 MiB / 0%, driver 550.54.15, NFS home ~7.0T свободно. Stdlib-venv не трогаем; ML env `py3.11-cu124-vllm-v1` на `ngpu01`. Это не аренда GPU.
 
-S1=2.71, S2=2.72 и S3=2.77 отклонены. S4 v7/ref 56097508 COMPLETE **3.70** — working champion. Историю не переписывать. Следующий notebook — S4b outer HUD; Phase B только после фразы сабмита. 27B LoRA в этот Flash-kernel не входит.
+S1=2.71, S2=2.72, S3=2.77, S4b=2.77, S6=2.82, S7=2.82, S5=3.13, S8=3.10 и S9=2.81 отклонены. S4 v7/ref 56097508 COMPLETE **3.70** — working champion. Историю не переписывать. 2026-09-15 запущен отдельный приватный внешний baseline `dmitriigluzdov/arc3-external-baseline-wuliao-duck-anim` v1; это не наш champion и не публикация. 27B LoRA в этот Flash-kernel не входит.
 
 ## Что расходует Kaggle
 
@@ -50,6 +50,8 @@ S1=2.71, S2=2.72 и S3=2.77 отклонены. S4 v7/ref 56097508 COMPLETE **3.
 
 Если Flash запускается только с отключённым MTP, другим quantization или перераспределением вычислений, пометить профиль `approximate_flash`. Не считать его побитовой копией Kaggle. Если перенос требует новой модели для самого submission, оформить отдельную гипотезу после S4–S7, не заменять champion автоматически.
 
+Qwen3.8-27B-FP8 proxy на A100: native FP8 kernels недоступны на `sm_80`, но Transformers 5.16.1 де-квантует checkpoint в bf16 при `none_override_guard`. Smoke 2026-09-14: `missing=0`, `unexpected=0`, generate OK, peak ~51.15 GiB. Это достаточно, чтобы перейти к P0d proxy baseline, но не доказывает перенос на Flash NVFP4/Kaggle.
+
 ## P0 — подготовительные задачи перед следующей Phase A (без LB submission)
 
 1. **P0a: укоротить packaging.** В общем builder выделить `offline_eval`, `kaggle_smoke`, `competition`. Реальный rerun определяется только штатным Kaggle flag и имеет приоритет над smoke-конфигом. Для smoke: реальная загрузка checkpoint, text+image/tool-call запросы, 1–2 открытые игры и несколько действий с коротким бюджетом, валидный placeholder, обязательное закрытие собственного vLLM. Прервать с ошибкой, если модель не ответила; пустая заглушка не smoke.
@@ -83,7 +85,7 @@ P0 — служебная работа, не новый номер сабмит�
 | C1 dataset | CPU, `tmp/kernels/s2-output/artifacts` | локальный `pairs.jsonl` + схема + builder | counts vs HUD scan; **не** Kaggle Dataset |
 | C2 writeup | `tmp/writeup-draft/` | локальный черновик | не public kernel |
 | C4 LB verify | короткий smoke + Phase B | COMPLETE score > 0.03 у этого метода | не публикация |
-| C3 LoRA 27B | одна A100 ≤2 ч | адаптер + рецепт | FP8 load честный; public weights только после LB-гейта |
+| C3 LoRA 27B | одна A100 ≤2 ч | адаптер + рецепт | FP8 dequant load честный; сначала P0d paired baseline; public weights только после LB-гейта |
 | S4 no-impact | CPU replay; затем C4 | unit tests + HUD labels | не потеряны реальные движения; legal actions |
 | S6 compaction | A100 paired; proxy ≠ Flash | тесты compaction | tokens↓, levels не хуже |
 | S7 scheduler | CPU + A100 load | симуляция coverage | нет starvation |
@@ -99,4 +101,4 @@ Linux project root: `/home/scientists/gluz_d_s/kaggle/projects/arc-prize-2026-ar
 
 Каждый run: code/model/env hashes, dataset version, seed list, profile (`proxy`/`approximate_flash`/`production`), resource request/lease, GPU UUID/count, durations и gpu_device_hours=count×hours. Для Kaggle дополнительно фактически наблюдённое списание квоты, если доступно; иначе null. Очередь общая для всех соревнований, неизвестный lease не присваивать. После работы забрать проверенные logs/metrics и закрыть свой server; очистить только свои неиспользуемые воспроизводимые файлы согласно RESOURCE_POLICY.
 
-Следующая реализация — локальный черновик C2 (`tmp/writeup-draft/`), без Kaggle publish. LoRA/C3 не стартовать, пока FP8/dequant не честный. C4/S4 на LB — только после terminal S3 и фразы сабмита.
+Следующая реализация — дождаться/сравнить внешний baseline EXB1 и закрыть P0d paired external baseline на Qwen3.8-27B-FP8 dequant path. Локальный C2 остаётся private. LoRA/C3 не стартовать до paired baseline/validation. Новые C4/LB-гипотезы — только после terminal текущего внешнего baseline или отдельной явной фразы сабмита.

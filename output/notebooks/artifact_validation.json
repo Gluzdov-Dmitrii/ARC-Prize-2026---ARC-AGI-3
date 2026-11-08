@@ -1,0 +1,10 @@
+{
+  "valid": true,
+  "notebook_sha256": "a9b9773004c08a8d2914efd106326f1f776df26ca5fcbe90a68215c73b97e814",
+  "cells": 33,
+  "embedded_modules": 4,
+  "champion_source_identical": true,
+  "all_cells_compile": true,
+  "html_offline_scripts": 0,
+  "html_expandable_modules": 4
+}

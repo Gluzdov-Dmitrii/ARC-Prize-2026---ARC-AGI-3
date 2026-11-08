@@ -1,0 +1,14 @@
+{
+  "tests": 20,
+  "result": "PASS",
+  "log": "tmp/sprint_20260922/s10_validation.log",
+  "real_subprocess_sandbox": true,
+  "remote_compute_used": false,
+  "files": {
+    "src/s10_scoped_no_impact.py": "106cb58c04e244087dbeaf10366829b40c0c961b499df843a9dec23471b5f191",
+    "tests/test_s10_scoped_no_impact.py": "21fa6c5c7b8c04db014f3b9da6138552a119f95af8e820b867a7b946f6fed1ee",
+    "tmp/src/tool_agent.py": "535ee88b81b262fa5aedb785466ade9f3183a6417656fb6733427242baac7c9d",
+    "tmp/src/harness_solver.py": "65ddfcdbe8c24fdc31246ff018b51469827b21c38995243a36a818adbed33370",
+    "tmp/src/duck-harness/ARC3-Inference/inference/agent/tool_agent.py": "5401a28f07acc35216d807038dd8e5c711484bbbc0e0dfd29eb51408868b8728"
+  }
+}

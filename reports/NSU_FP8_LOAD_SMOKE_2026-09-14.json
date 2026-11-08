@@ -1,0 +1,73 @@
+{
+  "probe": "nsu_qwen38_fp8_load_smoke",
+  "variant": "none_override_guard",
+  "started_at": "2026-09-14T09:50:11Z",
+  "model_dir": "/home/scientists/gluz_d_s/kaggle/projects/arc-prize-2026-arc-agi-3/models/Qwen3.8-27B-FP8",
+  "cuda_visible_devices": "GPU-61c0078d-a4a6-37a2-3aba-0378e7794c46",
+  "versions": {
+    "torch": "2.6.0+cu124",
+    "torch_cuda": "12.4",
+    "transformers": "5.16.1"
+  },
+  "cuda": {
+    "available": true,
+    "device_count": 1,
+    "device_name": "NVIDIA A100 80GB PCIe",
+    "capability": [
+      8,
+      0
+    ]
+  },
+  "ok": true,
+  "config_after_variant": {
+    "_experts_implementation": null,
+    "quantization_config_present": true,
+    "quantization_config": {
+      "activation_scheme": "dynamic",
+      "fmt": "e4m3",
+      "quant_method": "fp8",
+      "modules_to_not_convert": {
+        "count": 882,
+        "sample": [
+          "model.visual.blocks.0.attn.proj",
+          "model.visual.blocks.0.attn.qkv",
+          "model.visual.blocks.0.mlp.linear_fc1",
+          "model.visual.blocks.0.mlp.linear_fc2",
+          "visual.blocks.0.attn.proj",
+          "visual.blocks.0.attn.qkv_proj",
+          "visual.blocks.0.mlp.linear_fc1",
+          "visual.blocks.0.mlp.linear_fc2",
+          "model.visual.blocks.1.attn.proj",
+          "model.visual.blocks.1.attn.qkv",
+          "model.visual.blocks.1.mlp.linear_fc1",
+          "model.visual.blocks.1.mlp.linear_fc2",
+          "visual.blocks.1.attn.proj",
+          "visual.blocks.1.attn.qkv_proj",
+          "visual.blocks.1.mlp.linear_fc1",
+          "visual.blocks.1.mlp.linear_fc2",
+          "model.visual.blocks.2.attn.proj",
+          "model.visual.blocks.2.attn.qkv",
+          "model.visual.blocks.2.mlp.linear_fc1",
+          "model.visual.blocks.2.mlp.linear_fc2"
+        ]
+      },
+      "weight_block_size": [
+        128,
+        128
+      ]
+    }
+  },
+  "load_elapsed_s": 13.9,
+  "loading_info": {
+    "missing_count": 0,
+    "missing_sample": [],
+    "unexpected_count": 0,
+    "unexpected_sample": [],
+    "unexpected_scale_inv_count": 0
+  },
+  "generate_elapsed_s": 3.5,
+  "text": "Say OK.\n\nOK.",
+  "max_memory_allocated_gib": 51.15,
+  "memory_reserved_gib": 50.96,
+  "elapsed_s": 24.6
+}

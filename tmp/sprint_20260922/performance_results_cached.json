@@ -1,0 +1,190 @@
+{
+  "schema_version": "arc3-cached-instrumentation-v1",
+  "created_utc": "2026-09-22T12:43:44Z",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "s10_source_sha256": "a247847f4a4b92eefab337940a13a7070b37c4298090aea4ec2e30f91cd6e7ec",
+  "s4_source_sha256": "0c0d789783fbd944499cae6f5e37b46d24dea8077755a4ec892d35dc2486f07a",
+  "method": "Exact S4 and default-loader cached S10 wrappers; same runtime path; atomic before/after replacement; 5 outer ensures + 1 inner ensure + tool hook. File preparation outside timing; action-time atomic rename paused out of timing. Path.read_text counted without substituting snapshot loaders.",
+  "cases": [
+    {
+      "history_entries": 100,
+      "file_bytes": 6939146,
+      "repeats": 5,
+      "cache_hit_ensure_median_ms": 0.45679998584091663,
+      "cache_hit_ensure_reads_for_11_calls": 0,
+      "profiles": {
+        "s4": {
+          "median_wall_ms": 222.67579997424036,
+          "median_cpu_ms": 218.75,
+          "samples": [
+            {
+              "wall_ms": 266.0547000123188,
+              "cpu_ms": 265.625,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 1.6139000072143972
+            },
+            {
+              "wall_ms": 211.33210003608838,
+              "cpu_ms": 203.125,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 1.9838999724015594
+            },
+            {
+              "wall_ms": 211.05020004324615,
+              "cpu_ms": 187.5,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 2.1865000016987324
+            },
+            {
+              "wall_ms": 222.67579997424036,
+              "cpu_ms": 218.75,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 2.232200000435114
+            },
+            {
+              "wall_ms": 255.98760007414967,
+              "cpu_ms": 234.375,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 2.5719000259414315
+            }
+          ]
+        },
+        "s10_cached": {
+          "median_wall_ms": 133.72400001389906,
+          "median_cpu_ms": 125.0,
+          "samples": [
+            {
+              "wall_ms": 133.72400001389906,
+              "cpu_ms": 109.375,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 1.5559999737888575
+            },
+            {
+              "wall_ms": 140.29489998938516,
+              "cpu_ms": 109.375,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 2.379800018388778
+            },
+            {
+              "wall_ms": 126.68439996195957,
+              "cpu_ms": 125.0,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 1.5081000165082514
+            },
+            {
+              "wall_ms": 123.57860000338405,
+              "cpu_ms": 125.0,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 1.5395000227726996
+            },
+            {
+              "wall_ms": 138.19189998321235,
+              "cpu_ms": 125.0,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 1.580099982675165
+            }
+          ]
+        }
+      },
+      "delta_ms": -88.9517999603413,
+      "candidate_over_baseline": 0.6005322537490313
+    },
+    {
+      "history_entries": 500,
+      "file_bytes": 34488361,
+      "repeats": 5,
+      "cache_hit_ensure_median_ms": 0.9063999750651419,
+      "cache_hit_ensure_reads_for_11_calls": 0,
+      "profiles": {
+        "s4": {
+          "median_wall_ms": 1080.202899989672,
+          "median_cpu_ms": 1062.5,
+          "samples": [
+            {
+              "wall_ms": 1193.7050000415184,
+              "cpu_ms": 1187.5,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 5.468299961648881
+            },
+            {
+              "wall_ms": 1080.202899989672,
+              "cpu_ms": 1062.5,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 4.101000027731061
+            },
+            {
+              "wall_ms": 1056.9626999786124,
+              "cpu_ms": 1031.25,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 4.338600032497197
+            },
+            {
+              "wall_ms": 970.1241999864578,
+              "cpu_ms": 953.125,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 4.152400011662394
+            },
+            {
+              "wall_ms": 1516.2256000330672,
+              "cpu_ms": 1437.5,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 4.206400015391409
+            }
+          ]
+        },
+        "s10_cached": {
+          "median_wall_ms": 574.1249000420794,
+          "median_cpu_ms": 562.5,
+          "samples": [
+            {
+              "wall_ms": 710.4297000332735,
+              "cpu_ms": 671.875,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 5.301000026520342
+            },
+            {
+              "wall_ms": 562.959700007923,
+              "cpu_ms": 546.875,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 5.628699960652739
+            },
+            {
+              "wall_ms": 610.1160999969579,
+              "cpu_ms": 609.375,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 4.495800007134676
+            },
+            {
+              "wall_ms": 574.1249000420794,
+              "cpu_ms": 562.5,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 4.373400006443262
+            },
+            {
+              "wall_ms": 554.5610000262968,
+              "cpu_ms": 546.875,
+              "reads": 2,
+              "excluded_atomic_replace_ms": 5.532900046091527
+            }
+          ]
+        }
+      },
+      "delta_ms": -506.0779999475926,
+      "candidate_over_baseline": 0.5314972770833782
+    }
+  ],
+  "elapsed_s": 17.572937200020533,
+  "s10_counters": {
+    "transitions": 12,
+    "identical": 12,
+    "hud_only": 0,
+    "real_change": 0,
+    "confirmed_no_impact": 0,
+    "skipped_no_action": 0,
+    "skipped_multiple_actions": 0,
+    "skipped_unverified": 0,
+    "scope_resets": 10,
+    "internal_errors": 0
+  }
+}

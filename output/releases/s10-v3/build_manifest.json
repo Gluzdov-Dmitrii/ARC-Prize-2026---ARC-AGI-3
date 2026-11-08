@@ -1,0 +1,12 @@
+{
+  "notebook_sha256": "a9b9773004c08a8d2914efd106326f1f776df26ca5fcbe90a68215c73b97e814",
+  "parent_sha256": "573f82fdf1e382afcb0d4952fb060385213042e1e192bd2c376d64b4d49e112f",
+  "module_sha256": {
+    "arc3_runtime.py": "92bb5532873989940e92e9cdc89a3acc9c943375758a4bc70d4bfbde1cb61d8a",
+    "arc3_s4_baseline.py": "0c0d789783fbd944499cae6f5e37b46d24dea8077755a4ec892d35dc2486f07a",
+    "arc3_s10_memory.py": "a247847f4a4b92eefab337940a13a7070b37c4298090aea4ec2e30f91cd6e7ec",
+    "arc3_evaluation.py": "78442b9506faad78cbf217c8bb652baeb42c71050896649d2e845a57f5fdb631"
+  },
+  "cells": 33,
+  "code_cells": 17
+}

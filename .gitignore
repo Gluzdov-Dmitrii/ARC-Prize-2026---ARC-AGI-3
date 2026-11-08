@@ -15,3 +15,6 @@ tmp/nsu/
 tmp/community-dataset-v1/
 tmp/writeup-draft/
 tmp/*.zip
+tmp/sprint_20260922/qa_deps/
+tmp/sprint_20260922/performance_state_*.json
+tmp/sprint_20260922/parquet_deps/

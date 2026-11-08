@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-09-22T15:52:23.006045+00:00",
+  "valid": true,
+  "kernel_version": 3,
+  "games": 2,
+  "actions": 8,
+  "internal_errors": 0,
+  "source_sha256": "a247847f4a4b92eefab337940a13a7070b37c4298090aea4ec2e30f91cd6e7ec",
+  "submission_rows": 1,
+  "submission_is_phase_a_placeholder": true,
+  "smoke_score_not_quality_evidence": true,
+  "artifacts": "tmp/sprint_20260922/kaggle_v3_output"
+}
